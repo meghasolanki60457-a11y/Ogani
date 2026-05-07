@@ -3466,3 +3466,142 @@ ol {
 		font-size: 24px;
 	}
 }
+
+
+.categories{
+  padding: 50px 0;
+}
+
+.categories__item{
+
+  height: 270px;
+
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  align-items: end;
+  justify-content: center;
+
+  padding-bottom: 20px;
+
+  position: relative;
+}
+
+.categories__item h5 a{
+
+  font-size: 18px;
+
+  color: #1c1c1c;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  display: inline-block;
+
+  padding: 12px 25px;
+
+  background: #ffffff;
+
+  text-decoration: none;
+}
+
+.swiper{
+  width:100%;
+}
+
+.featured__item__pic{
+
+  height:250px;
+
+  background-size:cover;
+  background-position:center;
+}
+.featured__controls ul{
+
+  display:flex;
+
+  justify-content:center;
+
+  gap:30px;
+
+  list-style:none;
+
+  padding:0;
+
+  margin-bottom:50px;
+}
+
+.featured__controls ul li{
+
+  cursor:pointer;
+
+  font-size:18px;
+
+  font-weight:700;
+}
+
+.featured__controls ul li.active{
+
+  color:#7fad39;
+}
+
+.featured__item{
+
+  margin-bottom:30px;
+}
+
+.featured__item__pic{
+
+  position:relative;
+}
+
+.featured__item__pic__hover{
+
+  position:absolute;
+
+  bottom:20px;
+
+  left:0;
+
+  width:100%;
+
+  display:flex;
+
+  justify-content:center;
+
+  gap:10px;
+
+  list-style:none;
+}
+
+.featured__item__pic__hover li a{
+
+  width:40px;
+
+  height:40px;
+
+  background:#fff;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  border-radius:50%;
+
+  color:#000;
+
+  text-decoration:none;
+}
+
+.featured__item__text{
+
+  text-align:center;
+
+  padding-top:15px;
+}
