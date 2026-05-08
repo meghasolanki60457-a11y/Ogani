@@ -25,21 +25,21 @@ function App() {
                 <h6>Useful Links</h6>
 
                 <ul>
-                  <li><a href="#">About Us</a></li>
-                  <li><a href="#">About Our Shop</a></li>
-                  <li><a href="#">Secure Shopping</a></li>
-                  <li><a href="#">Delivery information</a></li>
-                  <li><a href="#">Privacy Policy</a></li>
-                  <li><a href="#">Our Sitemap</a></li>
+                  <li><a href="javascript:void(0)">About Us</a></li>
+                  <li><a href="javascript:void(0)">About Our Shop</a></li>
+                  <li><a href="javascript:void(0)">Secure Shopping</a></li>
+                  <li><a href="javascript:void(0)">Delivery information</a></li>
+                  <li><a href="javascript:void(0)">Privacy Policy</a></li>
+                  <li><a href="javascript:void(0)">Our Sitemap</a></li>
                 </ul>
 
                 <ul>
-                  <li><a href="#">Who We Are</a></li>
-                  <li><a href="#">Our Services</a></li>
-                  <li><a href="#">Projects</a></li>
-                  <li><a href="#">Contact</a></li>
-                  <li><a href="#">Innovation</a></li>
-                  <li><a href="#">Testimonials</a></li>
+                  <li><a href="javascript:void(0)">Who We Are</a></li>
+                  <li><a href="javascript:void(0)">Our Services</a></li>
+                  <li><a href="javascript:void(0)">Projects</a></li>
+                  <li><a href="javascript:void(0)">Contact</a></li>
+                  <li><a href="javascript:void(0)">Innovation</a></li>
+                  <li><a href="javascript:void(0)">Testimonials</a></li>
                 </ul>
               </div>
             </div>
@@ -52,7 +52,7 @@ function App() {
                   Get E-mail updates about our latest shop and special offers.
                 </p>
 
-                <form action="#">
+                <form action="javascript:void(0)">
                   <input type="text" placeholder="Enter your mail" />
                   <button type="submit" className="site-btn">
                     Subscribe
@@ -60,10 +60,10 @@ function App() {
                 </form>
 
                 <div className="footer__widget__social">
-                  <a href="#"><i className="fa fa-facebook"></i></a>
-                  <a href="#"><i className="fa fa-instagram"></i></a>
-                  <a href="#"><i className="fa fa-twitter"></i></a>
-                  <a href="#"><i className="fa fa-pinterest"></i></a>
+                  <a href="javascript:void(0)"><i class="fa-brands fa-facebook-f"></i></a>
+                  <a href="javascript:void(0)"><i class="fa-brands fa-instagram"></i></a>
+                  <a href="javascript:void(0)"><i class="fa-brands fa-twitter"></i></a>
+                  <a href="javascript:void(0)"><i class="fa-brands fa-pinterest"></i></a>
                 </div>
               </div>
             </div>

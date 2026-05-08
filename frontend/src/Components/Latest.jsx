@@ -1,4 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css/navigation";
 
 import "swiper/css";
 
@@ -17,121 +19,145 @@ function App() {
 
 
             {/* Latest Products */}
-            <div className="col-lg-4 col-md-6">
+                <div className="col-lg-4 col-md-6">
 
-              <div className="latest-product__text">
+        <div className="latest-product__text">
 
-                <h4>Latest Products</h4>
+          {/* Heading */}
+          <div className="d-flex gap-3 align-items-center mb-4">
 
-                <Swiper
-                  slidesPerView={1}
-                  spaceBetween={20}
-                  loop={true}
+            <h4 className="mb-0">Latest Products</h4>
+
+            {/* Navigation Buttons */}
+            <div className="latest-product__slider__nav">
+              <button className="latest-prev">
+                <i className="fa fa-angle-left"></i>
+              </button>
+
+              <button className="latest-next">
+                <i className="fa fa-angle-right"></i>
+              </button>
+            </div>
+
+          </div>
+
+          {/* Swiper */}
+          <Swiper
+            slidesPerView={1}
+            spaceBetween={20}
+            loop={true}
+            navigation={{
+              prevEl: ".latest-prev",
+              nextEl: ".latest-next",
+            }}
+            modules={[Navigation]}
+            onBeforeInit={(swiper) => {
+              swiper.params.navigation.prevEl = ".latest-prev";
+              swiper.params.navigation.nextEl = ".latest-next";
+            }}
+          >
+
+            <SwiperSlide>
+
+              <div className="latest-prdouct__slider__item">
+
+                <a
+                  href="javascript:void(0)"
+                  className="latest-product__item"
                 >
+                  <div className="latest-product__item__pic">
+                    <img src="/Images/one.png" alt="" />
+                  </div>
 
-                  <SwiperSlide>
+                  <div className="latest-product__item__text">
+                    <h6>Crab Pool Security</h6>
+                    <span>$30.00</span>
+                  </div>
+                </a>
 
-                    <div className="latest-prdouct__slider__item">
+                 <a
+                  href="javascript:void(0)"
+                  className="latest-product__item"
+                >
+                  <div className="latest-product__item__pic">
+                    <img src="/Images/one.png" alt="" />
+                  </div>
 
-                      <a href="#" className="latest-product__item">
+                  <div className="latest-product__item__text">
+                    <h6>Crab Pool Security</h6>
+                    <span>$30.00</span>
+                  </div>
+                </a>
+                   <a
+                  href="javascript:void(0)"
+                  className="latest-product__item"
+                >
+                  <div className="latest-product__item__pic">
+                    <img src="/Images/one.png" alt="" />
+                  </div>
 
-                        <div className="latest-product__item__pic">
-                          <img src="Images/one.png" alt="" />
-                        </div>
-
-                        <div className="latest-product__item__text">
-                          <h6>Crab Pool Security</h6>
-                          <span>$30.00</span>
-                        </div>
-
-                      </a>
-
-                      <a href="#" className="latest-product__item">
-
-                        <div className="latest-product__item__pic">
-                          <img src="Images/one.png" alt="" />
-                        </div>
-
-                        <div className="latest-product__item__text">
-                          <h6>Fresh Meat</h6>
-                          <span>$25.00</span>
-                        </div>
-
-                      </a>
-
-                      <a href="#" className="latest-product__item">
-
-                        <div className="latest-product__item__pic">
-                          <img src="Images/one.png" alt="" />
-                        </div>
-
-                        <div className="latest-product__item__text">
-                          <h6>Vegetables</h6>
-                          <span>$18.00</span>
-                        </div>
-
-                      </a>
-
-                    </div>
-
-                  </SwiperSlide>
-
-
-
-
-
-                  <SwiperSlide>
-
-                    <div className="latest-prdouct__slider__item">
-
-                      <a href="#" className="latest-product__item">
-
-                        <div className="latest-product__item__pic">
-                          <img src="Images/one.png" alt="" />
-                        </div>
-
-                        <div className="latest-product__item__text">
-                          <h6>Orange</h6>
-                          <span>$15.00</span>
-                        </div>
-
-                      </a>
-
-                      <a href="#" className="latest-product__item">
-
-                        <div className="latest-product__item__pic">
-                          <img src="Images/one.png" alt="" />
-                        </div>
-
-                        <div className="latest-product__item__text">
-                          <h6>Fastfood</h6>
-                          <span>$40.00</span>
-                        </div>
-
-                      </a>
-
-                      <a href="#" className="latest-product__item">
-
-                        <div className="latest-product__item__pic">
-                          <img src="Images/one.png" alt="" />
-                        </div>
-
-                        <div className="latest-product__item__text">
-                          <h6>Fresh Apple</h6>
-                          <span>$22.00</span>
-                        </div>
-
-                      </a>
-
-                    </div>
-
-                  </SwiperSlide>
-
-                </Swiper>
+                  <div className="latest-product__item__text">
+                    <h6>Crab Pool Security</h6>
+                    <span>$30.00</span>
+                  </div>
+                </a>
 
               </div>
 
-            </div>
+            </SwiperSlide>
+
+            <SwiperSlide>
+
+              <div className="latest-prdouct__slider__item">
+
+                 <a
+                  href="javascript:void(0)"
+                  className="latest-product__item"
+                >
+                  <div className="latest-product__item__pic">
+                    <img src="/Images/one.png" alt="" />
+                  </div>
+
+                  <div className="latest-product__item__text">
+                    <h6>Crab Pool Security</h6>
+                    <span>$30.00</span>
+                  </div>
+                </a>
+                <a
+                  href="javascript:void(0)"
+                  className="latest-product__item"
+                >
+                  <div className="latest-product__item__pic">
+                    <img src="/Images/one.png" alt="" />
+                  </div>
+
+                  <div className="latest-product__item__text">
+                    <h6>Crab Pool Security</h6>
+                    <span>$30.00</span>
+                  </div>
+                </a>
+                   <a
+                  href="javascript:void(0)"
+                  className="latest-product__item"
+                >
+                  <div className="latest-product__item__pic">
+                    <img src="/Images/one.png" alt="" />
+                  </div>
+
+                  <div className="latest-product__item__text">
+                    <h6>Crab Pool Security</h6>
+                    <span>$30.00</span>
+                  </div>
+                </a>
+              </div>
+
+            </SwiperSlide>
+
+          </Swiper>
+
+        </div>
+
+      </div>
 
 
 
@@ -154,7 +180,7 @@ function App() {
 
                     <div className="latest-prdouct__slider__item">
 
-                      <a href="#" className="latest-product__item">
+                      <a href="javascript:void(0)" className="latest-product__item">
 
                         <div className="latest-product__item__pic">
                           <img src="Images/one.png" alt="" />
@@ -167,7 +193,7 @@ function App() {
 
                       </a>
 
-                      <a href="#" className="latest-product__item">
+                      <a href="javascript:void(0)" className="latest-product__item">
 
                         <div className="latest-product__item__pic">
                           <img src="Images/one.png" alt="" />
@@ -180,7 +206,7 @@ function App() {
 
                       </a>
 
-                      <a href="#" className="latest-product__item">
+                      <a href="javascript:void(0)" className="latest-product__item">
 
                         <div className="latest-product__item__pic">
                           <img src="Images/one.png" alt="" />
@@ -205,7 +231,7 @@ function App() {
 
                     <div className="latest-prdouct__slider__item">
 
-                      <a href="#" className="latest-product__item">
+                      <a href="javascript:void(0)" className="latest-product__item">
 
                         <div className="latest-product__item__pic">
                           <img src="Images/one.png" alt="" />
@@ -218,7 +244,7 @@ function App() {
 
                       </a>
 
-                      <a href="#" className="latest-product__item">
+                      <a href="javascript:void(0)" className="latest-product__item">
 
                         <div className="latest-product__item__pic">
                           <img src="Images/one.png" alt="" />
@@ -231,7 +257,7 @@ function App() {
 
                       </a>
 
-                      <a href="#" className="latest-product__item">
+                      <a href="javascript:void(0)" className="latest-product__item">
 
                         <div className="latest-product__item__pic">
                           <img src="Images/one.png" alt="" />
@@ -275,7 +301,7 @@ function App() {
 
                     <div className="latest-prdouct__slider__item">
 
-                      <a href="#" className="latest-product__item">
+                      <a href="javascript:void(0)" className="latest-product__item">
 
                         <div className="latest-product__item__pic">
                           <img src="Images/one.png" alt="" />
@@ -288,7 +314,7 @@ function App() {
 
                       </a>
 
-                      <a href="#" className="latest-product__item">
+                      <a href="javascript:void(0)" className="latest-product__item">
 
                         <div className="latest-product__item__pic">
                           <img src="Images/one.png" alt="" />
@@ -301,7 +327,7 @@ function App() {
 
                       </a>
 
-                      <a href="#" className="latest-product__item">
+                      <a href="javascript:void(0)" className="latest-product__item">
 
                         <div className="latest-product__item__pic">
                           <img src="Images/one.png" alt="" />
@@ -326,7 +352,7 @@ function App() {
 
                     <div className="latest-prdouct__slider__item">
 
-                      <a href="#" className="latest-product__item">
+                      <a href="javascript:void(0)" className="latest-product__item">
 
                         <div className="latest-product__item__pic">
                           <img src="Images/one.png" alt="" />
@@ -339,7 +365,7 @@ function App() {
 
                       </a>
 
-                      <a href="#" className="latest-product__item">
+                      <a href="javascript:void(0)" className="latest-product__item">
 
                         <div className="latest-product__item__pic">
                           <img src="Images/one.png" alt="" />
@@ -352,7 +378,7 @@ function App() {
 
                       </a>
 
-                      <a href="#" className="latest-product__item">
+                      <a href="javascript:void(0)" className="latest-product__item">
 
                         <div className="latest-product__item__pic">
                           <img src="Images/one.png" alt="" />

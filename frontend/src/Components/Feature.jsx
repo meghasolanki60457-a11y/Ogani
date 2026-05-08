@@ -167,19 +167,19 @@ function App() {
                       <ul className="featured__item__pic__hover">
 
                         <li>
-                          <a href="#">
+                          <a href="javascript:void(0)">
                             <i className="fa fa-heart"></i>
                           </a>
                         </li>
 
                         <li>
-                          <a href="#">
+                          <a href="javascript:void(0)">
                             <i className="fa fa-retweet"></i>
                           </a>
                         </li>
 
                         <li>
-                          <a href="#">
+                          <a href="javascript:void(0)">
                             <i className="fa fa-shopping-cart"></i>
                           </a>
                         </li>
@@ -191,7 +191,7 @@ function App() {
                     <div className="featured__item__text">
 
                       <h6>
-                        <a href="#">
+                        <a href="javascript:void(0)">
                           {item.title}
                         </a>
                       </h6>

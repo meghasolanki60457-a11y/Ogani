@@ -11,17 +11,17 @@ function App() {
         }}
       >
         <div className="container">
-          <div className="row">
-            <div className="col-lg-12 text-center">
-              <div className="breadcrumb__text">
-                <h2>Organi Shop</h2>
-                <div className="breadcrumb__option">
-                  <a href="javascript:void(0)">Home</a>
-                  <span>Shop</span>
+        <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Blog</h2>
+                        <div class="breadcrumb__option">
+                            <a href="./index.html">Home</a>
+                            <span>Blog</span>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
       </section>
     </>

@@ -8,24 +8,24 @@
                             <span>All departments</span>
                         </div>
                         <ul>
-                            <li><a href="#">Fresh Meat</a></li>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fruit & Nut Gifts</a></li>
-                            <li><a href="#">Fresh Berries</a></li>
-                            <li><a href="#">Ocean Foods</a></li>
-                            <li><a href="#">Butter & Eggs</a></li>
-                            <li><a href="#">Fastfood</a></li>
-                            <li><a href="#">Fresh Onion</a></li>
-                            <li><a href="#">Papayaya & Crisps</a></li>
-                            <li><a href="#">Oatmeal</a></li>
-                            <li><a href="#">Fresh Bananas</a></li>
+                            <li><a href="javascript:void(0)">Fresh Meat</a></li>
+                            <li><a href="javascript:void(0)">Vegetables</a></li>
+                            <li><a href="javascript:void(0)">Fruit & Nut Gifts</a></li>
+                            <li><a href="javascript:void(0)">Fresh Berries</a></li>
+                            <li><a href="javascript:void(0)">Ocean Foods</a></li>
+                            <li><a href="javascript:void(0)">Butter & Eggs</a></li>
+                            <li><a href="javascript:void(0)">Fastfood</a></li>
+                            <li><a href="javascript:void(0)">Fresh Onion</a></li>
+                            <li><a href="javascript:void(0)">Papayaya & Crisps</a></li>
+                            <li><a href="javascript:void(0)">Oatmeal</a></li>
+                            <li><a href="javascript:void(0)">Fresh Bananas</a></li>
                         </ul>
                     </div>
                 </div>
                 <div className="col-lg-9">
                     <div className="hero__search">
                         <div className="hero__search__form">
-                            <form action="#">
+                            <form action="javascript:void(0)">
                                 <div className="hero__search__categories">
                                     All Categories
                                     <span className="arrow_carrot-down"></span>
@@ -49,7 +49,7 @@
                             <span>FRUIT FRESH</span>
                             <h2>Vegetable <br />100% Organic</h2>
                             <p>Free Pickup and Delivery Available</p>
-                            <a href="#" className="primary-btn">SHOP NOW</a>
+                            <a href="javascript:void(0)" className="primary-btn">SHOP NOW</a>
                         </div>
                     </div>
                 </div>

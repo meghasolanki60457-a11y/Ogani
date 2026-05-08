@@ -23,13 +23,13 @@ function App() {
         <div className="humberger__menu__cart">
           <ul>
             <li>
-              <a href="#">
+              <a href="javascript:void(0)">
                 <i className="fa fa-heart"></i> <span>1</span>
               </a>
             </li>
 
             <li>
-              <a href="#">
+              <a href="javascript:void(0)">
                 <i className="fa fa-shopping-bag"></i> <span>3</span>
               </a>
             </li>
@@ -50,13 +50,13 @@ function App() {
             <span className="arrow_carrot-down"></span>
 
             <ul>
-              <li><a href="#">Spanish</a></li>
-              <li><a href="#">English</a></li>
+              <li><a href="javascript:void(0)">Spanish</a></li>
+              <li><a href="javascript:void(0)">English</a></li>
             </ul>
           </div>
 
           <div className="header__top__right__auth">
-            <a href="#">
+            <a href="javascript:void(0)">
               <i className="fa fa-user"></i> Login
             </a>
           </div>
@@ -73,39 +73,39 @@ function App() {
             </li>
 
             <li>
-              <Link to="/shop">Shop</Link>
+              <Link to="/ogani/shop">Shop</Link>
             </li>
 
             <li>
-              <Link to="/pages">Pages</Link>
+              <Link to="/ogani/shop-details">Pages</Link>
 
               <ul className="header__menu__dropdown">
 
                 <li>
-                  <Link to="/shop-details">Shop Details</Link>
+                  <Link to="/ogani/shop-details">Shop Details</Link>
                 </li>
 
                 <li>
-                  <Link to="/shopping-cart">Shopping Cart</Link>
+                  <Link to="/ogani/shopping-cart">Shopping Cart</Link>
                 </li>
 
                 <li>
-                  <Link to="/checkout">Check Out</Link>
+                  <Link to="/ogani/checkout">Check Out</Link>
                 </li>
 
                 <li>
-                  <Link to="/blog-details">Blog Details</Link>
+                  <Link to="/ogani/blog-details">Blog Details</Link>
                 </li>
 
               </ul>
             </li>
 
             <li>
-              <Link to="/blog">Blog</Link>
+              <Link to="/ogani/blog">Blog</Link>
             </li>
 
             <li>
-              <Link to="/contact">Contact</Link>
+              <Link to="/ogani/contact">Contact</Link>
             </li>
 
           </ul>
@@ -116,19 +116,19 @@ function App() {
 
         <div className="header__top__right__social">
 
-          <a href="#">
+          <a href="javascript:void(0)">
             <i className="fa fa-facebook"></i>
           </a>
 
-          <a href="#">
+          <a href="javascript:void(0)">
             <i className="fa fa-twitter"></i>
           </a>
 
-          <a href="#">
+          <a href="javascript:void(0)">
             <i className="fa fa-linkedin"></i>
           </a>
 
-          <a href="#">
+          <a href="javascript:void(0)">
             <i className="fa fa-pinterest-p"></i>
           </a>
 
@@ -183,19 +183,19 @@ function App() {
 
                   <div className="header__top__right__social">
 
-                    <a href="#">
+                    <a href="javascript:void(0)">
                       <i className="fa-brands fa-facebook-f"></i>
                     </a>
 
-                    <a href="#">
+                    <a href="javascript:void(0)">
                       <i className="fa-brands fa-twitter"></i>
                     </a>
 
-                    <a href="#">
+                    <a href="javascript:void(0)">
                       <i className="fa-brands fa-linkedin-in"></i>
                     </a>
 
-                    <a href="#">
+                    <a href="javascript:void(0)">
                       <i className="fa-brands fa-pinterest-p"></i>
                     </a>
 
@@ -210,15 +210,15 @@ function App() {
                     <span className="arrow_carrot-down"></span>
 
                     <ul>
-                      <li><a href="#">Spanish</a></li>
-                      <li><a href="#">English</a></li>
+                      <li><a href="javascript:void(0)">Spanish</a></li>
+                      <li><a href="javascript:void(0)">English</a></li>
                     </ul>
 
                   </div>
 
                   <div className="header__top__right__auth">
 
-                    <a href="#">
+                    <a href="javascript:void(0)">
                       <i className="fa fa-user"></i> Login
                     </a>
 
@@ -266,35 +266,35 @@ function App() {
                   </li>
 
                   <li>
-                    <Link to="/shop">Shop</Link>
+                    <Link to="/ogani/shop">Shop</Link>
                   </li>
 
                   <li>
 
-                    <Link to="/pages">Pages</Link>
+                    <Link to="/ogani/shop-details">Pages</Link>
 
                     <ul className="header__menu__dropdown">
 
                       <li>
-                        <Link to="/shop-details">
+                        <Link to="/ogani/shop-details">
                           Shop Details
                         </Link>
                       </li>
 
                       <li>
-                        <Link to="/shopping-cart">
+                        <Link to="/ogani/shopping-cart">
                           Shopping Cart
                         </Link>
                       </li>
 
                       <li>
-                        <Link to="/checkout">
+                        <Link to="/ogani/checkout">
                           Check Out
                         </Link>
                       </li>
 
                       <li>
-                        <Link to="/blog-details">
+                        <Link to="/ogani/blog-details">
                           Blog Details
                         </Link>
                       </li>
@@ -304,11 +304,11 @@ function App() {
                   </li>
 
                   <li>
-                    <Link to="/blog">Blog</Link>
+                    <Link to="/ogani/blog">Blog</Link>
                   </li>
 
                   <li>
-                    <Link to="/contact">Contact</Link>
+                    <Link to="/ogani/contact">Contact</Link>
                   </li>
 
                 </ul>
@@ -324,14 +324,14 @@ function App() {
                 <ul>
 
                   <li>
-                    <a href="#">
+                    <a href="javascript:void(0)">
                       <i className="fa fa-heart"></i>
                       <span>1</span>
                     </a>
                   </li>
 
                   <li>
-                    <a href="#">
+                    <a href="javascript:void(0)">
                       <i className="fa fa-shopping-bag"></i>
                       <span>3</span>
                     </a>
@@ -365,29 +365,31 @@ function App() {
   >
     <i className="fa fa-bars"></i>
     <span>All departments</span>
+    
   </div>
 
-  <ul
+  <ul className="bg-white"
     style={{
       display: showCategories ? "block" : "none",
       position: "absolute",
-      background: "#fff",
+      background: "javascript:void(0)fff",
       width: "20%",
       zIndex: 999,
       
+      
     }}
   >
-    <li><a href="#">Fresh Meat</a></li>
-    <li><a href="#">Vegetables</a></li>
-    <li><a href="#">Fruit & Nut Gifts</a></li>
-    <li><a href="#">Fresh Berries</a></li>
-    <li><a href="#">Ocean Foods</a></li>
-    <li><a href="#">Butter & Eggs</a></li>
-    <li><a href="#">Fastfood</a></li>
-    <li><a href="#">Fresh Onion</a></li>
-    <li><a href="#">Papayaya & Crisps</a></li>
-    <li><a href="#">Oatmeal</a></li>
-    <li><a href="#">Fresh Bananas</a></li>
+    <li><a href="javascript:void(0)">Fresh Meat</a></li>
+    <li><a href="javascript:void(0)">Vegetables</a></li>
+    <li><a href="javascript:void(0)">Fruit & Nut Gifts</a></li>
+    <li><a href="javascript:void(0)">Fresh Berries</a></li>
+    <li><a href="javascript:void(0)">Ocean Foods</a></li>
+    <li><a href="javascript:void(0)">Butter & Eggs</a></li>
+    <li><a href="javascript:void(0)">Fastfood</a></li>
+    <li><a href="javascript:void(0)">Fresh Onion</a></li>
+    <li><a href="javascript:void(0)">Papayaya & Crisps</a></li>
+    <li><a href="javascript:void(0)">Oatmeal</a></li>
+    <li><a href="javascript:void(0)">Fresh Bananas</a></li>
   </ul>
 
 </div>
@@ -395,10 +397,10 @@ function App() {
                 <div className="col-lg-9">
                     <div className="hero__search">
                         <div className="hero__search__form">
-                            <form action="#">
+                            <form action="javascript:void(0)">
                                 <div className="hero__search__categories">
                                     All Categories
-                                    <span className="arrow_carrot-down"></span>
+                                    <span className="arrow_carrot-down"><wa-icon name="angle-down"></wa-icon></span>
                                 </div>
                                 <input type="text" placeholder="What do yo u need?"/>
                                 <button type="submit" className="site-btn">SEARCH</button>
@@ -414,14 +416,7 @@ function App() {
                             </div>
                         </div>
                     </div>
-                    {/* <div className="hero__item set-bg" data-setbg="img/hero/banner.jpg">
-                        <div className="hero__text">
-                            <span>FRUIT FRESH</span>
-                            <h2>Vegetable <br />100% Organic</h2>
-                            <p>Free Pickup and Delivery Available</p>
-                            <a href="#" className="primary-btn">SHOP NOW</a>
-                        </div>
-                    </div> */}
+                 
                 </div>
             </div>
         </div>

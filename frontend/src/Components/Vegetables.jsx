@@ -14,10 +14,11 @@ function App() {
           <div className="row">
             <div className="col-lg-12 text-center">
               <div className="breadcrumb__text">
-                <h2>Organi Shop</h2>
+                <h2>OVegetable’s Package</h2>
                 <div className="breadcrumb__option">
                   <a href="javascript:void(0)">Home</a>
-                  <span>Shop</span>
+                  <a href="javascript:void(0)">Vegetables</a>
+                  <span> Vegetable’s Package</span>
                 </div>
               </div>
             </div>

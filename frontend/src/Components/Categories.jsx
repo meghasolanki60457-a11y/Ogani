@@ -1,4 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css/navigation";
 
 import "swiper/css";
 
@@ -40,10 +42,12 @@ function App() {
       <div className="container">
 
         <Swiper
-          spaceBetween={25}
-          slidesPerView={4}
-          loop={true}
-        >
+  spaceBetween={25}
+  slidesPerView={4}
+  loop={true}
+  navigation={true}
+  modules={[Navigation]}
+>
 
           {
             categories.map((item, index) => (
@@ -59,7 +63,7 @@ function App() {
 
                   <h5>
 
-                    <a href="#">
+                    <a href="javascript:void(0)">
 
                       {item.title}
 

@@ -33,9 +33,12 @@
 html,
 body {
 	height: 100%;
-	font-family: "Cairo", sans-serif;
+	  font-family: "Cairo", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	font-smoothing: antialiased;
+}
+*{
+	text-decoration: none !important;
 }
 
 h1,
@@ -3604,4 +3607,138 @@ ol {
   text-align:center;
 
   padding-top:15px;
+}
+
+.product__discount .swiper {
+  width: 100%;
+  padding: 20px 0;
+}
+
+.product__discount {
+  overflow: visible !important;
+}
+
+.swiper-slide {
+  height: auto;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #000;
+  z-index: 999;
+}
+
+img.rim {
+    max-width: 93px;
+}
+
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999;
+}
+
+.loader-img {
+  width: 90px;
+  animation: zoom 1s infinite alternate;
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.2);
+  }
+}
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999;
+}
+
+/* Rotating Circle */
+.loader-circle {
+  width: 120px;
+  height: 120px;
+  border: 5px solid #eeeeee;
+  border-top: 5px solid #7fad39;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  position: absolute;
+}
+
+/* Logo Image */
+.loader-img {
+  width: 60px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Rotation Animation */
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999;
+}
+
+.loader {
+  width: 70px;
+  height: 70px;
+  border: 6px solid #444;
+  border-top: 6px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.latest-product__slider__nav {
+  display: flex;
+  gap: 10px;
+}
+
+.latest-product__slider__nav button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ebebeb;
+  background: #f5f5f5;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.latest-product__slider__nav button:hover {
+  background: #7fad39;
+  color: #fff;
 }
