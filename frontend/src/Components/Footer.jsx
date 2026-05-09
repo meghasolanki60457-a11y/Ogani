@@ -38,7 +38,9 @@ function App() {
                   <li><a href="javascript:void(0)">Who We Are</a></li>
                   <li><a href="javascript:void(0)">Our Services</a></li>
                   <li><a href="javascript:void(0)">Projects</a></li>
-                  <li><a href="javascript:void(0)">Contact</a></li>
+               <li>
+  <Link to="/ogani/contact">Contact</Link>
+</li>
                   <li><a href="javascript:void(0)">Innovation</a></li>
                   <li><a href="javascript:void(0)">Testimonials</a></li>
                 </ul>
@@ -89,7 +91,7 @@ function App() {
                 </div>
 
                 <div className="footer__copyright__payment">
-                  <img src="img/payment-item.png" alt="" />
+                  <img src="/Images/four.png" alt="" />
                 </div>
               </div>
             </div>
