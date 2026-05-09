@@ -197,20 +197,28 @@ function App() {
           </div>
 
           {/* Swiper */}
-          <Swiper
-            slidesPerView={1}
-            spaceBetween={20}
-            loop={true}
-            navigation={{
-              prevEl: ".latest-prev",
-              nextEl: ".latest-next",
-            }}
-            modules={[Navigation]}
-            onBeforeInit={(swiper) => {
-              swiper.params.navigation.prevEl = ".latest-prev";
-              swiper.params.navigation.nextEl = ".latest-next";
-            }}
-          >
+        <Swiper
+  slidesPerView={1}
+  spaceBetween={20}
+  loop={true}
+
+  autoplay={{
+    delay: 2000,
+    disableOnInteraction: false,
+  }}
+
+  navigation={{
+    prevEl: ".latest-prev",
+    nextEl: ".latest-next",
+  }}
+
+  modules={[Navigation, Autoplay]}
+
+  onBeforeInit={(swiper) => {
+    swiper.params.navigation.prevEl = ".latest-prev";
+    swiper.params.navigation.nextEl = ".latest-next";
+  }}
+>
 
             <SwiperSlide>
 
@@ -318,7 +326,127 @@ function App() {
 
             {/* PRODUCT SECTION */}
             <div className="col-lg-9 col-md-7">
+              <div className="product__discount">
+  <div className="section-title product__discount__title">
+    <h2>Sale Off</h2>
+  </div>
 
+  <div className="row">
+
+    <Swiper
+      slidesPerView={3}
+      spaceBetween={20}
+      loop={true}
+
+      autoplay={{
+        delay: 2000,
+        disableOnInteraction: false,
+      }}
+
+      modules={[Autoplay]}
+      breakpoints={{
+        0: { slidesPerView: 1 },
+        768: { slidesPerView: 2 },
+        992: { slidesPerView: 3 }
+      }}
+    >
+
+      {/* ITEM 1 */}
+      <SwiperSlide>
+        <div className="product__discount__item">
+          <div className="product__discount__item__pic set-bg"
+            style={{ backgroundImage: "url('/Images/one.png')" }}
+          >
+            <div className="product__discount__percent">-20%</div>
+
+            <ul className="product__item__pic__hover">
+              <li><a href="#"><i className="fa fa-heart"></i></a></li>
+              <li><a href="#"><i className="fa fa-retweet"></i></a></li>
+              <li><a href="#"><i className="fa fa-shopping-cart"></i></a></li>
+            </ul>
+          </div>
+
+          <div className="product__discount__item__text">
+            <span>Dried Fruit</span>
+            <h5><a href="#">Raisin’n’nuts</a></h5>
+            <div className="product__item__price">$30.00 <span>$36.00</span></div>
+          </div>
+        </div>
+      </SwiperSlide>
+
+      {/* ITEM 2 */}
+      <SwiperSlide>
+        <div className="product__discount__item">
+          <div className="product__discount__item__pic set-bg"
+            style={{ backgroundImage: "url('/Images/one.png')" }}
+          >
+            <div className="product__discount__percent">-20%</div>
+
+            <ul className="product__item__pic__hover">
+              <li><a href="#"><i className="fa fa-heart"></i></a></li>
+              <li><a href="#"><i className="fa fa-retweet"></i></a></li>
+              <li><a href="#"><i className="fa fa-shopping-cart"></i></a></li>
+            </ul>
+          </div>
+
+          <div className="product__discount__item__text">
+            <span>Vegetables</span>
+            <h5><a href="#">Vegetables’package</a></h5>
+            <div className="product__item__price">$30.00 <span>$36.00</span></div>
+          </div>
+        </div>
+      </SwiperSlide>
+
+      {/* ITEM 3 */}
+      <SwiperSlide>
+        <div className="product__discount__item">
+          <div className="product__discount__item__pic set-bg"
+            style={{ backgroundImage: "url('/Images/one.png')" }}
+          >
+            <div className="product__discount__percent">-20%</div>
+
+            <ul className="product__item__pic__hover">
+              <li><a href="#"><i className="fa fa-heart"></i></a></li>
+              <li><a href="#"><i className="fa fa-retweet"></i></a></li>
+              <li><a href="#"><i className="fa fa-shopping-cart"></i></a></li>
+            </ul>
+          </div>
+
+          <div className="product__discount__item__text">
+            <span>Dried Fruit</span>
+            <h5><a href="#">Mixed Fruits</a></h5>
+            <div className="product__item__price">$30.00 <span>$36.00</span></div>
+          </div>
+        </div>
+      </SwiperSlide>
+
+      {/* ITEM 4 */}
+      <SwiperSlide>
+        <div className="product__discount__item">
+          <div className="product__discount__item__pic set-bg"
+       style={{ backgroundImage: "url('/Images/one.png')" }}
+          >
+            <div className="product__discount__percent">-20%</div>
+
+            <ul className="product__item__pic__hover">
+              <li><a href="#"><i className="fa fa-heart"></i></a></li>
+              <li><a href="#"><i className="fa fa-retweet"></i></a></li>
+              <li><a href="#"><i className="fa fa-shopping-cart"></i></a></li>
+            </ul>
+          </div>
+
+          <div className="product__discount__item__text">
+            <span>Dried Fruit</span>
+            <h5><a href="#">Raisin’n’nuts</a></h5>
+            <div className="product__item__price">$30.00 <span>$36.00</span></div>
+          </div>
+        </div>
+      </SwiperSlide>
+
+    </Swiper>
+
+  </div>
+</div>
               <div className="filter__item">
                 <div className="row">
 

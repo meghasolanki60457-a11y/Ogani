@@ -2,6 +2,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import { useState } from "react";
 
+import { Link } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
@@ -11,8 +12,8 @@ function App() {
     const [activeImage, setActiveImage] = useState("/Images/one.png");
     const images = [
         "/Images/one.png",
-        "/Images/one.png",
-        "/Images/one.png",
+        "/Images/two.png",
+        "/Images/three.png",
         "/Images/one.png",
     ];
       const [activeTab, setActiveTab] = useState("description");
@@ -178,12 +179,9 @@ function App() {
 
                                 </div>
 
-                                <a
-                                    href="javascript:void(0)"
-                                    className="primary-btn"
-                                >
-                                    ADD TO CARD
-                                </a>
+                              <Link to="/ogani/shopping-cart" className="primary-btn">
+  ADD TO CART
+</Link>
 
                                 <a
                                     href="javascript:void(0)"

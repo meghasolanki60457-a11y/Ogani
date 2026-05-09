@@ -33,7 +33,7 @@ function App() {
                                             <td className="shoping__cart__quantity">
                                                 <div className="quantity">
                                                     <div
-                                                        className="pro-qty"
+                                                        className="pro-qty ms-4"
                                                         style={{
                                                             display: "flex",
                                                             alignItems: "center",
@@ -93,7 +93,7 @@ function App() {
                                             <td className="shoping__cart__quantity">
                                                 <div className="quantity">
                                                     <div
-                                                        className="pro-qty"
+                                                        className="pro-qty ms-4"
                                                         style={{
                                                             display: "flex",
                                                             alignItems: "center",
@@ -146,7 +146,7 @@ function App() {
                                             <td className="shoping__cart__quantity">
                                                 <div className="quantity">
                                                     <div
-                                                        className="pro-qty"
+                                                        className="pro-qty ms-4"
                                                         style={{
                                                             display: "flex",
                                                             alignItems: "center",

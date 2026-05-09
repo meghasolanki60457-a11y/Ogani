@@ -77,14 +77,14 @@ function App(){
                                 </div>
                                 <div className="blog__item__text">
                                     <ul>
-                                        <li><i className="fa fa-calendar-o"></i> May 4,2019</li>
-                                        <li><i className="fa fa-comment-o"></i> 5</li>
+                                        <li><i class="fa-regular fa-calendar"></i>  May 4,2019</li>
+                                        <li><i class="fa-regular fa-comment"></i> 5</li>
                                     </ul>
                                     <h5><a href="javascript:void(0)">6 ways to prepare breakfast for 30</a></h5>
                                     <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam
                                         quaerat </p>
                                  <Link to="/ogani/blog/blog-details" className="blog__btn">
-  READ MORE <span className="arrow_right"></span>
+  READ MORE <span className="arrow_right"><i class="fa-solid fa-arrow-right"></i></span>
 </Link>
                                 </div>
                             </div>
@@ -96,14 +96,14 @@ function App(){
                                 </div>
                                 <div className="blog__item__text">
                                     <ul>
-                                        <li><i className="fa fa-calendar-o"></i> May 4,2019</li>
-                                        <li><i className="fa fa-comment-o"></i> 5</li>
+                                        <li><i class="fa-regular fa-calendar"></i> May 4,2019</li>
+                                        <li><i class="fa-regular fa-comment"></i> 5</li>
                                     </ul>
                                     <h5><a href="javascript:void(0)">Visit the clean farm in the US</a></h5>
                                     <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam
                                         quaerat </p>
                                   <Link to="/ogani/blog/blog-details" className="blog__btn">
-  READ MORE <span className="arrow_right"></span>
+  READ MORE <span className="arrow_right"><i class="fa-solid fa-arrow-right"></i></span>
 </Link>
                                 </div>
                             </div>
@@ -115,14 +115,14 @@ function App(){
                                 </div>
                                 <div className="blog__item__text">
                                     <ul>
-                                        <li><i className="fa fa-calendar-o"></i> May 4,2019</li>
-                                        <li><i className="fa fa-comment-o"></i> 5</li>
+                                        <li><i class="fa-regular fa-calendar"></i> May 4,2019</li>
+                                        <li><i class="fa-regular fa-comment"></i> 5</li>
                                     </ul>
                                     <h5><a href="javascript:void(0)">Cooking tips make cooking simple</a></h5>
                                     <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam
                                         quaerat </p>
                                     <Link to="/ogani/blog/blog-details" className="blog__btn">
-  READ MORE <span className="arrow_right"></span>
+  READ MORE <span className="arrow_right"><i class="fa-solid fa-arrow-right"></i></span>
 </Link>
                                 </div>
                             </div>
@@ -134,14 +134,14 @@ function App(){
                                 </div>
                                 <div className="blog__item__text">
                                     <ul>
-                                        <li><i className="fa fa-calendar-o"></i> May 4,2019</li>
-                                        <li><i className="fa fa-comment-o"></i> 5</li>
+                                       <li><i class="fa-regular fa-calendar"></i> May 4,2019</li>
+                                        <li><i class="fa-regular fa-comment"></i> 5</li>
                                     </ul>
                                     <h5><a href="javascript:void(0)">Cooking tips make cooking simple</a></h5>
                                     <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam
                                         quaerat </p>
                                    <Link to="/ogani/blog/blog-details" className="blog__btn">
-  READ MORE <span className="arrow_right"></span>
+  READ MORE <span className="arrow_right"><i class="fa-solid fa-arrow-right"></i></span>
 </Link>
                                 </div>
                             </div>
@@ -153,14 +153,14 @@ function App(){
                                 </div>
                                 <div className="blog__item__text">
                                     <ul>
-                                        <li><i className="fa fa-calendar-o"></i> May 4,2019</li>
-                                        <li><i className="fa fa-comment-o"></i> 5</li>
+                                        <li><i class="fa-regular fa-calendar"></i> May 4,2019</li>
+                                        <li><i class="fa-regular fa-comment"></i> 5</li>
                                     </ul>
                                     <h5><a href="javascript:void(0)">The Moment You Need To Remove Garlic From The Menu</a></h5>
                                     <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam
                                         quaerat </p>
                                    <Link to="/ogani/blog/blog-details" className="blog__btn">
-  READ MORE <span className="arrow_right"></span>
+  READ MORE <span className="arrow_right"><i class="fa-solid fa-arrow-right"></i></span>
 </Link>
                                 </div>
                             </div>
@@ -172,14 +172,14 @@ function App(){
                                 </div>
                                 <div className="blog__item__text">
                                     <ul>
-                                        <li><i className="fa fa-calendar-o"></i> May 4,2019</li>
-                                        <li><i className="fa fa-comment-o"></i> 5</li>
+                                        <li><i class="fa-regular fa-calendar"></i> May 4,2019</li>
+                                        <li><i class="fa-regular fa-comment"></i> 5</li>
                                     </ul>
                                     <h5><a href="javascript:void(0)">Cooking tips make cooking simple</a></h5>
                                     <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam
                                         quaerat </p>
                                    <Link to="/ogani/blog/blog-details" className="blog__btn">
-  READ MORE <span className="arrow_right"></span>
+  READ MORE <span className="arrow_right"><i class="fa-solid fa-arrow-right"></i></span>
 </Link>
                                 </div>
                             </div>
