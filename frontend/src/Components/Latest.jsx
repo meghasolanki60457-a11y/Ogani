@@ -172,15 +172,15 @@ function App() {
                 }}
 
                 navigation={{
-                  prevEl: ".latest-prev",
-                  nextEl: ".latest-next",
+                  prevEl: ".latest-prev2",
+                  nextEl: ".latest-next2",
                 }}
 
                 modules={[Navigation, Autoplay]}
 
                 onBeforeInit={(swiper) => {
-                  swiper.params.navigation.prevEl = ".latest-prev";
-                  swiper.params.navigation.nextEl = ".latest-next";
+                  swiper.params.navigation.prevEl = ".latest-prev2";
+                  swiper.params.navigation.nextEl = ".latest-next2";
                 }}
               >
 
@@ -299,15 +299,15 @@ Review Products</h4>
                 }}
 
                 navigation={{
-                  prevEl: ".latest-prev",
-                  nextEl: ".latest-next",
+                  prevEl: ".latest-prev3",
+                  nextEl: ".latest-next3",
                 }}
 
                 modules={[Navigation, Autoplay]}
 
                 onBeforeInit={(swiper) => {
-                  swiper.params.navigation.prevEl = ".latest-prev";
-                  swiper.params.navigation.nextEl = ".latest-next";
+                  swiper.params.navigation.prevEl = ".latest-prev3";
+                  swiper.params.navigation.nextEl = ".latest-next3";
                 }}
               >
 

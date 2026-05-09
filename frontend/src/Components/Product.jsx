@@ -102,7 +102,7 @@ function App() {
                                                         }}
                                                     >
                                                          <button
-                                                            onClick={() => count1 > 1 && setCount1(count1 - 1)}
+                                                            onClick={() => count2 > 1 && setCount2(count2 - 1)}
                                                             style={{
                                                                 border: "none",
                                                                 padding: "7px 12px",
@@ -115,7 +115,7 @@ function App() {
                                                         <input type="text" value={count2} readOnly />
 
                                                          <button
-                                                            onClick={() => setCount1(count1 + 1)}
+                                                            onClick={() => setCount2(count2 + 1)}
                                                             style={{
                                                                 border: "none",
                                                                 padding: "7px 12px",
@@ -154,7 +154,7 @@ function App() {
                                                         }}
                                                     >
                                                         <button
-                                                            onClick={() => count1 > 1 && setCount1(count1 - 1)}
+                                                            onClick={() => count3 > 1 && setCount3(count3 - 1)}
                                                             style={{
                                                                 border: "none",
                                                                 padding: "7px 12px",
@@ -167,7 +167,7 @@ function App() {
                                                         <input type="text" value={count3} readOnly />
 
                                                          <button
-                                                            onClick={() => setCount1(count1 + 1)}
+                                                            onClick={() => setCount3(count3 + 1)}
                                                             style={{
                                                                 border: "none",
                                                                 padding: "7px 12px",
@@ -195,7 +195,9 @@ function App() {
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="shoping__cart__btns">
-                                <a href="javascript:void(0)" className="primary-btn cart-btn">CONTINUE SHOPPING</a>
+                              <Link to="/ogani/shopping-detail" className="primary-btn cart-btn">
+  CONTINUE SHOPPING
+</Link>
                                 <a href="javascript:void(0)" className="primary-btn cart-btn cart-btn-right"><span className="icon_loading"></span>
                                     Upadate Cart</a>
                             </div>

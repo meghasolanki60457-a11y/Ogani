@@ -1,9 +1,9 @@
-import Logo from "../Components/Logo";
+import Register from "../Components/Register";
 function App(){
     return(
         <>
-       
-        <Logo />
+        
+        <Register/>
         </>
     );
 }

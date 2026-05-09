@@ -24,6 +24,7 @@ import BlogDetails from "./Pages/BlogDetails";
 import Block from "./Pages/Block";
 import Contact from "./Pages/Contact";
 import Login from "./Pages/Login";
+import Sign from "./Pages/Sign";
 
 function Home() {
   return (
@@ -123,6 +124,8 @@ function Website() {
         <Route path="/ogani/product/:id" element={<ShopDetail />} />
         <Route path="/ogani/shop-details/:id" element={<ShopDetail />} />
         <Route path="/ogani/login" element={<Login />} />
+        <Route path="/ogani/sign-in" element={<Sign />} />
+      
       </Routes>
 
      

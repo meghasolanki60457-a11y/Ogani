@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function App() {
 
   
-  const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState();
   const [showCategories, setShowCategories] = useState(false); 
 
   return (
@@ -160,7 +160,7 @@ function App() {
 
             <div className="row">
 
-              <div className="col-lg-6 col-md-6">
+              <div className="col-lg-5 col-md-5">
 
                 <div className="header__top__left">
 
@@ -224,6 +224,11 @@ function App() {
 </Link>
 
                   </div>
+                   <div className="header__top__right__auth ps-3 ">
+                    <Link to="/ogani/sign-in">
+   Sign In
+</Link>
+</div>
 
                 </div>
 
