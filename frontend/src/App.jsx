@@ -23,6 +23,7 @@ import Checkout from "./Pages/Checkout";
 import BlogDetails from "./Pages/BlogDetails";
 import Block from "./Pages/Block";
 import Contact from "./Pages/Contact";
+import Login from "./Pages/Login";
 
 function Home() {
   return (
@@ -102,7 +103,29 @@ function Website() {
           path="/ogani/contact"
           element={<Contact />}
         />
+         <Route
+          path="/ogani/shoping-cart/checkout"
+          element={<Checkout />}
+        />
+          <Route
+          path="/ogani/shopping-cart"
+          element={<ShopCard />}
+        />
+          <Route
+          path="/ogani/shopping-detail"
+          element={<ShopDetail />}
+        />
+        
+         <Route
+          path="/ogani/blog/blog-details"
+          element={<BlogDetails />}
+        />
+        <Route path="/ogani/product/:id" element={<ShopDetail />} />
+        <Route path="/ogani/shop-details/:id" element={<ShopDetail />} />
+        <Route path="/ogani/login" element={<Login />} />
       </Routes>
+
+     
 
       {/* Footer */}
       <Footer />

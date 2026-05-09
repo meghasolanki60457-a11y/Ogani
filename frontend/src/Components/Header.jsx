@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 function App() {
 
+  
   const [showMenu, setShowMenu] = useState(false);
   const [showCategories, setShowCategories] = useState(false); 
 
@@ -16,7 +17,7 @@ function App() {
 
         <div className="humberger__menu__logo">
           <Link to="/">
-            <img src="Images/one.png" className="w-25" alt="" />
+            <img src="Images/two.png" className="w-25" alt="" />
           </Link>
         </div>
 
@@ -43,7 +44,7 @@ function App() {
         <div className="humberger__menu__widget">
 
           <div className="header__top__right__language">
-            <img src="Images/one.png" alt="" className="w-25" />
+            <img src="Images/three.png" alt="" className="w-25" />
 
             <div>English</div>
 
@@ -56,9 +57,9 @@ function App() {
           </div>
 
           <div className="header__top__right__auth">
-            <a href="javascript:void(0)">
-              <i className="fa fa-user"></i> Login
-            </a>
+           <Link to="/ogani/login">
+  <i className="fa fa-user"></i> Login
+</Link>
           </div>
 
         </div>
@@ -203,7 +204,7 @@ function App() {
 
                   <div className="header__top__right__language">
 
-                    <img src="Images/one.png" alt="" className="w-25" />
+                    <img src="Images/three.png" alt="" className="w-25" />
 
                     <div>English</div>
 
@@ -218,9 +219,9 @@ function App() {
 
                   <div className="header__top__right__auth">
 
-                    <a href="javascript:void(0)">
-                      <i className="fa fa-user"></i> Login
-                    </a>
+                  <Link to="/ogani/login">
+  <i className="fa fa-user"></i> Login
+</Link>
 
                   </div>
 
@@ -245,9 +246,9 @@ function App() {
 
                 <Link to="/">
                   <img
-                    src="Images/one.png"
+                    src="Images/two.png"
                     alt=""
-                    className="w-25"
+                    
                   />
                 </Link>
 
@@ -259,61 +260,27 @@ function App() {
 
               <nav className="header__menu">
 
-                <ul>
+      <ul>
 
-                  <li className="active">
-                    <Link to="/">Home</Link>
-                  </li>
+        <li className={location.pathname === "/" ? "active" : ""}>
+          <Link to="/">Home</Link>
+        </li>
 
-                  <li>
-                    <Link to="/ogani/shop">Shop</Link>
-                  </li>
+        <li className={location.pathname === "/ogani/shop" ? "active" : ""}>
+          <Link to="/ogani/shop">Shop</Link>
+        </li>
 
-                  <li>
+        <li className={location.pathname === "/ogani/blog" ? "active" : ""}>
+          <Link to="/ogani/blog">Blog</Link>
+        </li>
 
-                    <Link to="/ogani/shop-details">Pages</Link>
+        <li className={location.pathname === "/ogani/contact" ? "active" : ""}>
+          <Link to="/ogani/contact">Contact</Link>
+        </li>
 
-                    <ul className="header__menu__dropdown">
+      </ul>
 
-                      <li>
-                        <Link to="/ogani/shop-details">
-                          Shop Details
-                        </Link>
-                      </li>
-
-                      <li>
-                        <Link to="/ogani/shopping-cart">
-                          Shopping Cart
-                        </Link>
-                      </li>
-
-                      <li>
-                        <Link to="/ogani/checkout">
-                          Check Out
-                        </Link>
-                      </li>
-
-                      <li>
-                        <Link to="/ogani/blog-details">
-                          Blog Details
-                        </Link>
-                      </li>
-
-                    </ul>
-
-                  </li>
-
-                  <li>
-                    <Link to="/ogani/blog">Blog</Link>
-                  </li>
-
-                  <li>
-                    <Link to="/ogani/contact">Contact</Link>
-                  </li>
-
-                </ul>
-
-              </nav>
+    </nav>
 
             </div>
 
@@ -324,17 +291,18 @@ function App() {
                 <ul>
 
                   <li>
-                    <a href="javascript:void(0)">
-                      <i className="fa fa-heart"></i>
-                      <span>1</span>
-                    </a>
+                     <Link to="/ogani/shopping-detail">
+ <i className="fa fa-heart"></i>
+  <span>1</span>
+</Link>
+                    
                   </li>
 
                   <li>
-                    <a href="javascript:void(0)">
-                      <i className="fa fa-shopping-bag"></i>
-                      <span>3</span>
-                    </a>
+                    <Link to="/ogani/shopping-cart">
+<i className="fa fa-shopping-bag"></i>
+  <span>1</span>
+</Link>
                   </li>
 
                 </ul>

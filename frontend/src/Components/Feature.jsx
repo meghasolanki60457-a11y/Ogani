@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function App() {
 
@@ -53,14 +54,16 @@ function App() {
       price: "$15.00",
       image: "/Images/one.png"
     },
-     {
+
+    {
       id: 7,
       category: "Vegetables",
       title: "Green Vegetables",
       price: "$15.00",
       image: "/Images/one.png"
     },
-     {
+
+    {
       id: 8,
       category: "Vegetables",
       title: "Green Vegetables",
@@ -74,8 +77,8 @@ function App() {
     activeTab === "All"
       ? products
       : products.filter(
-          (item) => item.category === activeTab
-        );
+        (item) => item.category === activeTab
+      );
 
   return (
 
@@ -90,9 +93,7 @@ function App() {
             <div className="col-lg-12">
 
               <div className="section-title">
-
                 <h2>Featured Product</h2>
-
               </div>
 
               <div className="featured__controls">
@@ -154,46 +155,52 @@ function App() {
 
                   <div className="featured__item">
 
-                    <div
-                      className="featured__item__pic"
-                      style={{
-                        backgroundImage: `url(${item.image})`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                        height: "270px"
-                      }}
-                    >
+                    {/* IMAGE CLICK */}
+                    <Link to={`/ogani/shop-details/${item.id}`}>
 
-                      <ul className="featured__item__pic__hover">
+                      <div
+                        className="featured__item__pic"
+                        style={{
+                          backgroundImage: `url(${item.image})`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                          height: "270px"
+                        }}
+                      >
 
-                        <li>
-                          <a href="javascript:void(0)">
-                            <i className="fa fa-heart"></i>
-                          </a>
-                        </li>
+                        <ul className="featured__item__pic__hover">
 
-                        <li>
-                          <a href="javascript:void(0)">
-                            <i className="fa fa-retweet"></i>
-                          </a>
-                        </li>
+                          <li>
+                            <a href="javascript:void(0)">
+                              <i className="fa fa-heart"></i>
+                            </a>
+                          </li>
 
-                        <li>
-                          <a href="javascript:void(0)">
-                            <i className="fa fa-shopping-cart"></i>
-                          </a>
-                        </li>
+                          <li>
+                            <a href="javascript:void(0)">
+                              <i className="fa fa-retweet"></i>
+                            </a>
+                          </li>
 
-                      </ul>
+                          <li>
+                            <a href="javascript:void(0)">
+                              <i className="fa fa-shopping-cart"></i>
+                            </a>
+                          </li>
 
-                    </div>
+                        </ul>
 
+                      </div>
+
+                    </Link>
+
+                    {/* TEXT CLICK */}
                     <div className="featured__item__text">
 
                       <h6>
-                        <a href="javascript:void(0)">
+                        <Link to={`/ogani/shop-details/${item.id}`}>
                           {item.title}
-                        </a>
+                        </Link>
                       </h6>
 
                       <h5>{item.price}</h5>
@@ -212,22 +219,27 @@ function App() {
         </div>
 
       </section>
-       <div className="banner">
+
+      {/* BANNER (UNCHANGED) */}
+      <div className="banner">
         <div className="container">
-            <div className="row">
-                <div className="col-lg-6 col-md-6 col-sm-6">
-                    <div className="banner__pic">
-                        <img src="Images/one.png" alt=""/>
-                    </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-6">
-                    <div className="banner__pic">
-                        <img src="Images/one.png" alt=""/>
-                    </div>
-                </div>
+          <div className="row">
+
+            <div className="col-lg-6 col-md-6 col-sm-6">
+              <div className="banner__pic">
+                <img src="Images/one.png" alt="" />
+              </div>
             </div>
+
+            <div className="col-lg-6 col-md-6 col-sm-6">
+              <div className="banner__pic">
+                <img src="Images/one.png" alt="" />
+              </div>
+            </div>
+
+          </div>
         </div>
-    </div>
+      </div>
 
     </>
 

@@ -1,3 +1,4 @@
+import {Link} from "react-router-dom";
 import { useState } from "react";
 function App() {
     const [count1, setCount1] = useState(1);
@@ -100,16 +101,27 @@ function App() {
 
                                                         }}
                                                     >
-                                                        <button
-                                                            onClick={() => count2 > 1 && setCount2(count2 - 1)}
+                                                         <button
+                                                            onClick={() => count1 > 1 && setCount1(count1 - 1)}
+                                                            style={{
+                                                                border: "none",
+                                                                padding: "7px 12px",
+
+                                                            }}
                                                         >
                                                             -
                                                         </button>
 
                                                         <input type="text" value={count2} readOnly />
 
-                                                        <button
-                                                            onClick={() => setCount2(count2 + 1)}
+                                                         <button
+                                                            onClick={() => setCount1(count1 + 1)}
+                                                            style={{
+                                                                border: "none",
+                                                                padding: "7px 12px",
+
+
+                                                            }}
                                                         >
                                                             +
                                                         </button>
@@ -142,15 +154,26 @@ function App() {
                                                         }}
                                                     >
                                                         <button
-                                                            onClick={() => count3 > 1 && setCount3(count3 - 1)}
+                                                            onClick={() => count1 > 1 && setCount1(count1 - 1)}
+                                                            style={{
+                                                                border: "none",
+                                                                padding: "7px 12px",
+
+                                                            }}
                                                         >
                                                             -
                                                         </button>
 
                                                         <input type="text" value={count3} readOnly />
 
-                                                        <button
-                                                            onClick={() => setCount3(count3 + 1)}
+                                                         <button
+                                                            onClick={() => setCount1(count1 + 1)}
+                                                            style={{
+                                                                border: "none",
+                                                                padding: "7px 12px",
+
+
+                                                            }}
                                                         >
                                                             +
                                                         </button>
@@ -195,7 +218,9 @@ function App() {
                                     <li>Subtotal <span>$454.98</span></li>
                                     <li>Total <span>$454.98</span></li>
                                 </ul>
-                                <a href="javascript:void(0)" className="primary-btn">PROCEED TO CHECKOUT</a>
+                              <Link to="/ogani/shoping-cart/checkout" className="primary-btn">
+  PROCEED TO CHECKOUT
+</Link>
                             </div>
                         </div>
                     </div>

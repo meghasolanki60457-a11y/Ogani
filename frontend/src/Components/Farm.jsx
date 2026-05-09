@@ -1,3 +1,4 @@
+import {Link} from "react-router-dom";
 function App(){
     return(
         <>
@@ -82,7 +83,9 @@ function App(){
                                     <h5><a href="javascript:void(0)">6 ways to prepare breakfast for 30</a></h5>
                                     <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam
                                         quaerat </p>
-                                    <a href="javascript:void(0)" className="blog__btn">READ MORE <span className="arrow_right"></span></a>
+                                 <Link to="/ogani/blog/blog-details" className="blog__btn">
+  READ MORE <span className="arrow_right"></span>
+</Link>
                                 </div>
                             </div>
                         </div>
@@ -99,7 +102,9 @@ function App(){
                                     <h5><a href="javascript:void(0)">Visit the clean farm in the US</a></h5>
                                     <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam
                                         quaerat </p>
-                                    <a href="javascript:void(0)" className="blog__btn">READ MORE <span className="arrow_right"></span></a>
+                                  <Link to="/ogani/blog/blog-details" className="blog__btn">
+  READ MORE <span className="arrow_right"></span>
+</Link>
                                 </div>
                             </div>
                         </div>
@@ -116,7 +121,9 @@ function App(){
                                     <h5><a href="javascript:void(0)">Cooking tips make cooking simple</a></h5>
                                     <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam
                                         quaerat </p>
-                                    <a href="javascript:void(0)" className="blog__btn">READ MORE <span className="arrow_right"></span></a>
+                                    <Link to="/ogani/blog/blog-details" className="blog__btn">
+  READ MORE <span className="arrow_right"></span>
+</Link>
                                 </div>
                             </div>
                         </div>
@@ -133,7 +140,9 @@ function App(){
                                     <h5><a href="javascript:void(0)">Cooking tips make cooking simple</a></h5>
                                     <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam
                                         quaerat </p>
-                                    <a href="javascript:void(0)" className="blog__btn">READ MORE <span className="arrow_right"></span></a>
+                                   <Link to="/ogani/blog/blog-details" className="blog__btn">
+  READ MORE <span className="arrow_right"></span>
+</Link>
                                 </div>
                             </div>
                         </div>
@@ -150,7 +159,9 @@ function App(){
                                     <h5><a href="javascript:void(0)">The Moment You Need To Remove Garlic From The Menu</a></h5>
                                     <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam
                                         quaerat </p>
-                                    <a href="javascript:void(0)" className="blog__btn">READ MORE <span className="arrow_right"></span></a>
+                                   <Link to="/ogani/blog/blog-details" className="blog__btn">
+  READ MORE <span className="arrow_right"></span>
+</Link>
                                 </div>
                             </div>
                         </div>
@@ -167,7 +178,9 @@ function App(){
                                     <h5><a href="javascript:void(0)">Cooking tips make cooking simple</a></h5>
                                     <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam
                                         quaerat </p>
-                                    <a href="javascript:void(0)" className="blog__btn">READ MORE <span className="arrow_right"></span></a>
+                                   <Link to="/ogani/blog/blog-details" className="blog__btn">
+  READ MORE <span className="arrow_right"></span>
+</Link>
                                 </div>
                             </div>
                         </div>

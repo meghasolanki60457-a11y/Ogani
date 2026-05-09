@@ -1,3 +1,4 @@
+import {Link} from "react-router-dom";
 function App() {
   return (
     <>
@@ -7,9 +8,9 @@ function App() {
             <div className="col-lg-3 col-md-6 col-sm-6">
               <div className="footer__about">
                 <div className="footer__about__logo">
-                  <a href="./index.html">
-                    <img src="Images/one.png" alt="" className="w-25" />
-                  </a>
+                <Link to="/">
+  <img src="Images/two.png" alt="" />
+</Link>
                 </div>
 
                 <ul>
