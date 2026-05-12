@@ -7,6 +7,20 @@ import {
 
 import { useEffect, useState } from "react";
 
+/* ADMIN */
+import AdminLayout from "./Admin/Components/Layout";
+
+import Dashboard from "./Admin/Pages/Dashboard";
+
+import Order from "./Admin/Pages/Inventory";
+import Setting from "./Admin/Pages/Setting";
+import Products from "./Admin/Pages/Products";
+import Reports from "./Admin/Pages/Reports";
+import Error from "./Admin/Pages/Error";
+import Inventory from "./Admin/Pages/Inventory";
+import Orders from "./Admin/Pages/Orders";
+
+/* WEBSITE */
 import Loader from "./Components/Loader";
 import Header from "./Components/Header";
 import Banner from "./Components/Banner";
@@ -26,6 +40,7 @@ import Contact from "./Pages/Contact";
 import Login from "./Pages/Login";
 import Sign from "./Pages/Sign";
 
+/* HOME PAGE */
 function Home() {
   return (
     <>
@@ -38,7 +53,7 @@ function Home() {
   );
 }
 
-/* WEBSITE COMPONENT */
+/* WEBSITE LAYOUT */
 function Website() {
 
   const location = useLocation();
@@ -59,78 +74,44 @@ function Website() {
 
   return (
     <>
-      {/* Loader */}
       {loading && <Loader />}
 
-      {/* Header */}
       <Header />
 
-      {/* Routes */}
       <Routes>
+
         <Route path="/" element={<Home />} />
 
         <Route path="/ogani/shop" element={<Shop />} />
 
-       <Route
-          path="/ogani/shop-details"
-          element={<ShopDetail />}
-        /> 
-         <Route
-          path="/ogani/shop-details"
-          element={<ShopDetail />}
-        /> 
+        <Route path="/ogani/shop-details" element={<ShopDetail />} />
 
-        <Route
-          path="/ogani/shopping-cart"
-          element={<ShopCard />}
-        />
+        <Route path="/ogani/shopping-cart" element={<ShopCard />} />
 
-        <Route
-          path="/ogani/checkout"
-          element={<Checkout />}
-        />
+        <Route path="/ogani/checkout" element={<Checkout />} />
 
-        <Route
-          path="/ogani/blog-details"
-          element={<BlogDetails />}
-        />
+        <Route path="/ogani/blog-details" element={<BlogDetails />} />
 
-        <Route
-          path="/ogani/blog"
-          element={<Block />}
-        />
+        <Route path="/ogani/blog" element={<Block />} />
 
-        <Route
-          path="/ogani/contact"
-          element={<Contact />}
-        />
-         <Route
-          path="/ogani/shoping-cart/checkout"
-          element={<Checkout />}
-        />
-          <Route
-          path="/ogani/shopping-cart"
-          element={<ShopCard />}
-        />
-          <Route
-          path="/ogani/shopping-detail"
-          element={<ShopDetail />}
-        />
-        
-         <Route
-          path="/ogani/blog/blog-details"
-          element={<BlogDetails />}
-        />
+        <Route path="/ogani/contact" element={<Contact />} />
+
+        <Route path="/ogani/shoping-cart/checkout" element={<Checkout />} />
+
+        <Route path="/ogani/shopping-detail" element={<ShopDetail />} />
+
+        <Route path="/ogani/blog/blog-details" element={<BlogDetails />} />
+
         <Route path="/ogani/product/:id" element={<ShopDetail />} />
+
         <Route path="/ogani/shop-details/:id" element={<ShopDetail />} />
+
         <Route path="/ogani/login" element={<Login />} />
+
         <Route path="/ogani/sign-in" element={<Sign />} />
-      
+
       </Routes>
 
-     
-
-      {/* Footer */}
       <Footer />
     </>
   );
@@ -138,10 +119,35 @@ function Website() {
 
 /* MAIN APP */
 function App() {
+
   return (
+
     <BrowserRouter>
-      <Website />
+
+      <Routes>
+
+        {/* WEBSITE */}
+        <Route path="/*" element={<Website />} />
+
+        {/* ADMIN */}
+        <Route path="/admin/*" element={<AdminLayout />}>
+
+          <Route index element={<Dashboard />} />
+
+          <Route path="reports" element={<Reports />} />
+          <Route path="inventory" element={<Orders />} />
+
+          <Route path="error" element={<Error />} />
+          <Route path="products" element={<Products />} />
+
+          <Route path="docs" element={<Setting />} />
+
+        </Route>
+
+      </Routes>
+
     </BrowserRouter>
+
   );
 }
 
