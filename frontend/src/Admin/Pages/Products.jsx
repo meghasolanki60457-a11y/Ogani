@@ -4,12 +4,13 @@ import { useNavigate } from "react-router-dom";
 const Products = () => {
   const navigate = useNavigate();
 
-  // POPUP STATES
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [deleteProduct, setDeleteProduct] = useState(null);
 
-  // 👉 NEW ADD PRODUCT POPUP STATE
   const [showAddPopup, setShowAddPopup] = useState(false);
+
+  // 👉 NEW: success popup state
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const products = [
     { id: "554433", name: "Wireless Headphones", category: "Electronics", price: "$120", stock: 6, status: "Low Stock" },
@@ -24,7 +25,6 @@ const Products = () => {
 
       {/* HEADER */}
       <div className="products-header">
-
         <div>
           <h2>Products</h2>
           <p className="products-subtitle">Manage all your products here</p>
@@ -36,7 +36,6 @@ const Products = () => {
         >
           + Add Product
         </button>
-
       </div>
 
       {/* TABLE */}
@@ -44,13 +43,8 @@ const Products = () => {
         <table className="products-table">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Price</th>
-              <th>Stock</th>
-              <th>Status</th>
-              <th>Actions</th>
+              <th>ID</th><th>Name</th><th>Category</th>
+              <th>Price</th><th>Stock</th><th>Status</th><th>Actions</th>
             </tr>
           </thead>
 
@@ -87,7 +81,6 @@ const Products = () => {
       {/* ================= ADD PRODUCT POPUP ================= */}
       {showAddPopup && (
         <div className="modal-overlay">
-
           <div className="modal-box">
 
             <h2>Add Product</h2>
@@ -98,12 +91,12 @@ const Products = () => {
             <input type="number" placeholder="Stock" />
 
             <div style={{ display: "flex", gap: "10px", marginTop: "15px" }}>
-
+              
               <button
                 className="add-product-btn"
                 onClick={() => {
-                  alert("Product Added (Demo)");
                   setShowAddPopup(false);
+                  setShowSuccessPopup(true); // 👉 show success popup
                 }}
               >
                 Save
@@ -117,9 +110,26 @@ const Products = () => {
               </button>
 
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ✅ SUCCESS POPUP */}
+      {showSuccessPopup && (
+        <div className="modal-overlay">
+          <div className="modal-box">
+
+            <h2>Success 🎉</h2>
+            <p>Product added successfully!</p>
+
+            <button
+              className="add-product-btn"
+              onClick={() => setShowSuccessPopup(false)}
+            >
+              OK
+            </button>
 
           </div>
-
         </div>
       )}
 
@@ -127,7 +137,6 @@ const Products = () => {
       {selectedProduct && (
         <div className="modal-overlay">
           <div className="modal-box">
-
             <h2>Product Details</h2>
 
             <p><b>ID:</b> {selectedProduct.id}</p>
@@ -140,7 +149,6 @@ const Products = () => {
             <button className="close-btn" onClick={() => setSelectedProduct(null)}>
               Close
             </button>
-
           </div>
         </div>
       )}
@@ -152,7 +160,6 @@ const Products = () => {
 
             <h2>Confirm Delete</h2>
             <p>Are you sure you want to delete:</p>
-
             <h4>{deleteProduct.name}</h4>
 
             <div style={{ display: "flex", gap: "10px", marginTop: "15px" }}>
@@ -160,7 +167,6 @@ const Products = () => {
               <button
                 className="delete-btn"
                 onClick={() => {
-                  alert("Deleted Successfully!");
                   setDeleteProduct(null);
                 }}
               >
