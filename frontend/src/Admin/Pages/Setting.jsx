@@ -1,225 +1,131 @@
-import React from "react";
+import { useState } from "react";
 
+const Settings = () => {
 
-const Docs = () => {
+  const [message, setMessage] = useState("");
+
+  const handleSave = () => {
+    setMessage("Settings saved successfully ✅");
+
+    setTimeout(() => {
+      setMessage("");
+    }, 3000);
+  };
+
   return (
-    <div className="docs-page">
+    <div className="settings-page">
 
-      {/* SIDEBAR */}
-      <aside className="docs-sidebar">
+      {/* HEADER */}
+      <div className="settings-header">
+        <div>
+          <h2>Settings</h2>
+          <p>Manage your application settings</p>
 
-        <div className="logo">
-          <h2>InApp Docs</h2>
+          {/* SUCCESS MESSAGE */}
+          {message && (
+            <div className="success-message">
+              {message}
+            </div>
+          )}
+
         </div>
 
-        <ul className="docs-menu">
+        <button className="save-btn" onClick={handleSave}>
+          Save Changes
+        </button>
+      </div>
 
-          <li><a href="#intro">Introduction</a></li>
+      {/* SETTINGS GRID */}
+      <div className="settings-grid">
 
-          <li><a href="#install">Installation</a></li>
+        {/* PROFILE SETTINGS */}
+        <div className="settings-card">
+          <h3>Profile Settings</h3>
 
-          <li><a href="#structure">Project Structure</a></li>
-
-          <li><a href="#routing">Routing</a></li>
-
-          <li><a href="#components">Components</a></li>
-
-          <li><a href="#charts">Charts</a></li>
-
-          <li><a href="#theme">Theme Customization</a></li>
-
-          <li><a href="#deploy">Deployment</a></li>
-
-        </ul>
-
-      </aside>
-
-      {/* CONTENT */}
-      <div className="docs-content">
-
-        {/* INTRO */}
-        <section id="intro" className="docs-section">
-
-          <h1>Introduction</h1>
-
-          <p>
-            InApp React Dashboard is a modern admin dashboard
-            template built with React, Vite and custom CSS.
-          </p>
-
-          <div className="info-box">
-            <strong>Version:</strong> 1.0.0
+          <div className="form-group">
+            <label>Name</label>
+            <input type="text" placeholder="Admin Name" />
           </div>
 
-        </section>
-
-        {/* INSTALL */}
-        <section id="install" className="docs-section">
-
-          <h2>Installation</h2>
-
-          <p>
-            Install all dependencies using npm or yarn.
-          </p>
-
-          <div className="code-box">
-
-            <pre>
-{`npm install
-
-npm run dev`}
-            </pre>
-
+          <div className="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="admin@example.com" />
           </div>
 
-        </section>
+          <div className="form-group">
+            <label>Phone</label>
+            <input type="text" placeholder="+91 00000 00000" />
+          </div>
+        </div>
 
-        {/* STRUCTURE */}
-        <section id="structure" className="docs-section">
+        {/* PASSWORD */}
+        <div className="settings-card">
+          <h3>Change Password</h3>
 
-          <h2>Project Structure</h2>
-
-          <div className="code-box">
-
-            <pre>
-{`src/
- ├── Admin/
- │    ├── Components/
- │    ├── Pages/
- │    └── Layout/
- │
- ├── Components/
- ├── Pages/
- ├── App.jsx
- └── main.jsx`}
-            </pre>
-
+          <div className="form-group">
+            <label>Current Password</label>
+            <input type="password" />
           </div>
 
-        </section>
-
-        {/* ROUTING */}
-        <section id="routing" className="docs-section">
-
-          <h2>Routing</h2>
-
-          <p>
-            React Router DOM is used for navigation.
-          </p>
-
-          <div className="code-box">
-
-            <pre>
-{`npm install react-router-dom`}
-            </pre>
-
+          <div className="form-group">
+            <label>New Password</label>
+            <input type="password" />
           </div>
 
-        </section>
+          <div className="form-group">
+            <label>Confirm Password</label>
+            <input type="password" />
+          </div>
+        </div>
 
-        {/* COMPONENTS */}
-        <section id="components" className="docs-section">
+        {/* WEBSITE SETTINGS */}
+        <div className="settings-card">
+          <h3>Website Settings</h3>
 
-          <h2>Components</h2>
-
-          <div className="table-wrapper">
-
-            <table>
-
-              <thead>
-                <tr>
-                  <th>Component</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-
-              <tbody>
-
-                <tr>
-                  <td>Sidebar</td>
-                  <td>Admin navigation menu</td>
-                </tr>
-
-                <tr>
-                  <td>Navbar</td>
-                  <td>Top navigation header</td>
-                </tr>
-
-                <tr>
-                  <td>Charts</td>
-                  <td>Analytics and reports</td>
-                </tr>
-
-                <tr>
-                  <td>Cards</td>
-                  <td>Dashboard widgets</td>
-                </tr>
-
-              </tbody>
-
-            </table>
-
+          <div className="form-group">
+            <label>Website Name</label>
+            <input type="text" placeholder="My Store" />
           </div>
 
-        </section>
-
-        {/* CHARTS */}
-        <section id="charts" className="docs-section">
-
-          <h2>Charts</h2>
-
-          <p>
-            Recharts library is used for analytics charts.
-          </p>
-
-          <div className="code-box">
-
-            <pre>
-{`npm install recharts`}
-            </pre>
-
+          <div className="form-group">
+            <label>Support Email</label>
+            <input type="email" />
           </div>
 
-        </section>
+          <div className="form-group">
+            <label>Currency</label>
+            <select>
+              <option>INR (₹)</option>
+              <option>USD ($)</option>
+              <option>EUR (€)</option>
+            </select>
+          </div>
+        </div>
 
-        {/* THEME */}
-        <section id="theme" className="docs-section">
+        {/* NOTIFICATIONS */}
+        <div className="settings-card">
+          <h3>Notifications</h3>
 
-          <h2>Theme Customization</h2>
-
-          <p>
-            Customize colors, typography and layouts
-            using CSS variables.
-          </p>
-
-          <div className="info-box">
-            Primary Color: #5B5FEF
+          <div className="toggle-item">
+            <span>Email Notifications</span>
+            <input type="checkbox" />
           </div>
 
-        </section>
-
-        {/* DEPLOY */}
-        <section id="deploy" className="docs-section">
-
-          <h2>Deployment</h2>
-
-          <p>
-            Build the production-ready app using:
-          </p>
-
-          <div className="code-box">
-
-            <pre>
-{`npm run build`}
-            </pre>
-
+          <div className="toggle-item">
+            <span>SMS Notifications</span>
+            <input type="checkbox" />
           </div>
 
-        </section>
+          <div className="toggle-item">
+            <span>Order Alerts</span>
+            <input type="checkbox" defaultChecked />
+          </div>
+        </div>
 
       </div>
+
     </div>
   );
 };
 
-export default Docs;
+export default Settings;

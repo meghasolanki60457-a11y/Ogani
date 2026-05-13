@@ -1,166 +1,117 @@
-import React from "react";
+import { useState } from "react";
 
 
-const products = [
-  {
-    id: "#554433",
-    name: "Wireless Headphones",
-    stock: 6,
-    price: "$120",
-    status: "Low Stock",
-  },
-  {
-    id: "#887766",
-    name: "USB-C Cable Pack",
-    stock: 9,
-    price: "$40",
-    status: "In Stock",
-  },
-  {
-    id: "#332211",
-    name: "Phone Screen Protector",
-    stock: 3,
-    price: "$18",
-    status: "Low Stock",
-  },
-  {
-    id: "#998877",
-    name: "Portable Charger",
-    stock: 7,
-    price: "$75",
-    status: "In Stock",
-  },
-  {
-    id: "#665544",
-    name: "Mechanical Keyboard",
-    stock: 2,
-    price: "$150",
-    status: "Low Stock",
-  },
-];
+const Orders = () => {
+  const [orders] = useState([
+    {
+      id: "#ORD1001",
+      customer: "Aarav Sharma",
+      date: "2026-01-20",
+      amount: "$120",
+      status: "Pending",
+    },
+    {
+      id: "#ORD1002",
+      customer: "Priya Verma",
+      date: "2026-01-18",
+      amount: "$450",
+      status: "Delivered",
+    },
+    {
+      id: "#ORD1003",
+      customer: "Rahul Singh",
+      date: "2026-01-16",
+      amount: "$80",
+      status: "Cancelled",
+    },
+    {
+      id: "#ORD1004",
+      customer: "Sneha Patel",
+      date: "2026-01-15",
+      amount: "$320",
+      status: "Processing",
+    },
+  ]);
 
-const Inventory = () => {
   return (
-    <div className="inventory-page">
+    <div className="orders-page">
 
       {/* HEADER */}
-      <div className="inventory-header">
-
+      <div className="orders-header">
         <div>
-          <h1>Inventory</h1>
-          <p>Dashboard / Inventory</p>
+          <h2>Orders</h2>
+          <p>Manage all customer orders</p>
         </div>
 
-        <button className="add-btn">
-          + Add Product
+        <button className="export-btn">
+          Export Orders
         </button>
-
       </div>
 
       {/* STATS */}
-      <div className="inventory-stats">
+      <div className="orders-stats">
 
-        <div className="inventory-card">
-          <h3>Total Products</h3>
-          <h2>1,250</h2>
-          <span className="green">+12%</span>
+        <div className="stat-card">
+          <h3>Total Orders</h3>
+          <h2>1,240</h2>
         </div>
 
-        <div className="inventory-card">
-          <h3>Low Stock</h3>
-          <h2>32</h2>
-          <span className="red">-5%</span>
+        <div className="stat-card">
+          <h3>Pending</h3>
+          <h2>320</h2>
         </div>
 
-        <div className="inventory-card">
-          <h3>Out Of Stock</h3>
-          <h2>12</h2>
-          <span className="orange">+2%</span>
+        <div className="stat-card">
+          <h3>Delivered</h3>
+          <h2>820</h2>
         </div>
 
-        <div className="inventory-card">
-          <h3>Total Revenue</h3>
-          <h2>$89,450</h2>
-          <span className="green">+18%</span>
+        <div className="stat-card">
+          <h3>Cancelled</h3>
+          <h2>100</h2>
         </div>
 
       </div>
 
       {/* TABLE */}
-      <div className="table-wrapper">
+      <div className="orders-table-card">
 
         <div className="table-header">
-          <h2>Inventory Products</h2>
+          <h3>All Orders</h3>
         </div>
 
         <table>
 
           <thead>
             <tr>
-              <th>Product ID</th>
-              <th>Product Name</th>
-              <th>Price</th>
-              <th>Stock</th>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Date</th>
+              <th>Amount</th>
               <th>Status</th>
             </tr>
           </thead>
 
           <tbody>
-
-            {products.map((item, index) => (
+            {orders.map((order, index) => (
               <tr key={index}>
 
-                <td>{item.id}</td>
-
-                <td>{item.name}</td>
-
-                <td>{item.price}</td>
-
-                <td>{item.stock}</td>
+                <td>{order.id}</td>
+                <td>{order.customer}</td>
+                <td>{order.date}</td>
+                <td>{order.amount}</td>
 
                 <td>
-                  <span
-                    className={
-                      item.status === "Low Stock"
-                        ? "status low"
-                        : "status active"
-                    }
-                  >
-                    {item.status}
+                  <span className={`status ${order.status.toLowerCase()}`}>
+                    {order.status}
                   </span>
                 </td>
 
               </tr>
             ))}
-
           </tbody>
 
         </table>
-
-      </div>
-
-      {/* LOW STOCK */}
-      <div className="low-stock-section">
-
-        <h2>Low Stock Alerts</h2>
-
-        <div className="low-stock-grid">
-
-          {products
-            .filter((item) => item.stock < 5)
-            .map((item, index) => (
-              <div className="low-stock-card" key={index}>
-
-                <h3>{item.name}</h3>
-
-                <p>ID: {item.id}</p>
-
-                <span>{item.stock} Items Left</span>
-
-              </div>
-            ))}
-
-        </div>
 
       </div>
 
@@ -168,4 +119,4 @@ const Inventory = () => {
   );
 };
 
-export default Inventory;
+export default Orders;

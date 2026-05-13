@@ -1,4 +1,6 @@
-import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { FaSignOutAlt } from "react-icons/fa";
 
 import {
   FaHome,
@@ -10,6 +12,16 @@ import {
 } from "react-icons/fa";
 
 const Sidebar = () => {
+
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setShowModal(false);
+    navigate("/admin/login");
+  };
+
   return (
     <div className="sidebar">
 
@@ -22,9 +34,9 @@ const Sidebar = () => {
           <span>Dashboard</span>
         </NavLink>
 
-        <NavLink to="/admin/inventory" className="menu-item">
+        <NavLink to="/admin/orders" className="menu-item">
           <FaBox />
-          <span>Inventory</span>
+          <span>Orders</span>
         </NavLink>
 
         <NavLink to="/admin/products" className="menu-item">
@@ -37,17 +49,60 @@ const Sidebar = () => {
           <span>Reports</span>
         </NavLink>
 
-        <NavLink to="/admin/error" className="menu-item">
+        <NavLink to="/admin/users" className="menu-item">
           <FaChartBar />
-          <span>404 Error</span>
+          <span>Users</span>
         </NavLink>
 
-        <NavLink to="/admin/docs" className="menu-item">
+        <NavLink to="/admin/settings" className="menu-item">
           <FaCog />
-          <span>Docs</span>
+          <span>Settings</span>
         </NavLink>
+
+        {/* LOGOUT BUTTON (MODAL TRIGGER) */}
+        <div
+          className="menu-item logout"
+          onClick={() => setShowModal(true)}
+          style={{ cursor: "pointer" }}
+        >
+          <FaSignOutAlt />
+          <span>Logout</span>
+        </div>
 
       </div>
+
+      {/* ================= POPUP MODAL ================= */}
+      {showModal && (
+        <div className="modal-overlay">
+
+          <div className="modal-box">
+
+            <h3>Are you sure you want to logout?</h3>
+            <p>You will be redirected to login page.</p>
+
+            <div className="modal-actions">
+
+              <button
+                className="cancel-btn"
+                onClick={() => setShowModal(false)}
+              >
+                Cancel
+              </button>
+
+              <button
+                className="logout-btn"
+                onClick={handleLogout}
+              >
+                Yes, Logout
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+      )}
+
     </div>
   );
 };
