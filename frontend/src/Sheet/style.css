@@ -3827,7 +3827,7 @@ img.rim {
 }
 
 .featured__item__pic__hover li a:hover {
-  background: #7fad39; /* Ogani green */
+
   color: white;
 }
 
@@ -3835,4 +3835,5 @@ img.rim {
 .featured__item:hover .featured__item__pic__hover {
   bottom: 20px;
   opacity: 1;
+}
 }

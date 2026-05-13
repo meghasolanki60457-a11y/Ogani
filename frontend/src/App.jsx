@@ -3,6 +3,8 @@ import {
   Routes,
   Route,
   useLocation,
+  Navigate,
+  Outlet,
 } from "react-router-dom";
 
 import { useEffect, useState } from "react";
@@ -11,19 +13,15 @@ import { useEffect, useState } from "react";
 import AdminLayout from "./Admin/Components/Layout";
 
 import Dashboard from "./Admin/Pages/Dashboard";
-
-import Order from "./Admin/Pages/Inventory";
 import Setting from "./Admin/Pages/Setting";
 import Products from "./Admin/Pages/Products";
 import Reports from "./Admin/Pages/Reports";
 import Users from "./Admin/Pages/Users";
-import Inventory from "./Admin/Pages/Inventory";
 import Orders from "./Admin/Pages/Orders";
 import CreateProduct from "./Admin/Pages/CreateProduct";
 import AddUser from "./Admin/Pages/AddUser";
 import Loginss from "./Admin/Pages/Loginss";
 import EditPage from "./Admin/Pages/EditPage";
-
 
 /* WEBSITE */
 import Loader from "./Components/Loader";
@@ -58,14 +56,19 @@ function Home() {
   );
 }
 
+/* PROTECTED ADMIN ROUTE */
+function ProtectedAdminRoute() {
+  const isLoggedIn = localStorage.getItem("adminToken");
+
+  return isLoggedIn ? <Outlet /> : <Navigate to="/login" replace />;
+}
+
 /* WEBSITE LAYOUT */
 function Website() {
-
   const location = useLocation();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-
     setLoading(true);
 
     const timer = setTimeout(() => {
@@ -73,7 +76,6 @@ function Website() {
     }, 1000);
 
     return () => clearTimeout(timer);
-
   }, [location]);
 
   return (
@@ -83,7 +85,6 @@ function Website() {
       <Header />
 
       <Routes>
-
         <Route path="/" element={<Home />} />
 
         <Route path="/ogani/shop" element={<Shop />} />
@@ -100,7 +101,6 @@ function Website() {
         <Route path="/ogani/shop-details/:id" element={<ShopDetail />} />
         <Route path="/ogani/login" element={<Login />} />
         <Route path="/ogani/sign-in" element={<Sign />} />
-
       </Routes>
 
       <Footer />
@@ -110,44 +110,41 @@ function Website() {
 
 /* MAIN APP */
 function App() {
-
   return (
-
     <BrowserRouter>
-
       <Routes>
 
-        {/* WEBSITE */}
+        {/* WEBSITE FIRST */}
         <Route path="/*" element={<Website />} />
 
-        {/* ADMIN LOGIN (IMPORTANT FIX) */}
+        {/* ADMIN LOGIN */}
         <Route path="/login" element={<Loginss />} />
 
-        {/* ADMIN */}
-        <Route path="/admin/*" element={<AdminLayout />}>
+        {/* FIXED ADMIN ROUTES WRAP */}
+        <Route element={<ProtectedAdminRoute />}>
+          <Route path="/admin/*" element={<AdminLayout />}>
 
-          <Route index element={<Dashboard />} />
+            <Route index element={<Dashboard />} />
 
-          <Route path="dashboard" element={<Dashboard />} />
+            <Route path="dashboard" element={<Dashboard />} />
 
-          <Route path="reports" element={<Reports />} />
-          <Route path="orders" element={<Orders />} />
+            <Route path="reports" element={<Reports />} />
+            <Route path="orders" element={<Orders />} />
 
-          <Route path="users" element={<Users />} />
-          <Route path="products" element={<Products />} />
+            <Route path="users" element={<Users />} />
+            <Route path="products" element={<Products />} />
 
-          <Route path="settings" element={<Setting />} />
+            <Route path="settings" element={<Setting />} />
 
-          <Route path="products/create" element={<CreateProduct />} />
-          <Route path="users/add" element={<AddUser />} />
-          <Route path="products/edit/:id" element={<EditPage />} />
+            <Route path="products/create" element={<CreateProduct />} />
+            <Route path="users/add" element={<AddUser />} />
+            <Route path="products/edit/:id" element={<EditPage />} />
 
+          </Route>
         </Route>
 
       </Routes>
-
     </BrowserRouter>
-
   );
 }
 

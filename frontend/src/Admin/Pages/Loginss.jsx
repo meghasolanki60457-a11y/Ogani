@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Loginss = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -9,19 +9,27 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    // demo login (real me API hoti hai)
-    if (email && password) {
-      localStorage.setItem("token", "12345");
 
-      navigate("/admin");
+    const adminEmail = "admin@gmail.com";
+    const adminPassword = "123456";
+
+    if (
+      email === adminEmail &&
+      password === adminPassword
+    ) {
+
+      localStorage.setItem("adminToken", "true");
+
+      navigate("/admin/dashboard");
+
     } else {
-      alert("Please fill all fields");
+      alert("Invalid Email or Password");
     }
+
   };
 
   return (
     <div className="login-page">
-
       <div className="login-box">
 
         <h2>Admin Login</h2>
@@ -45,9 +53,8 @@ const Login = () => {
         </button>
 
       </div>
-
     </div>
   );
 };
 
-export default Login;
+export default Loginss;

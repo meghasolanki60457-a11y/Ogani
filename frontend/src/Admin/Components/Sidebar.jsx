@@ -23,7 +23,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="sidebar">
+    <div className="ridebar">
 
       <h2 className="logo">Admin</h2>
 

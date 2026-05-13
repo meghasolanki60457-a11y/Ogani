@@ -8,6 +8,9 @@ const Products = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [deleteProduct, setDeleteProduct] = useState(null);
 
+  // 👉 NEW ADD PRODUCT POPUP STATE
+  const [showAddPopup, setShowAddPopup] = useState(false);
+
   const products = [
     { id: "554433", name: "Wireless Headphones", category: "Electronics", price: "$120", stock: 6, status: "Low Stock" },
     { id: "887766", name: "USB-C Cable Pack", category: "Accessories", price: "$40", stock: 9, status: "In Stock" },
@@ -29,7 +32,7 @@ const Products = () => {
 
         <button
           className="add-product-btn"
-          onClick={() => navigate("/admin/products/create")}
+          onClick={() => setShowAddPopup(true)}
         >
           + Add Product
         </button>
@@ -38,9 +41,7 @@ const Products = () => {
 
       {/* TABLE */}
       <div className="products-table-card">
-
         <table className="products-table">
-
           <thead>
             <tr>
               <th>ID</th>
@@ -54,10 +55,8 @@ const Products = () => {
           </thead>
 
           <tbody>
-
             {products.map((item, index) => (
               <tr key={index}>
-
                 <td>{item.id}</td>
                 <td>{item.name}</td>
                 <td>{item.category}</td>
@@ -70,39 +69,63 @@ const Products = () => {
                   </span>
                 </td>
 
-                {/* ACTIONS */}
                 <td style={{ display: "flex", gap: "10px" }}>
-
-                  {/* VIEW POPUP */}
-                  <button
-                    onClick={() => setSelectedProduct(item)}
-                    className="view-btn"
-                  >
+                  <button onClick={() => setSelectedProduct(item)} className="view-btn">
                     View
                   </button>
 
-                  {/* DELETE POPUP */}
-                  <button
-                    onClick={() => setDeleteProduct(item)}
-                    className="delete-btn"
-                  >
+                  <button onClick={() => setDeleteProduct(item)} className="delete-btn">
                     Delete
                   </button>
-
                 </td>
-
               </tr>
             ))}
-
           </tbody>
-
         </table>
       </div>
 
-      {/* ================= VIEW POPUP ================= */}
-      {selectedProduct && (
+      {/* ================= ADD PRODUCT POPUP ================= */}
+      {showAddPopup && (
         <div className="modal-overlay">
 
+          <div className="modal-box">
+
+            <h2>Add Product</h2>
+
+            <input type="text" placeholder="Product Name" />
+            <input type="text" placeholder="Category" />
+            <input type="text" placeholder="Price" />
+            <input type="number" placeholder="Stock" />
+
+            <div style={{ display: "flex", gap: "10px", marginTop: "15px" }}>
+
+              <button
+                className="add-product-btn"
+                onClick={() => {
+                  alert("Product Added (Demo)");
+                  setShowAddPopup(false);
+                }}
+              >
+                Save
+              </button>
+
+              <button
+                className="close-btn"
+                onClick={() => setShowAddPopup(false)}
+              >
+                Cancel
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+      )}
+
+      {/* VIEW POPUP */}
+      {selectedProduct && (
+        <div className="modal-overlay">
           <div className="modal-box">
 
             <h2>Product Details</h2>
@@ -114,26 +137,20 @@ const Products = () => {
             <p><b>Stock:</b> {selectedProduct.stock}</p>
             <p><b>Status:</b> {selectedProduct.status}</p>
 
-            <button
-              className="close-btn"
-              onClick={() => setSelectedProduct(null)}
-            >
+            <button className="close-btn" onClick={() => setSelectedProduct(null)}>
               Close
             </button>
 
           </div>
-
         </div>
       )}
 
-      {/* ================= DELETE POPUP ================= */}
+      {/* DELETE POPUP */}
       {deleteProduct && (
         <div className="modal-overlay">
-
           <div className="modal-box">
 
             <h2>Confirm Delete</h2>
-
             <p>Are you sure you want to delete:</p>
 
             <h4>{deleteProduct.name}</h4>
@@ -160,7 +177,6 @@ const Products = () => {
             </div>
 
           </div>
-
         </div>
       )}
 

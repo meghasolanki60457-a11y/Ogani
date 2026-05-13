@@ -1,6 +1,4 @@
-
-
-import React from "react";
+import React, { useState } from "react";
 import {
   LineChart,
   Line,
@@ -15,7 +13,6 @@ import {
   BarChart,
   Bar,
 } from "recharts";
-
 
 const salesData = [
   { name: "Jan", sales: 4000, purchase: 2400 },
@@ -35,6 +32,10 @@ const pieData = [
 const COLORS = ["#5B5FEF", "#22C55E", "#EF4444"];
 
 const ReportsPage = () => {
+
+  // 👉 NEW POPUP STATE
+  const [showExportPopup, setShowExportPopup] = useState(false);
+
   return (
     <div className="reports-page">
 
@@ -45,14 +46,16 @@ const ReportsPage = () => {
           <p>Dashboard / Reports</p>
         </div>
 
-        <button className="export-btn">
+        <button
+          className="export-btn"
+          onClick={() => setShowExportPopup(true)}
+        >
           Export Report
         </button>
       </div>
 
       {/* STATS */}
       <div className="stats-grid">
-
         <div className="card stat-card">
           <h4>Total Sales</h4>
           <h2>$25,458</h2>
@@ -76,7 +79,6 @@ const ReportsPage = () => {
           <h2>$89,450</h2>
           <span className="danger">-3% this month</span>
         </div>
-
       </div>
 
       {/* CHARTS */}
@@ -84,7 +86,6 @@ const ReportsPage = () => {
 
         {/* LINE CHART */}
         <div className="card chart-card large-card">
-
           <div className="card-header">
             <h3>Sales Analytics</h3>
           </div>
@@ -96,52 +97,28 @@ const ReportsPage = () => {
               <YAxis stroke="#94A3B8" />
               <Tooltip />
 
-              <Line
-                type="monotone"
-                dataKey="sales"
-                stroke="#5B5FEF"
-                strokeWidth={3}
-              />
-
-              <Line
-                type="monotone"
-                dataKey="purchase"
-                stroke="#22C55E"
-                strokeWidth={3}
-              />
+              <Line type="monotone" dataKey="sales" stroke="#5B5FEF" strokeWidth={3} />
+              <Line type="monotone" dataKey="purchase" stroke="#22C55E" strokeWidth={3} />
             </LineChart>
           </ResponsiveContainer>
         </div>
 
         {/* PIE CHART */}
         <div className="card chart-card">
-
           <div className="card-header">
             <h3>Revenue Breakdown</h3>
           </div>
 
           <ResponsiveContainer width="100%" height={320}>
             <PieChart>
-              <Pie
-                data={pieData}
-                cx="50%"
-                cy="50%"
-                outerRadius={100}
-                dataKey="value"
-                label
-              >
+              <Pie data={pieData} cx="50%" cy="50%" outerRadius={100} dataKey="value" label>
                 {pieData.map((entry, index) => (
-                  <Cell
-                    key={index}
-                    fill={COLORS[index % COLORS.length]}
-                  />
+                  <Cell key={index} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
-
               <Tooltip />
             </PieChart>
           </ResponsiveContainer>
-
         </div>
 
       </div>
@@ -151,13 +128,11 @@ const ReportsPage = () => {
 
         {/* TABLE */}
         <div className="card table-card">
-
           <div className="card-header">
             <h3>Recent Reports</h3>
           </div>
 
           <table>
-
             <thead>
               <tr>
                 <th>Report</th>
@@ -168,48 +143,32 @@ const ReportsPage = () => {
             </thead>
 
             <tbody>
-
               <tr>
                 <td>Sales Report</td>
                 <td>12 May 2026</td>
-                <td>
-                  <span className="badge completed">
-                    Completed
-                  </span>
-                </td>
+                <td><span className="badge completed">Completed</span></td>
                 <td>$4,500</td>
               </tr>
 
               <tr>
                 <td>Expense Report</td>
                 <td>10 May 2026</td>
-                <td>
-                  <span className="badge pending">
-                    Pending
-                  </span>
-                </td>
+                <td><span className="badge pending">Pending</span></td>
                 <td>$2,100</td>
               </tr>
 
               <tr>
                 <td>Revenue Report</td>
                 <td>08 May 2026</td>
-                <td>
-                  <span className="badge completed">
-                    Completed
-                  </span>
-                </td>
+                <td><span className="badge completed">Completed</span></td>
                 <td>$8,700</td>
               </tr>
-
             </tbody>
           </table>
-
         </div>
 
         {/* BAR CHART */}
         <div className="card chart-card">
-
           <div className="card-header">
             <h3>Monthly Revenue</h3>
           </div>
@@ -221,17 +180,58 @@ const ReportsPage = () => {
               <YAxis stroke="#94A3B8" />
               <Tooltip />
 
-              <Bar
-                dataKey="sales"
-                fill="#5B5FEF"
-                radius={[8, 8, 0, 0]}
-              />
+              <Bar dataKey="sales" fill="#5B5FEF" radius={[8, 8, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
-
         </div>
 
       </div>
+
+      {/* ================= EXPORT POPUP ================= */}
+      {showExportPopup && (
+        <div className="modal-overlay">
+
+          <div className="modal-box">
+
+            <h2>Export Report</h2>
+
+            <p>Select format to download report</p>
+
+            <button
+              className="add-product-btn"
+              style={{ marginTop: "10px" }}
+              onClick={() => {
+                alert("Exported as PDF (Demo)");
+                setShowExportPopup(false);
+              }}
+            >
+              Export as PDF
+            </button>
+
+            <button
+              className="add-product-btn"
+              style={{ marginTop: "10px", background: "#22c55e" }}
+              onClick={() => {
+                alert("Exported as Excel (Demo)");
+                setShowExportPopup(false);
+              }}
+            >
+              Export as Excel
+            </button>
+
+            <button
+              className="close-btn"
+              style={{ marginTop: "10px" }}
+              onClick={() => setShowExportPopup(false)}
+            >
+              Cancel
+            </button>
+
+          </div>
+
+        </div>
+      )}
+
     </div>
   );
 };
