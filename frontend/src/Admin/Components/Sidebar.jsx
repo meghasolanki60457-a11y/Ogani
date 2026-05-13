@@ -19,7 +19,7 @@ const Sidebar = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setShowModal(false);
-    navigate("/admin/login");
+    navigate("/login");
   };
 
   return (

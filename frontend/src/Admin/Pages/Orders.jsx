@@ -1,7 +1,14 @@
 import { useState } from "react";
 
-
 const Orders = () => {
+
+  // ORDER DETAILS POPUP
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
+  // EXPORT POPUP
+  const [showExportPopup, setShowExportPopup] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+
   const [orders] = useState([
     {
       id: "#ORD1001",
@@ -43,7 +50,10 @@ const Orders = () => {
           <p>Manage all customer orders</p>
         </div>
 
-        <button className="export-btn">
+        <button
+          className="export-btn"
+          onClick={() => setShowExportPopup(true)}
+        >
           Export Orders
         </button>
       </div>
@@ -89,6 +99,7 @@ const Orders = () => {
               <th>Date</th>
               <th>Amount</th>
               <th>Status</th>
+              <th>Action</th>
             </tr>
           </thead>
 
@@ -107,6 +118,15 @@ const Orders = () => {
                   </span>
                 </td>
 
+                <td>
+                  <button
+                    className="view-btn"
+                    onClick={() => setSelectedOrder(order)}
+                  >
+                    View
+                  </button>
+                </td>
+
               </tr>
             ))}
           </tbody>
@@ -114,6 +134,93 @@ const Orders = () => {
         </table>
 
       </div>
+
+      {/* ORDER DETAILS POPUP */}
+      {selectedOrder && (
+        <div className="modal-overlay">
+
+          <div className="order-modal">
+
+            <h2>Order Details</h2>
+
+            <p>
+              <strong>Order ID:</strong> {selectedOrder.id}
+            </p>
+
+            <p>
+              <strong>Customer:</strong> {selectedOrder.customer}
+            </p>
+
+            <p>
+              <strong>Date:</strong> {selectedOrder.date}
+            </p>
+
+            <p>
+              <strong>Amount:</strong> {selectedOrder.amount}
+            </p>
+
+            <p>
+              <strong>Status:</strong> {selectedOrder.status}
+            </p>
+
+            <button
+              className="close-modal-btn"
+              onClick={() => setSelectedOrder(null)}
+            >
+              Close
+            </button>
+
+          </div>
+
+        </div>
+      )}
+
+      {/* EXPORT POPUP */}
+      {showExportPopup && (
+        <div className="modal-overlay">
+
+          <div className="order-modal">
+
+            <h2>Export Orders</h2>
+
+            <p>
+              Do you want to export all customer orders?
+            </p>
+
+            <div className="popup-buttons">
+<button
+  className="view-btn"
+  onClick={() => {
+    setShowExportPopup(false);
+    setShowSuccessPopup(true);
+
+    setTimeout(() => {
+      setShowSuccessPopup(false);
+    }, 2000);
+  }}
+>
+  Yes Export
+</button>
+
+              <button
+                className="close-modal-btn"
+                onClick={() => setShowExportPopup(false)}
+              >
+                Cancel
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+      )}
+      {/* SUCCESS POPUP */}
+{showSuccessPopup && (
+  <div className="success-popup">
+    Orders Exported Successfully!
+  </div>
+)}
 
     </div>
   );

@@ -1,103 +1,51 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const products = [
-  {
-    id: "554433",   // ✅ FIXED (removed #)
-    name: "Wireless Headphones",
-    stock: 6,
-    price: "$120",
-    status: "Low Stock",
-  },
-  {
-    id: "887766",
-    name: "USB-C Cable Pack",
-    stock: 9,
-    price: "$40",
-    status: "In Stock",
-  },
-  {
-    id: "332211",
-    name: "Phone Screen Protector",
-    stock: 3,
-    price: "$18",
-    status: "Low Stock",
-  },
-  {
-    id: "998877",
-    name: "Portable Charger",
-    stock: 7,
-    price: "$75",
-    status: "In Stock",
-  },
-  {
-    id: "665544",
-    name: "Mechanical Keyboard",
-    stock: 2,
-    price: "$150",
-    status: "Low Stock",
-  },
-];
+const Products = () => {
+  const navigate = useNavigate();
 
-const Inventory = () => {
+  // POPUP STATES
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [deleteProduct, setDeleteProduct] = useState(null);
+
+  const products = [
+    { id: "554433", name: "Wireless Headphones", category: "Electronics", price: "$120", stock: 6, status: "Low Stock" },
+    { id: "887766", name: "USB-C Cable Pack", category: "Accessories", price: "$40", stock: 9, status: "In Stock" },
+    { id: "332211", name: "Phone Screen Protector", category: "Mobile", price: "$18", stock: 3, status: "Low Stock" },
+    { id: "998877", name: "Portable Charger", category: "Electronics", price: "$75", stock: 7, status: "In Stock" },
+    { id: "665544", name: "Mechanical Keyboard", category: "Computer", price: "$150", stock: 2, status: "Low Stock" },
+  ];
+
   return (
-    <div className="inventory-page">
+    <div className="products-page">
 
       {/* HEADER */}
-      <div className="inventory-header">
+      <div className="products-header">
 
         <div>
-          <h2>Inventory</h2>
-          <p>Product list</p>
+          <h2>Products</h2>
+          <p className="products-subtitle">Manage all your products here</p>
         </div>
 
-        <Link to="/admin/products/create">
-          <button className="add-btn">
-            + Add Product
-          </button>
-        </Link>
-
-      </div>
-
-      {/* STATS */}
-      <div className="inventory-stats">
-
-        <div className="inventory-card">
-          <h3>Total Products</h3>
-          <h2>1,250</h2>
-          <span className="green">+12%</span>
-        </div>
-
-        <div className="inventory-card">
-          <h3>Low Stock</h3>
-          <h2>32</h2>
-          <span className="red">-5%</span>
-        </div>
-
-        <div className="inventory-card">
-          <h3>Out Of Stock</h3>
-          <h2>12</h2>
-          <span className="orange">+2%</span>
-        </div>
-
-        <div className="inventory-card">
-          <h3>Total Revenue</h3>
-          <h2>$89,450</h2>
-          <span className="green">+18%</span>
-        </div>
+        <button
+          className="add-product-btn"
+          onClick={() => navigate("/admin/products/create")}
+        >
+          + Add Product
+        </button>
 
       </div>
 
       {/* TABLE */}
-      <div className="table-wrapper">
+      <div className="products-table-card">
 
-        <table>
+        <table className="products-table">
 
           <thead>
             <tr>
-              <th>Product ID</th>
-              <th>Product Name</th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Category</th>
               <th>Price</th>
               <th>Stock</th>
               <th>Status</th>
@@ -106,73 +54,118 @@ const Inventory = () => {
           </thead>
 
           <tbody>
+
             {products.map((item, index) => (
               <tr key={index}>
 
                 <td>{item.id}</td>
                 <td>{item.name}</td>
+                <td>{item.category}</td>
                 <td>{item.price}</td>
                 <td>{item.stock}</td>
 
                 <td>
-                  <span
-                    className={
-                      item.status === "Low Stock"
-                        ? "status low"
-                        : "status active"
-                    }
-                  >
+                  <span className={item.status === "In Stock" ? "status-badge in-stock" : "status-badge low-stock"}>
                     {item.status}
                   </span>
                 </td>
 
-                {/* ACTION BUTTONS */}
-                <td className="action-buttons">
+                {/* ACTIONS */}
+                <td style={{ display: "flex", gap: "10px" }}>
 
-                  {/* ✅ FIXED EDIT ROUTE */}
-                  <Link to={`/admin/products/edit/${item.id}`}>
-                    <button className="edit-btn">
-                      <FaEdit /> Edit
-                    </button>
-                  </Link>
+                  {/* VIEW POPUP */}
+                  <button
+                    onClick={() => setSelectedProduct(item)}
+                    className="view-btn"
+                  >
+                    View
+                  </button>
 
-                  <button className="delete-btn">
-                    <FaTrash /> Delete
+                  {/* DELETE POPUP */}
+                  <button
+                    onClick={() => setDeleteProduct(item)}
+                    className="delete-btn"
+                  >
+                    Delete
                   </button>
 
                 </td>
 
               </tr>
             ))}
+
           </tbody>
 
         </table>
-
       </div>
 
-      {/* LOW STOCK */}
-      <div className="low-stock-section">
+      {/* ================= VIEW POPUP ================= */}
+      {selectedProduct && (
+        <div className="modal-overlay">
 
-        <h2>Low Stock Alerts</h2>
+          <div className="modal-box">
 
-        <div className="low-stock-grid">
+            <h2>Product Details</h2>
 
-          {products
-            .filter((item) => item.stock < 5)
-            .map((item, index) => (
-              <div className="low-stock-card" key={index}>
-                <h3>{item.name}</h3>
-                <p>ID: {item.id}</p>
-                <span>{item.stock} Items Left</span>
-              </div>
-            ))}
+            <p><b>ID:</b> {selectedProduct.id}</p>
+            <p><b>Name:</b> {selectedProduct.name}</p>
+            <p><b>Category:</b> {selectedProduct.category}</p>
+            <p><b>Price:</b> {selectedProduct.price}</p>
+            <p><b>Stock:</b> {selectedProduct.stock}</p>
+            <p><b>Status:</b> {selectedProduct.status}</p>
+
+            <button
+              className="close-btn"
+              onClick={() => setSelectedProduct(null)}
+            >
+              Close
+            </button>
+
+          </div>
 
         </div>
+      )}
 
-      </div>
+      {/* ================= DELETE POPUP ================= */}
+      {deleteProduct && (
+        <div className="modal-overlay">
+
+          <div className="modal-box">
+
+            <h2>Confirm Delete</h2>
+
+            <p>Are you sure you want to delete:</p>
+
+            <h4>{deleteProduct.name}</h4>
+
+            <div style={{ display: "flex", gap: "10px", marginTop: "15px" }}>
+
+              <button
+                className="delete-btn"
+                onClick={() => {
+                  alert("Deleted Successfully!");
+                  setDeleteProduct(null);
+                }}
+              >
+                Yes Delete
+              </button>
+
+              <button
+                className="close-btn"
+                onClick={() => setDeleteProduct(null)}
+              >
+                Cancel
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+      )}
 
     </div>
   );
 };
 
-export default Inventory;
+export default Products;

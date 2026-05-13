@@ -121,7 +121,7 @@ function App() {
         <Route path="/*" element={<Website />} />
 
         {/* ADMIN LOGIN (IMPORTANT FIX) */}
-        <Route path="/admin/login" element={<Loginss />} />
+        <Route path="/login" element={<Loginss />} />
 
         {/* ADMIN */}
         <Route path="/admin/*" element={<AdminLayout />}>
