@@ -328,7 +328,7 @@ const Products = () => {
       {/* SINGLE PRODUCT */}
       {singleProduct && (
         <div className="modal-overlay">
-          <div className="modal-box">
+          <div className="modal-box text-start">
 
             <h2>Product Details</h2>
 
