@@ -18,9 +18,16 @@ const Sidebar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    // ✅ FIXED: correct key match with App.jsx
+    localStorage.removeItem("adminToken");
+
     setShowModal(false);
-    navigate("/login");
+
+    // ✅ clean redirect
+    navigate("/admin/login", { replace: true });
+
+    // ✅ extra safety (prevents stuck UI / dashboard freeze issue)
+    window.location.reload();
   };
 
   return (
@@ -50,17 +57,17 @@ const Sidebar = () => {
           <span>Reports</span>
         </NavLink>
 
-       <NavLink to="/admin/users" className="menu-item">
-  <FaUser />
-  <span>Users</span>
-</NavLink>
+        <NavLink to="/admin/users" className="menu-item">
+          <FaUser />
+          <span>Users</span>
+        </NavLink>
 
         <NavLink to="/admin/settings" className="menu-item">
           <FaCog />
           <span>Settings</span>
         </NavLink>
 
-        {/* LOGOUT BUTTON (MODAL TRIGGER) */}
+        {/* LOGOUT BUTTON */}
         <div
           className="menu-item logout"
           onClick={() => setShowModal(true)}

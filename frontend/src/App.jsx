@@ -56,9 +56,9 @@ function Home() {
   );
 }
 
-/* 🔥 ADMIN PROTECTION */
+/* 🔥 IMPROVED ADMIN AUTH GUARD */
 function ProtectedAdminRoute() {
-  const isLoggedIn = localStorage.getItem("adminToken");
+  const isLoggedIn = !!localStorage.getItem("adminToken"); // FIXED
 
   return isLoggedIn ? <Outlet /> : <Navigate to="/admin/login" replace />;
 }
@@ -70,7 +70,7 @@ function Website() {
 
   useEffect(() => {
     setLoading(true);
-    const timer = setTimeout(() => setLoading(false), 1000);
+    const timer = setTimeout(() => setLoading(false), 800);
     return () => clearTimeout(timer);
   }, [location]);
 
@@ -109,11 +109,14 @@ function App() {
         {/* WEBSITE */}
         <Route path="/*" element={<Website />} />
 
-        {/* 🔥 IMPORTANT: /admin redirect to login */}
-        <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
-
-        {/* ADMIN LOGIN PAGE */}
+        {/* ADMIN LOGIN */}
         <Route path="/admin/login" element={<Loginss />} />
+
+        {/* OPTIONAL SAFE REDIRECT */}
+        <Route
+          path="/admin"
+          element={<Navigate to="/admin/dashboard" replace />}
+        />
 
         {/* PROTECTED ADMIN AREA */}
         <Route element={<ProtectedAdminRoute />}>
