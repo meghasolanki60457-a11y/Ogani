@@ -18,6 +18,10 @@ const Users = () => {
     email: "",
   });
 
+  // ================= PAGINATION STATES (ADDED ONLY) =================
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 5;
+
   useEffect(() => {
     fetch("https://fakestoreapi.com/users")
       .then((res) => res.json())
@@ -107,6 +111,13 @@ const Users = () => {
     }
   };
 
+  // ================= PAGINATION LOGIC (ADDED ONLY) =================
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+
+  const totalPages = Math.ceil(users.length / usersPerPage);
+
   return (
     <div className="users-page">
 
@@ -146,11 +157,12 @@ const Users = () => {
 
             <tbody>
 
-              {users.map((user, index) => (
+              {/* PAGINATED DATA ONLY CHANGE HERE */}
+              {currentUsers.map((user, index) => (
 
                 <tr key={user.id}>
 
-                  <td>{index + 1}</td>
+                  <td>{indexOfFirstUser + index + 1}</td>
 
                   <td>
                     {user.name?.firstname} {user.name?.lastname}
@@ -199,9 +211,44 @@ const Users = () => {
           </table>
         )}
 
+        {/* ================= PAGINATION UI (ADDED ONLY) ================= */}
+        <div className="d-flex justify-content-center mt-3 gap-2 flex-wrap">
+
+          <button
+            className="btn btn-outline-primary btn-sm"
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(currentPage - 1)}
+          >
+            Prev
+          </button>
+
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentPage(i + 1)}
+              className={`btn btn-sm ${
+                currentPage === i + 1
+                  ? "btn-primary"
+                  : "btn-outline-primary"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            className="btn btn-outline-primary btn-sm"
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage(currentPage + 1)}
+          >
+            Next
+          </button>
+
+        </div>
+
       </div>
 
-      {/* ================= VIEW POPUP ================= */}
+      {/* VIEW POPUP */}
       {showViewPopup && singleUser && (
         <div className="modal d-block" style={{ background: "rgba(0,0,0,0.6)" }}>
           <div className="modal-dialog modal-dialog-centered">
@@ -229,7 +276,7 @@ const Users = () => {
         </div>
       )}
 
-      {/* ================= EDIT POPUP ================= */}
+      {/* EDIT POPUP */}
       {showEditPopup && (
         <div className="modal d-block" style={{ background: "rgba(0,0,0,0.6)" }}>
           <div className="modal-dialog modal-dialog-centered">
@@ -244,7 +291,6 @@ const Users = () => {
                 onChange={(e) =>
                   setEditUser({ ...editUser, username: e.target.value })
                 }
-                placeholder="Username"
               />
 
               <input
@@ -253,15 +299,11 @@ const Users = () => {
                 onChange={(e) =>
                   setEditUser({ ...editUser, email: e.target.value })
                 }
-                placeholder="Email"
               />
 
               <div className="d-flex justify-content-end gap-2">
 
-                <button
-                  className="btn btn-success"
-                  onClick={updateUser}
-                >
+                <button className="btn btn-success" onClick={updateUser}>
                   Update
                 </button>
 
@@ -280,7 +322,7 @@ const Users = () => {
         </div>
       )}
 
-      {/* ================= DELETE POPUP ================= */}
+      {/* DELETE POPUP */}
       {showModal && (
         <div className="modal d-block" style={{ background: "rgba(0,0,0,0.6)" }}>
           <div className="modal-dialog modal-dialog-centered">
@@ -293,17 +335,11 @@ const Users = () => {
 
               <div className="d-flex justify-content-center gap-3">
 
-                <button
-                  className="btn btn-danger"
-                  onClick={deleteUser}
-                >
+                <button className="btn btn-danger" onClick={deleteUser}>
                   Yes Delete
                 </button>
 
-                <button
-                  className="btn btn-secondary"
-                  onClick={closeModal}
-                >
+                <button className="btn btn-secondary" onClick={closeModal}>
                   Cancel
                 </button>
 
