@@ -25,6 +25,10 @@ const Products = () => {
     price: "",
   });
 
+  // 👉 NEW STATES (ONLY FOR POPUPS CONTROL)
+  const [showEditPopup, setShowEditPopup] = useState(false);
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+
   // ================= GET ALL PRODUCTS API =================
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
@@ -106,6 +110,7 @@ const Products = () => {
 
       setProducts(updated);
       setDeleteProduct(null);
+      setShowDeletePopup(false);
 
     } catch (error) {
       console.log(error);
@@ -148,6 +153,8 @@ const Products = () => {
         title: "",
         price: "",
       });
+
+      setShowEditPopup(false);
 
     } catch (error) {
       console.log(error);
@@ -209,58 +216,93 @@ const Products = () => {
           <thead>
             <tr>
               <th>ID</th>
+              <th>Image</th>
               <th>Name</th>
+              <th>Description</th>
               <th>Category</th>
               <th>Price</th>
               <th>Actions</th>
             </tr>
           </thead>
 
-          <tbody>
+        <tbody>
 
-            {products.map((item) => (
-              <tr key={item.id}>
+  {products.map((item, index) => (
+    <tr key={item.id}>
 
-                <td>#{item.id}</td>
-                <td>{item.title}</td>
-                <td>{item.category}</td>
-                <td>${item.price}</td>
+      {/* CHANGED HERE */}
+      <td>#{index + 1}</td>
 
-                <td style={{ display: "flex", gap: "10px" }}>
+      <td>
+        <img
+          src={item.image}
+          alt={item.title}
+          style={{
+            width: "60px",
+            height: "60px",
+            objectFit: "contain",
+            background: "#fff",
+            padding: "5px",
+            borderRadius: "8px"
+          }}
+        />
+      </td>
 
-                  <button
-                    className="view-btn"
-                    onClick={() => getSingleProduct(item.id)}
-                  >
-                    View
-                  </button>
+      <td style={{ maxWidth: "220px" }}>
+        {item.title}
+      </td>
 
-                  <button
-                    className="add-product-btn"
-                    onClick={() =>
-                      setEditProduct({
-                        id: item.id,
-                        title: item.title,
-                        price: item.price,
-                      })
-                    }
-                  >
-                    Edit
-                  </button>
+      <td style={{ maxWidth: "300px" }}>
+        {item.description?.slice(0, 80)}...
+      </td>
 
-                  <button
-                    className="delete-btn"
-                    onClick={() => setDeleteProduct(item)}
-                  >
-                    Delete
-                  </button>
+      <td>{item.category}</td>
 
-                </td>
+      <td>
+        <b>${item.price}</b>
+      </td>
 
-              </tr>
-            ))}
+      <td style={{ display: "flex", gap: "10px" }}>
 
-          </tbody>
+        <button
+          className="view-btn"
+          onClick={() => getSingleProduct(item.id)}
+        >
+          View
+        </button>
+
+        {/* EDIT BUTTON → POPUP OPEN */}
+        <button
+          className="add-product-btn"
+          onClick={() => {
+            setEditProduct({
+              id: item.id,
+              title: item.title,
+              price: item.price,
+            });
+            setShowEditPopup(true);
+          }}
+        >
+          Edit
+        </button>
+
+        {/* DELETE BUTTON → POPUP OPEN */}
+        <button
+          className="delete-btn"
+          onClick={() => {
+            setDeleteProduct(item);
+            setShowDeletePopup(true);
+          }}
+        >
+          Delete
+        </button>
+
+      </td>
+
+    </tr>
+  ))}
+
+</tbody>
 
         </table>
 
@@ -306,6 +348,44 @@ const Products = () => {
         </div>
       )}
 
+      {/* EDIT POPUP */}
+      {showEditPopup && (
+        <div className="modal-overlay">
+          <div className="modal-box">
+
+            <h2>Edit Product</h2>
+
+            <input
+              type="text"
+              value={editProduct.title}
+              onChange={(e) =>
+                setEditProduct({ ...editProduct, title: e.target.value })
+              }
+            />
+
+            <input
+              type="number"
+              value={editProduct.price}
+              onChange={(e) =>
+                setEditProduct({ ...editProduct, price: e.target.value })
+              }
+            />
+
+            <button onClick={updateProduct} className="add-product-btn">
+              Update
+            </button>
+
+            <button
+              className="close-btn"
+              onClick={() => setShowEditPopup(false)}
+            >
+              Cancel
+            </button>
+
+          </div>
+        </div>
+      )}
+
       {/* SUCCESS POPUP */}
       {showSuccessPopup && (
         <div className="modal-overlay">
@@ -332,10 +412,30 @@ const Products = () => {
 
             <h2>Product Details</h2>
 
+            <div style={{ textAlign: "center", marginBottom: "15px" }}>
+              <img
+                src={singleProduct.image}
+                alt={singleProduct.title}
+                style={{
+                  width: "150px",
+                  height: "150px",
+                  objectFit: "contain"
+                }}
+              />
+            </div>
+
             <p><b>ID:</b> {singleProduct.id}</p>
+
             <p><b>Name:</b> {singleProduct.title}</p>
-            <p><b>Price:</b> ${singleProduct.price}</p>
+
+            <p><b>Description:</b></p>
+            <p>{singleProduct.description}</p>
+
             <p><b>Category:</b> {singleProduct.category}</p>
+
+            <p>
+              <b>Price:</b> ${singleProduct.price}
+            </p>
 
             <button
               className="close-btn"
@@ -349,28 +449,30 @@ const Products = () => {
       )}
 
       {/* DELETE POPUP */}
-      {deleteProduct && (
+      {showDeletePopup && (
         <div className="modal-overlay">
           <div className="modal-box">
 
             <h2>Confirm Delete</h2>
 
             <p>Are you sure you want to delete:</p>
-            <h4>{deleteProduct.title}</h4>
+            <h4>{deleteProduct?.title}</h4>
 
-            <button
-              className="delete-btn"
-              onClick={deleteProductAPI}
-            >
-              Yes Delete
-            </button>
+            <div className="d-flex gap-3 pt-3">
+              <button
+                className="delete-btn"
+                onClick={deleteProductAPI}
+              >
+                Yes Delete
+              </button>
 
-            <button
-              className="close-btn"
-              onClick={() => setDeleteProduct(null)}
-            >
-              Cancel
-            </button>
+              <button
+                className="close-btn"
+                onClick={() => setShowDeletePopup(false)}
+              >
+                Cancel
+              </button>
+            </div>
 
           </div>
         </div>
