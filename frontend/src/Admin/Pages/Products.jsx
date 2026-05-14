@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Products = () => {
@@ -8,17 +8,151 @@ const Products = () => {
   const [deleteProduct, setDeleteProduct] = useState(null);
 
   const [showAddPopup, setShowAddPopup] = useState(false);
-
-  // 👉 NEW: success popup state
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
-  const products = [
-    { id: "554433", name: "Wireless Headphones", category: "Electronics", price: "$120", stock: 6, status: "Low Stock" },
-    { id: "887766", name: "USB-C Cable Pack", category: "Accessories", price: "$40", stock: 9, status: "In Stock" },
-    { id: "332211", name: "Phone Screen Protector", category: "Mobile", price: "$18", stock: 3, status: "Low Stock" },
-    { id: "998877", name: "Portable Charger", category: "Electronics", price: "$75", stock: 7, status: "In Stock" },
-    { id: "665544", name: "Mechanical Keyboard", category: "Computer", price: "$150", stock: 2, status: "Low Stock" },
-  ];
+  // ================= API STATES =================
+  const [products, setProducts] = useState([]);
+  const [singleProduct, setSingleProduct] = useState(null);
+
+  const [newProduct, setNewProduct] = useState({
+    title: "",
+    price: "",
+  });
+
+  const [editProduct, setEditProduct] = useState({
+    id: "",
+    title: "",
+    price: "",
+  });
+
+  // ================= GET ALL PRODUCTS API =================
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("All Products:", data);
+        setProducts(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  // ================= GET SINGLE PRODUCT API =================
+  const getSingleProduct = async (id) => {
+    try {
+      const res = await fetch(
+        `https://fakestoreapi.com/products/${id}`
+      );
+
+      const data = await res.json();
+
+      console.log("Single Product:", data);
+
+      setSingleProduct(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // ================= ADD PRODUCT API =================
+  const addProduct = async () => {
+    try {
+      const productData = {
+        title: newProduct.title,
+        price: newProduct.price,
+      };
+
+      const res = await fetch(
+        "https://fakestoreapi.com/products",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(productData),
+        }
+      );
+
+      const data = await res.json();
+
+      console.log("Added Product:", data);
+
+      setProducts([...products, data]);
+
+      setNewProduct({
+        title: "",
+        price: "",
+      });
+
+      setShowAddPopup(false);
+      setShowSuccessPopup(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // ================= DELETE PRODUCT API =================
+  const deleteProductAPI = async () => {
+    try {
+      await fetch(
+        `https://fakestoreapi.com/products/${deleteProduct.id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      const updated = products.filter(
+        (p) => p.id !== deleteProduct.id
+      );
+
+      setProducts(updated);
+      setDeleteProduct(null);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // ================= UPDATE PRODUCT API =================
+  const updateProduct = async () => {
+    try {
+      const updatedData = {
+        title: editProduct.title,
+        price: editProduct.price,
+      };
+
+      const res = await fetch(
+        `https://fakestoreapi.com/products/${editProduct.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedData),
+        }
+      );
+
+      const data = await res.json();
+
+      console.log("Updated Product:", data);
+
+      const updatedList = products.map((p) =>
+        p.id === editProduct.id
+          ? { ...p, title: editProduct.title, price: editProduct.price }
+          : p
+      );
+
+      setProducts(updatedList);
+
+      setEditProduct({
+        id: "",
+        title: "",
+        price: "",
+      });
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="products-page">
@@ -27,7 +161,9 @@ const Products = () => {
       <div className="products-header">
         <div>
           <h2>Products</h2>
-          <p className="products-subtitle">Manage all your products here</p>
+          <p className="products-subtitle">
+            Manage all your products here
+          </p>
         </div>
 
         <button
@@ -38,83 +174,139 @@ const Products = () => {
         </button>
       </div>
 
+      {/* EDIT SECTION */}
+      <div style={{ background: "#fff", padding: "15px", marginBottom: "15px" }}>
+        <h3>Edit Product</h3>
+
+        <input
+          type="text"
+          placeholder="Title"
+          value={editProduct.title}
+          onChange={(e) =>
+            setEditProduct({ ...editProduct, title: e.target.value })
+          }
+        />
+
+        <input
+          type="number"
+          placeholder="Price"
+          value={editProduct.price}
+          onChange={(e) =>
+            setEditProduct({ ...editProduct, price: e.target.value })
+          }
+        />
+
+        <button onClick={updateProduct} className="add-product-btn">
+          Update Product
+        </button>
+      </div>
+
       {/* TABLE */}
       <div className="products-table-card">
+
         <table className="products-table">
+
           <thead>
             <tr>
-              <th>ID</th><th>Name</th><th>Category</th>
-              <th>Price</th><th>Stock</th><th>Status</th><th>Actions</th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Actions</th>
             </tr>
           </thead>
 
           <tbody>
-            {products.map((item, index) => (
-              <tr key={index}>
-                <td>{item.id}</td>
-                <td>{item.name}</td>
-                <td>{item.category}</td>
-                <td>{item.price}</td>
-                <td>{item.stock}</td>
 
-                <td>
-                  <span className={item.status === "In Stock" ? "status-badge in-stock" : "status-badge low-stock"}>
-                    {item.status}
-                  </span>
-                </td>
+            {products.map((item) => (
+              <tr key={item.id}>
+
+                <td>#{item.id}</td>
+                <td>{item.title}</td>
+                <td>{item.category}</td>
+                <td>${item.price}</td>
 
                 <td style={{ display: "flex", gap: "10px" }}>
-                  <button onClick={() => setSelectedProduct(item)} className="view-btn">
+
+                  <button
+                    className="view-btn"
+                    onClick={() => getSingleProduct(item.id)}
+                  >
                     View
                   </button>
 
-                  <button onClick={() => setDeleteProduct(item)} className="delete-btn">
+                  <button
+                    className="add-product-btn"
+                    onClick={() =>
+                      setEditProduct({
+                        id: item.id,
+                        title: item.title,
+                        price: item.price,
+                      })
+                    }
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    className="delete-btn"
+                    onClick={() => setDeleteProduct(item)}
+                  >
                     Delete
                   </button>
+
                 </td>
+
               </tr>
             ))}
+
           </tbody>
+
         </table>
+
       </div>
 
-      {/* ================= ADD PRODUCT POPUP ================= */}
+      {/* ADD POPUP */}
       {showAddPopup && (
         <div className="modal-overlay">
           <div className="modal-box">
 
             <h2>Add Product</h2>
 
-            <input type="text" placeholder="Product Name" />
-            <input type="text" placeholder="Category" />
-            <input type="text" placeholder="Price" />
-            <input type="number" placeholder="Stock" />
+            <input
+              type="text"
+              placeholder="Product Name"
+              value={newProduct.title}
+              onChange={(e) =>
+                setNewProduct({ ...newProduct, title: e.target.value })
+              }
+            />
 
-            <div style={{ display: "flex", gap: "10px", marginTop: "15px" }}>
-              
-              <button
-                className="add-product-btn"
-                onClick={() => {
-                  setShowAddPopup(false);
-                  setShowSuccessPopup(true); // 👉 show success popup
-                }}
-              >
-                Save
-              </button>
+            <input
+              type="number"
+              placeholder="Price"
+              value={newProduct.price}
+              onChange={(e) =>
+                setNewProduct({ ...newProduct, price: e.target.value })
+              }
+            />
 
-              <button
-                className="close-btn"
-                onClick={() => setShowAddPopup(false)}
-              >
-                Cancel
-              </button>
+            <button onClick={addProduct} className="add-product-btn">
+              Save
+            </button>
 
-            </div>
+            <button
+              className="close-btn"
+              onClick={() => setShowAddPopup(false)}
+            >
+              Cancel
+            </button>
+
           </div>
         </div>
       )}
 
-      {/* ✅ SUCCESS POPUP */}
+      {/* SUCCESS POPUP */}
       {showSuccessPopup && (
         <div className="modal-overlay">
           <div className="modal-box">
@@ -133,22 +325,25 @@ const Products = () => {
         </div>
       )}
 
-      {/* VIEW POPUP */}
-      {selectedProduct && (
+      {/* SINGLE PRODUCT */}
+      {singleProduct && (
         <div className="modal-overlay">
           <div className="modal-box">
+
             <h2>Product Details</h2>
 
-            <p><b>ID:</b> {selectedProduct.id}</p>
-            <p><b>Name:</b> {selectedProduct.name}</p>
-            <p><b>Category:</b> {selectedProduct.category}</p>
-            <p><b>Price:</b> {selectedProduct.price}</p>
-            <p><b>Stock:</b> {selectedProduct.stock}</p>
-            <p><b>Status:</b> {selectedProduct.status}</p>
+            <p><b>ID:</b> {singleProduct.id}</p>
+            <p><b>Name:</b> {singleProduct.title}</p>
+            <p><b>Price:</b> ${singleProduct.price}</p>
+            <p><b>Category:</b> {singleProduct.category}</p>
 
-            <button className="close-btn" onClick={() => setSelectedProduct(null)}>
+            <button
+              className="close-btn"
+              onClick={() => setSingleProduct(null)}
+            >
               Close
             </button>
+
           </div>
         </div>
       )}
@@ -159,28 +354,23 @@ const Products = () => {
           <div className="modal-box">
 
             <h2>Confirm Delete</h2>
+
             <p>Are you sure you want to delete:</p>
-            <h4>{deleteProduct.name}</h4>
+            <h4>{deleteProduct.title}</h4>
 
-            <div style={{ display: "flex", gap: "10px", marginTop: "15px" }}>
+            <button
+              className="delete-btn"
+              onClick={deleteProductAPI}
+            >
+              Yes Delete
+            </button>
 
-              <button
-                className="delete-btn"
-                onClick={() => {
-                  setDeleteProduct(null);
-                }}
-              >
-                Yes Delete
-              </button>
-
-              <button
-                className="close-btn"
-                onClick={() => setDeleteProduct(null)}
-              >
-                Cancel
-              </button>
-
-            </div>
+            <button
+              className="close-btn"
+              onClick={() => setDeleteProduct(null)}
+            >
+              Cancel
+            </button>
 
           </div>
         </div>

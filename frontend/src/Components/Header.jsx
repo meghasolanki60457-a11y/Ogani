@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
+
 function App() {
 
   const [showMenu, setShowMenu] = useState();
@@ -180,8 +181,19 @@ function App() {
             <div className="col-lg-3">
               <div className="header__cart">
                 <ul>
-                  <li><i className="fa fa-heart"></i><span>1</span></li>
-                  <li><i className="fa fa-shopping-bag"></i><span>1</span></li>
+               <li>
+  <Link to="/ogani/shop-details">
+    <i className="fa fa-heart"></i>
+    <span>1</span>
+  </Link>
+</li>
+
+<li>
+  <Link to="/ogani/shopping-cart">
+    <i className="fa fa-shopping-bag"></i>
+    <span>1</span>
+  </Link>
+</li>
                 </ul>
                 <div className="header__cart__price">
                   item: <span>$150.00</span>
@@ -212,7 +224,7 @@ function App() {
                   <span>All departments</span>
                 </div>
 
-                <ul
+                <ul className="d-flex flex-column gap-3"
                   style={{
                     display: showCategories ? "block" : "none",
                     position: "absolute",
@@ -228,6 +240,10 @@ function App() {
                   <li>Ocean Foods</li>
                   <li>Butter & Eggs</li>
                   <li>Fastfood</li>
+                  <li>Fresh Onion</li>
+                  <li>Papayaya & Crisps</li>
+                  <li>Oatmeal</li>
+                  <li>Fresh Bananas</li>
                 </ul>
 
               </div>

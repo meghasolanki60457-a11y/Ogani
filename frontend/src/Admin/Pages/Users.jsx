@@ -1,40 +1,189 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Users = () => {
+
+  // ================= STATES =================
+
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
-  const users = [
-    { id: "#U1001", name: "Aarav Sharma", email: "aarav@example.com", role: "Customer", status: "Active" },
-    { id: "#U1002", name: "Priya Verma", email: "priya@example.com", role: "Admin", status: "Active" },
-    { id: "#U1003", name: "Rahul Singh", email: "rahul@example.com", role: "Customer", status: "Blocked" },
-    { id: "#U1004", name: "Sneha Patel", email: "sneha@example.com", role: "Vendor", status: "Active" },
-  ];
+  // USERS STATE
+  const [users, setUsers] = useState([]);
 
-  // OPEN MODAL
+  // LOADING STATE
+  const [loading, setLoading] = useState(true);
+
+  // SINGLE USER STATE
+  const [singleUser, setSingleUser] = useState(null);
+
+  // EDIT USER STATE
+  const [editUser, setEditUser] = useState({
+    id: "",
+    username: "",
+    email: "",
+  });
+
+  // ================= GET ALL USERS API =================
+
+  useEffect(() => {
+
+    fetch("https://fakestoreapi.com/users")
+      .then((res) => res.json())
+      .then((data) => {
+
+        console.log("All Users:", data);
+
+        setUsers(data);
+
+        setLoading(false);
+
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+
+  }, []);
+
+  // ================= GET SINGLE USER API =================
+
+  const getSingleUser = async (id) => {
+
+    try {
+
+      const res = await fetch(
+        `https://fakestoreapi.com/users/${id}`
+      );
+
+      const data = await res.json();
+
+      console.log("Single User:", data);
+
+      setSingleUser(data);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // ================= OPEN MODAL =================
+
   const openModal = (user) => {
     setSelectedUser(user);
     setShowModal(true);
   };
 
-  // CLOSE MODAL
+  // ================= CLOSE MODAL =================
+
   const closeModal = () => {
     setShowModal(false);
     setSelectedUser(null);
   };
 
-  // DELETE ACTION (demo only)
-  const deleteUser = () => {
-    console.log("Deleted user:", selectedUser);
-    closeModal();
+  // ================= DELETE USER API =================
+
+  const deleteUser = async () => {
+
+    try {
+
+      const res = await fetch(
+        `https://fakestoreapi.com/users/${selectedUser.id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      const data = await res.json();
+
+      console.log("Deleted API Response:", data);
+
+      // UI SE REMOVE
+      const updatedUsers = users.filter(
+        (user) => user.id !== selectedUser.id
+      );
+
+      setUsers(updatedUsers);
+
+      console.log("Deleted user:", selectedUser);
+
+      closeModal();
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // ================= SET EDIT USER =================
+
+  const handleEditClick = (user) => {
+
+    setEditUser({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+    });
+  };
+
+  // ================= UPDATE USER API =================
+
+  const updateUser = async () => {
+
+    try {
+
+      const updatedData = {
+        username: editUser.username,
+        email: editUser.email,
+      };
+
+      const res = await fetch(
+        `https://fakestoreapi.com/users/${editUser.id}`,
+        {
+          method: "PUT",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify(updatedData),
+        }
+      );
+
+      const data = await res.json();
+
+      console.log("Updated User:", data);
+
+      // UI UPDATE
+      const updatedUsers = users.map((user) => {
+
+        if (user.id === editUser.id) {
+
+          return {
+            ...user,
+            username: editUser.username,
+            email: editUser.email,
+          };
+        }
+
+        return user;
+      });
+
+      setUsers(updatedUsers);
+
+      alert("User Updated Successfully");
+
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div className="users-page">
 
-      {/* HEADER */}
+      {/* ================= HEADER ================= */}
+
       <div className="users-header">
+
         <div>
           <h1>Users</h1>
           <p>Manage all platform users</p>
@@ -43,61 +192,232 @@ const Users = () => {
         <Link to="/admin/users/add" className="add-user-btn">
           + Add User
         </Link>
+
       </div>
 
-      {/* TABLE */}
+      {/* ================= EDIT USER FORM ================= */}
+
+      <div
+        style={{
+          background: "#fff",
+          padding: "20px",
+          borderRadius: "10px",
+          marginBottom: "20px",
+        }}
+      >
+
+        <h2>Edit User</h2>
+
+        <div
+          style={{
+            display: "grid",
+            gap: "10px",
+          }}
+        >
+
+          <input
+            type="text"
+            placeholder="Username"
+            value={editUser.username}
+            onChange={(e) =>
+              setEditUser({
+                ...editUser,
+                username: e.target.value,
+              })
+            }
+          />
+
+          <input
+            type="email"
+            placeholder="Email"
+            value={editUser.email}
+            onChange={(e) =>
+              setEditUser({
+                ...editUser,
+                email: e.target.value,
+              })
+            }
+          />
+
+          <button
+            onClick={updateUser}
+            style={{
+              padding: "10px",
+              background: "#16a34a",
+              color: "#fff",
+              border: "none",
+              borderRadius: "6px",
+              cursor: "pointer",
+            }}
+          >
+            Update User
+          </button>
+
+        </div>
+
+      </div>
+
+      {/* ================= TABLE CARD ================= */}
+
       <div className="users-table-card">
 
-        <table className="users-table">
-          <thead>
-            <tr>
-              <th>User ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+        {loading ? (
 
-          <tbody>
-            {users.map((user, index) => (
-              <tr key={index}>
-                <td>{user.id}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.role}</td>
+          <h2 style={{ textAlign: "center", padding: "30px" }}>
+            Loading...
+          </h2>
 
-                <td>
-                  <span className={user.status === "Active" ? "status active" : "status blocked"}>
-                    {user.status}
-                  </span>
-                </td>
+        ) : (
 
-                <td>
-                  <button
-                    onClick={() => openModal(user)}
+          <table className="users-table">
+
+            <thead>
+              <tr>
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              {users.map((user) => (
+
+                <tr key={user.id}>
+
+                  {/* USER ID */}
+                  <td>#U{user.id}</td>
+
+                  {/* NAME */}
+                  <td>
+                    {user.name?.firstname}{" "}
+                    {user.name?.lastname}
+                  </td>
+
+                  {/* EMAIL */}
+                  <td>{user.email}</td>
+
+                  {/* USERNAME */}
+                  <td>{user.username}</td>
+
+                  {/* STATUS */}
+                  <td>
+                    <span className="status active">
+                      Active
+                    </span>
+                  </td>
+
+                  {/* ACTIONS */}
+                  <td
                     style={{
-                      padding: "6px 12px",
-                      background: "red",
-                      color: "white",
-                      border: "none",
-                      borderRadius: "6px",
-                      cursor: "pointer"
+                      display: "flex",
+                      gap: "10px",
                     }}
                   >
-                    Delete
-                  </button>
-                </td>
 
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                    {/* VIEW BUTTON */}
+                    <button
+                      onClick={() => getSingleUser(user.id)}
+                      style={{
+                        padding: "6px 12px",
+                        background: "#1e40af",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "6px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      View
+                    </button>
+
+                    {/* EDIT BUTTON */}
+                    <button
+                      onClick={() => handleEditClick(user)}
+                      style={{
+                        padding: "6px 12px",
+                        background: "#f59e0b",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "6px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Edit
+                    </button>
+
+                    {/* DELETE BUTTON */}
+                    <button
+                      onClick={() => openModal(user)}
+                      style={{
+                        padding: "6px 12px",
+                        background: "red",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "6px",
+                        cursor: "pointer"
+                      }}
+                    >
+                      Delete
+                    </button>
+
+                  </td>
+
+                </tr>
+
+              ))}
+
+            </tbody>
+
+          </table>
+
+        )}
+
       </div>
 
-      {/* ================= MODAL ================= */}
+      {/* ================= SINGLE USER DETAILS ================= */}
+
+      {singleUser && (
+
+        <div
+          style={{
+            marginTop: "20px",
+            background: "#fff",
+            padding: "20px",
+            borderRadius: "10px",
+          }}
+        >
+
+          <h2>Single User Details</h2>
+
+          <p>
+            <b>ID:</b> {singleUser.id}
+          </p>
+
+          <p>
+            <b>Name:</b>{" "}
+            {singleUser.name?.firstname}{" "}
+            {singleUser.name?.lastname}
+          </p>
+
+          <p>
+            <b>Email:</b> {singleUser.email}
+          </p>
+
+          <p>
+            <b>Username:</b> {singleUser.username}
+          </p>
+
+        </div>
+
+      )}
+
+      {/* ================= DELETE MODAL ================= */}
+
       {showModal && (
+
         <div className="modal-overlay">
 
           <div className="modal-box">
@@ -106,16 +426,26 @@ const Users = () => {
 
             <p>
               Are you sure you want to delete{" "}
-              <b>{selectedUser?.name}</b>?
+              <b>
+                {selectedUser?.name?.firstname}{" "}
+                {selectedUser?.name?.lastname}
+              </b>
+              ?
             </p>
 
             <div className="modal-actions">
 
-              <button className="cancel-btn" onClick={closeModal}>
+              <button
+                className="cancel-btn"
+                onClick={closeModal}
+              >
                 Cancel
               </button>
 
-              <button className="delete-btn" onClick={deleteUser}>
+              <button
+                className="delete-btn"
+                onClick={deleteUser}
+              >
                 Yes, Delete
               </button>
 
@@ -124,6 +454,7 @@ const Users = () => {
           </div>
 
         </div>
+
       )}
 
     </div>
