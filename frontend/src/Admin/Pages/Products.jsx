@@ -29,6 +29,26 @@ const Products = () => {
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
 
+  // ================= PAGINATION STATES =================
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const productsPerPage = 5;
+
+  const indexOfLastProduct =
+    currentPage * productsPerPage;
+
+  const indexOfFirstProduct =
+    indexOfLastProduct - productsPerPage;
+
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  const totalPages = Math.ceil(
+    products.length / productsPerPage
+  );
+
   // ================= GET ALL PRODUCTS API =================
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
@@ -109,8 +129,18 @@ const Products = () => {
       );
 
       setProducts(updated);
+
       setDeleteProduct(null);
+
       setShowDeletePopup(false);
+
+      // PAGINATION FIX AFTER DELETE
+      if (
+        currentProducts.length === 1 &&
+        currentPage > 1
+      ) {
+        setCurrentPage(currentPage - 1);
+      }
 
     } catch (error) {
       console.log(error);
@@ -142,7 +172,11 @@ const Products = () => {
 
       const updatedList = products.map((p) =>
         p.id === editProduct.id
-          ? { ...p, title: editProduct.title, price: editProduct.price }
+          ? {
+              ...p,
+              title: editProduct.title,
+              price: editProduct.price,
+            }
           : p
       );
 
@@ -168,6 +202,7 @@ const Products = () => {
       <div className="products-header">
         <div>
           <h2>Products</h2>
+
           <p className="products-subtitle">
             Manage all your products here
           </p>
@@ -182,7 +217,13 @@ const Products = () => {
       </div>
 
       {/* EDIT SECTION */}
-      <div style={{ background: "#fff", padding: "15px", marginBottom: "15px" }}>
+      <div
+        style={{
+          background: "#fff",
+          padding: "15px",
+          marginBottom: "15px",
+        }}
+      >
         <h3>Edit Product</h3>
 
         <input
@@ -190,7 +231,10 @@ const Products = () => {
           placeholder="Title"
           value={editProduct.title}
           onChange={(e) =>
-            setEditProduct({ ...editProduct, title: e.target.value })
+            setEditProduct({
+              ...editProduct,
+              title: e.target.value,
+            })
           }
         />
 
@@ -199,11 +243,17 @@ const Products = () => {
           placeholder="Price"
           value={editProduct.price}
           onChange={(e) =>
-            setEditProduct({ ...editProduct, price: e.target.value })
+            setEditProduct({
+              ...editProduct,
+              price: e.target.value,
+            })
           }
         />
 
-        <button onClick={updateProduct} className="add-product-btn">
+        <button
+          onClick={updateProduct}
+          className="add-product-btn"
+        >
           Update Product
         </button>
       </div>
@@ -225,86 +275,164 @@ const Products = () => {
             </tr>
           </thead>
 
-        <tbody>
+          <tbody>
 
-  {products.map((item, index) => (
-    <tr key={item.id}>
+            {currentProducts.map((item, index) => (
+              <tr key={item.id}>
 
-      {/* CHANGED HERE */}
-      <td>#{index + 1}</td>
+                <td>
+                  #{indexOfFirstProduct + index + 1}
+                </td>
 
-      <td>
-        <img
-          src={item.image}
-          alt={item.title}
-          style={{
-            width: "60px",
-            height: "60px",
-            objectFit: "contain",
-            background: "#fff",
-            padding: "5px",
-            borderRadius: "8px"
-          }}
-        />
-      </td>
+                <td>
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      objectFit: "contain",
+                      background: "#fff",
+                      padding: "5px",
+                      borderRadius: "8px",
+                    }}
+                  />
+                </td>
 
-      <td style={{ maxWidth: "220px" }}>
-        {item.title}
-      </td>
+                <td style={{ maxWidth: "220px" }}>
+                  {item.title}
+                </td>
 
-      <td style={{ maxWidth: "300px" }}>
-        {item.description?.slice(0, 80)}...
-      </td>
+                <td style={{ maxWidth: "300px" }}>
+                  {item.description?.slice(0, 80)}...
+                </td>
 
-      <td>{item.category}</td>
+                <td>{item.category}</td>
 
-      <td>
-        <b>${item.price}</b>
-      </td>
+                <td>
+                  <b>${item.price}</b>
+                </td>
 
-      <td style={{ display: "flex", gap: "10px" }}>
+                <td
+                  style={{
+                    display: "flex",
+                    gap: "10px",
+                  }}
+                >
 
-        <button
-          className="view-btn"
-          onClick={() => getSingleProduct(item.id)}
-        >
-          View
-        </button>
+                  <button
+                    className="view-btn"
+                    onClick={() =>
+                      getSingleProduct(item.id)
+                    }
+                  >
+                    View
+                  </button>
 
-        {/* EDIT BUTTON → POPUP OPEN */}
-        <button
-          className="add-product-btn"
-          onClick={() => {
-            setEditProduct({
-              id: item.id,
-              title: item.title,
-              price: item.price,
-            });
-            setShowEditPopup(true);
-          }}
-        >
-          Edit
-        </button>
+                  {/* EDIT BUTTON */}
+                  <button
+                    className="add-product-btn"
+                    onClick={() => {
+                      setEditProduct({
+                        id: item.id,
+                        title: item.title,
+                        price: item.price,
+                      });
 
-        {/* DELETE BUTTON → POPUP OPEN */}
-        <button
-          className="delete-btn"
-          onClick={() => {
-            setDeleteProduct(item);
-            setShowDeletePopup(true);
-          }}
-        >
-          Delete
-        </button>
+                      setShowEditPopup(true);
+                    }}
+                  >
+                    Edit
+                  </button>
 
-      </td>
+                  {/* DELETE BUTTON */}
+                  <button
+                    className="delete-btn"
+                    onClick={() => {
+                      setDeleteProduct(item);
 
-    </tr>
-  ))}
+                      setShowDeletePopup(true);
+                    }}
+                  >
+                    Delete
+                  </button>
 
-</tbody>
+                </td>
+
+              </tr>
+            ))}
+
+          </tbody>
 
         </table>
+
+        {/* PAGINATION */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "10px",
+            marginTop: "20px",
+            flexWrap: "wrap",
+          }}
+        >
+
+          <button
+            className="add-product-btn"
+            disabled={currentPage === 1}
+            onClick={() =>
+              setCurrentPage(currentPage - 1)
+            }
+            style={{
+              opacity:
+                currentPage === 1 ? 0.5 : 1,
+            }}
+          >
+            Prev
+          </button>
+
+          {[...Array(totalPages)].map((_, i) => (
+            <button
+              key={i}
+              onClick={() =>
+                setCurrentPage(i + 1)
+              }
+              className="add-product-btn"
+              style={{
+                background:
+                  currentPage === i + 1
+                    ? "#000"
+                    : "",
+
+                color:
+                  currentPage === i + 1
+                    ? "#fff"
+                    : "",
+              }}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            className="add-product-btn"
+            disabled={
+              currentPage === totalPages
+            }
+            onClick={() =>
+              setCurrentPage(currentPage + 1)
+            }
+            style={{
+              opacity:
+                currentPage === totalPages
+                  ? 0.5
+                  : 1,
+            }}
+          >
+            Next
+          </button>
+
+        </div>
 
       </div>
 
@@ -320,7 +448,10 @@ const Products = () => {
               placeholder="Product Name"
               value={newProduct.title}
               onChange={(e) =>
-                setNewProduct({ ...newProduct, title: e.target.value })
+                setNewProduct({
+                  ...newProduct,
+                  title: e.target.value,
+                })
               }
             />
 
@@ -329,17 +460,25 @@ const Products = () => {
               placeholder="Price"
               value={newProduct.price}
               onChange={(e) =>
-                setNewProduct({ ...newProduct, price: e.target.value })
+                setNewProduct({
+                  ...newProduct,
+                  price: e.target.value,
+                })
               }
             />
 
-            <button onClick={addProduct} className="add-product-btn">
+            <button
+              onClick={addProduct}
+              className="add-product-btn"
+            >
               Save
             </button>
 
             <button
               className="close-btn"
-              onClick={() => setShowAddPopup(false)}
+              onClick={() =>
+                setShowAddPopup(false)
+              }
             >
               Cancel
             </button>
@@ -359,7 +498,10 @@ const Products = () => {
               type="text"
               value={editProduct.title}
               onChange={(e) =>
-                setEditProduct({ ...editProduct, title: e.target.value })
+                setEditProduct({
+                  ...editProduct,
+                  title: e.target.value,
+                })
               }
             />
 
@@ -367,17 +509,25 @@ const Products = () => {
               type="number"
               value={editProduct.price}
               onChange={(e) =>
-                setEditProduct({ ...editProduct, price: e.target.value })
+                setEditProduct({
+                  ...editProduct,
+                  price: e.target.value,
+                })
               }
             />
 
-            <button onClick={updateProduct} className="add-product-btn">
+            <button
+              onClick={updateProduct}
+              className="add-product-btn"
+            >
               Update
             </button>
 
             <button
               className="close-btn"
-              onClick={() => setShowEditPopup(false)}
+              onClick={() =>
+                setShowEditPopup(false)
+              }
             >
               Cancel
             </button>
@@ -392,11 +542,16 @@ const Products = () => {
           <div className="modal-box">
 
             <h2>Success 🎉</h2>
-            <p>Product added successfully!</p>
+
+            <p>
+              Product added successfully!
+            </p>
 
             <button
               className="add-product-btn"
-              onClick={() => setShowSuccessPopup(false)}
+              onClick={() =>
+                setShowSuccessPopup(false)
+              }
             >
               OK
             </button>
@@ -412,34 +567,55 @@ const Products = () => {
 
             <h2>Product Details</h2>
 
-            <div style={{ textAlign: "center", marginBottom: "15px" }}>
+            <div
+              style={{
+                textAlign: "center",
+                marginBottom: "15px",
+              }}
+            >
               <img
                 src={singleProduct.image}
                 alt={singleProduct.title}
                 style={{
                   width: "150px",
                   height: "150px",
-                  objectFit: "contain"
+                  objectFit: "contain",
                 }}
               />
             </div>
 
-            <p><b>ID:</b> {singleProduct.id}</p>
-
-            <p><b>Name:</b> {singleProduct.title}</p>
-
-            <p><b>Description:</b></p>
-            <p>{singleProduct.description}</p>
-
-            <p><b>Category:</b> {singleProduct.category}</p>
+            <p>
+              <b>ID:</b> {singleProduct.id}
+            </p>
 
             <p>
-              <b>Price:</b> ${singleProduct.price}
+              <b>Name:</b>{" "}
+              {singleProduct.title}
+            </p>
+
+            <p>
+              <b>Description:</b>
+            </p>
+
+            <p>
+              {singleProduct.description}
+            </p>
+
+            <p>
+              <b>Category:</b>{" "}
+              {singleProduct.category}
+            </p>
+
+            <p>
+              <b>Price:</b> $
+              {singleProduct.price}
             </p>
 
             <button
               className="close-btn"
-              onClick={() => setSingleProduct(null)}
+              onClick={() =>
+                setSingleProduct(null)
+              }
             >
               Close
             </button>
@@ -451,14 +627,21 @@ const Products = () => {
       {/* DELETE POPUP */}
       {showDeletePopup && (
         <div className="modal-overlay">
-          <div className="modal-box">
+          <div className="modal-box text-start">
 
             <h2>Confirm Delete</h2>
 
-            <p>Are you sure you want to delete:</p>
-            <h4>{deleteProduct?.title}</h4>
+            <p>
+              Are you sure you want to
+              delete:
+            </p>
+
+            <h4>
+              {deleteProduct?.title}
+            </h4>
 
             <div className="d-flex gap-3 pt-3">
+
               <button
                 className="delete-btn"
                 onClick={deleteProductAPI}
@@ -468,10 +651,13 @@ const Products = () => {
 
               <button
                 className="close-btn"
-                onClick={() => setShowDeletePopup(false)}
+                onClick={() =>
+                  setShowDeletePopup(false)
+                }
               >
                 Cancel
               </button>
+
             </div>
 
           </div>

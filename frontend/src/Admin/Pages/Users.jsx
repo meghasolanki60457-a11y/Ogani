@@ -3,174 +3,104 @@ import { Link } from "react-router-dom";
 
 const Users = () => {
 
-  // ================= STATES =================
-
   const [showModal, setShowModal] = useState(false);
+  const [showEditPopup, setShowEditPopup] = useState(false);
+  const [showViewPopup, setShowViewPopup] = useState(false);
+
   const [selectedUser, setSelectedUser] = useState(null);
-
-  // USERS STATE
   const [users, setUsers] = useState([]);
-
-  // LOADING STATE
   const [loading, setLoading] = useState(true);
-
-  // SINGLE USER STATE
   const [singleUser, setSingleUser] = useState(null);
 
-  // EDIT USER STATE
   const [editUser, setEditUser] = useState({
     id: "",
     username: "",
     email: "",
   });
 
-  // ================= GET ALL USERS API =================
-
   useEffect(() => {
-
     fetch("https://fakestoreapi.com/users")
       .then((res) => res.json())
       .then((data) => {
-
-        console.log("All Users:", data);
-
         setUsers(data);
-
         setLoading(false);
-
       })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-
+      .catch(() => setLoading(false));
   }, []);
 
-  // ================= GET SINGLE USER API =================
+  const handleViewUser = (user) => {
+    setSingleUser(user);
+    setShowViewPopup(true);
+  };
 
   const getSingleUser = async (id) => {
-
     try {
-
-      const res = await fetch(
-        `https://fakestoreapi.com/users/${id}`
-      );
-
+      const res = await fetch(`https://fakestoreapi.com/users/${id}`);
       const data = await res.json();
-
-      console.log("Single User:", data);
-
       setSingleUser(data);
-
     } catch (error) {
       console.log(error);
     }
   };
-
-  // ================= OPEN MODAL =================
 
   const openModal = (user) => {
     setSelectedUser(user);
     setShowModal(true);
   };
 
-  // ================= CLOSE MODAL =================
-
   const closeModal = () => {
     setShowModal(false);
     setSelectedUser(null);
   };
 
-  // ================= DELETE USER API =================
-
   const deleteUser = async () => {
-
     try {
+      await fetch(`https://fakestoreapi.com/users/${selectedUser.id}`, {
+        method: "DELETE",
+      });
 
-      const res = await fetch(
-        `https://fakestoreapi.com/users/${selectedUser.id}`,
-        {
-          method: "DELETE",
-        }
-      );
-
-      const data = await res.json();
-
-      console.log("Deleted API Response:", data);
-
-      // UI SE REMOVE
       const updatedUsers = users.filter(
         (user) => user.id !== selectedUser.id
       );
 
       setUsers(updatedUsers);
 
-      console.log("Deleted user:", selectedUser);
-
       closeModal();
-
     } catch (error) {
       console.log(error);
     }
   };
 
-  // ================= SET EDIT USER =================
-
   const handleEditClick = (user) => {
-
     setEditUser({
       id: user.id,
       username: user.username,
       email: user.email,
     });
+
+    setShowEditPopup(true);
   };
 
-  // ================= UPDATE USER API =================
-
   const updateUser = async () => {
-
     try {
-
-      const updatedData = {
-        username: editUser.username,
-        email: editUser.email,
-      };
-
-      const res = await fetch(
-        `https://fakestoreapi.com/users/${editUser.id}`,
-        {
-          method: "PUT",
-
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify(updatedData),
-        }
-      );
-
-      const data = await res.json();
-
-      console.log("Updated User:", data);
-
-      // UI UPDATE
-      const updatedUsers = users.map((user) => {
-
-        if (user.id === editUser.id) {
-
-          return {
-            ...user,
-            username: editUser.username,
-            email: editUser.email,
-          };
-        }
-
-        return user;
+      await fetch(`https://fakestoreapi.com/users/${editUser.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: editUser.username,
+          email: editUser.email,
+        }),
       });
+
+      const updatedUsers = users.map((user) =>
+        user.id === editUser.id
+          ? { ...user, ...editUser }
+          : user
+      );
 
       setUsers(updatedUsers);
 
-      alert("User Updated Successfully");
+      setShowEditPopup(false);
 
     } catch (error) {
       console.log(error);
@@ -180,10 +110,8 @@ const Users = () => {
   return (
     <div className="users-page">
 
-      {/* ================= HEADER ================= */}
-
+      {/* HEADER */}
       <div className="users-header">
-
         <div>
           <h1>Users</h1>
           <p>Manage all platform users</p>
@@ -192,88 +120,22 @@ const Users = () => {
         <Link to="/admin/users/add" className="add-user-btn">
           + Add User
         </Link>
-
       </div>
 
-      {/* ================= EDIT USER FORM ================= */}
-
-      <div
-        style={{
-          background: "#fff",
-          padding: "20px",
-          borderRadius: "10px",
-          marginBottom: "20px",
-        }}
-      >
-
-        <h2>Edit User</h2>
-
-        <div
-          style={{
-            display: "grid",
-            gap: "10px",
-          }}
-        >
-
-          <input
-            type="text"
-            placeholder="Username"
-            value={editUser.username}
-            onChange={(e) =>
-              setEditUser({
-                ...editUser,
-                username: e.target.value,
-              })
-            }
-          />
-
-          <input
-            type="email"
-            placeholder="Email"
-            value={editUser.email}
-            onChange={(e) =>
-              setEditUser({
-                ...editUser,
-                email: e.target.value,
-              })
-            }
-          />
-
-          <button
-            onClick={updateUser}
-            style={{
-              padding: "10px",
-              background: "#16a34a",
-              color: "#fff",
-              border: "none",
-              borderRadius: "6px",
-              cursor: "pointer",
-            }}
-          >
-            Update User
-          </button>
-
-        </div>
-
-      </div>
-
-      {/* ================= TABLE CARD ================= */}
-
+      {/* TABLE */}
       <div className="users-table-card">
 
         {loading ? (
-
           <h2 style={{ textAlign: "center", padding: "30px" }}>
             Loading...
           </h2>
-
         ) : (
 
           <table className="users-table">
 
             <thead>
               <tr>
-                <th>User ID</th>
+                <th>#</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Username</th>
@@ -284,81 +146,44 @@ const Users = () => {
 
             <tbody>
 
-              {users.map((user) => (
+              {users.map((user, index) => (
 
                 <tr key={user.id}>
 
-                  {/* USER ID */}
-                  <td>#U{user.id}</td>
+                  <td>{index + 1}</td>
 
-                  {/* NAME */}
                   <td>
-                    {user.name?.firstname}{" "}
-                    {user.name?.lastname}
+                    {user.name?.firstname} {user.name?.lastname}
                   </td>
 
-                  {/* EMAIL */}
                   <td>{user.email}</td>
-
-                  {/* USERNAME */}
                   <td>{user.username}</td>
 
-                  {/* STATUS */}
                   <td>
                     <span className="status active">
                       Active
                     </span>
                   </td>
 
-                  {/* ACTIONS */}
-                  <td
-                    style={{
-                      display: "flex",
-                      gap: "10px",
-                    }}
-                  >
+                  <td style={{ display: "flex", gap: "10px" }}>
 
-                    {/* VIEW BUTTON */}
                     <button
-                      onClick={() => getSingleUser(user.id)}
-                      style={{
-                        padding: "6px 12px",
-                        background: "#1e40af",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "6px",
-                        cursor: "pointer",
-                      }}
+                      onClick={() => handleViewUser(user)}
+                      className="btn btn-primary btn-sm"
                     >
                       View
                     </button>
 
-                    {/* EDIT BUTTON */}
                     <button
                       onClick={() => handleEditClick(user)}
-                      style={{
-                        padding: "6px 12px",
-                        background: "#f59e0b",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "6px",
-                        cursor: "pointer",
-                      }}
+                      className="btn btn-warning btn-sm"
                     >
                       Edit
                     </button>
 
-                    {/* DELETE BUTTON */}
                     <button
                       onClick={() => openModal(user)}
-                      style={{
-                        padding: "6px 12px",
-                        background: "red",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "6px",
-                        cursor: "pointer"
-                      }}
+                      className="btn btn-danger btn-sm"
                     >
                       Delete
                     </button>
@@ -372,89 +197,122 @@ const Users = () => {
             </tbody>
 
           </table>
-
         )}
 
       </div>
 
-      {/* ================= SINGLE USER DETAILS ================= */}
+      {/* ================= VIEW POPUP ================= */}
+      {showViewPopup && singleUser && (
+        <div className="modal d-block" style={{ background: "rgba(0,0,0,0.6)" }}>
+          <div className="modal-dialog modal-dialog-centered">
 
-      {singleUser && (
+            <div className="modal-content p-3">
 
-        <div
-          style={{
-            marginTop: "20px",
-            background: "#fff",
-            padding: "20px",
-            borderRadius: "10px",
-          }}
-        >
+              <h4>User Details</h4>
 
-          <h2>Single User Details</h2>
+              <p><b>Name:</b> {singleUser.name?.firstname} {singleUser.name?.lastname}</p>
+              <p><b>Email:</b> {singleUser.email}</p>
+              <p><b>Username:</b> {singleUser.username}</p>
 
-          <p>
-            <b>ID:</b> {singleUser.id}
-          </p>
-
-          <p>
-            <b>Name:</b>{" "}
-            {singleUser.name?.firstname}{" "}
-            {singleUser.name?.lastname}
-          </p>
-
-          <p>
-            <b>Email:</b> {singleUser.email}
-          </p>
-
-          <p>
-            <b>Username:</b> {singleUser.username}
-          </p>
-
-        </div>
-
-      )}
-
-      {/* ================= DELETE MODAL ================= */}
-
-      {showModal && (
-
-        <div className="modal-overlay">
-
-          <div className="modal-box">
-
-            <h2>Delete User</h2>
-
-            <p>
-              Are you sure you want to delete{" "}
-              <b>
-                {selectedUser?.name?.firstname}{" "}
-                {selectedUser?.name?.lastname}
-              </b>
-              ?
-            </p>
-
-            <div className="modal-actions">
-
-              <button
-                className="cancel-btn"
-                onClick={closeModal}
-              >
-                Cancel
-              </button>
-
-              <button
-                className="delete-btn"
-                onClick={deleteUser}
-              >
-                Yes, Delete
-              </button>
+              <div className="text-end">
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => setShowViewPopup(false)}
+                >
+                  Close
+                </button>
+              </div>
 
             </div>
 
           </div>
-
         </div>
+      )}
 
+      {/* ================= EDIT POPUP ================= */}
+      {showEditPopup && (
+        <div className="modal d-block" style={{ background: "rgba(0,0,0,0.6)" }}>
+          <div className="modal-dialog modal-dialog-centered">
+
+            <div className="modal-content p-3">
+
+              <h4>Edit User</h4>
+
+              <input
+                className="form-control mb-2"
+                value={editUser.username}
+                onChange={(e) =>
+                  setEditUser({ ...editUser, username: e.target.value })
+                }
+                placeholder="Username"
+              />
+
+              <input
+                className="form-control mb-3"
+                value={editUser.email}
+                onChange={(e) =>
+                  setEditUser({ ...editUser, email: e.target.value })
+                }
+                placeholder="Email"
+              />
+
+              <div className="d-flex justify-content-end gap-2">
+
+                <button
+                  className="btn btn-success"
+                  onClick={updateUser}
+                >
+                  Update
+                </button>
+
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => setShowEditPopup(false)}
+                >
+                  Cancel
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* ================= DELETE POPUP ================= */}
+      {showModal && (
+        <div className="modal d-block" style={{ background: "rgba(0,0,0,0.6)" }}>
+          <div className="modal-dialog modal-dialog-centered">
+
+            <div className="modal-content p-3 text-center">
+
+              <h4>Delete User</h4>
+
+              <p>Are you sure you want to delete this user?</p>
+
+              <div className="d-flex justify-content-center gap-3">
+
+                <button
+                  className="btn btn-danger"
+                  onClick={deleteUser}
+                >
+                  Yes Delete
+                </button>
+
+                <button
+                  className="btn btn-secondary"
+                  onClick={closeModal}
+                >
+                  Cancel
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
       )}
 
     </div>
