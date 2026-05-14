@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Signup = () => {
+
   const [formData, setFormData] = useState({
+    id: "",
     username: "",
     email: "",
     mobile: "",
@@ -14,7 +16,9 @@ const Signup = () => {
     terms: false,
   });
 
+  // Handle Input
   const handleChange = (e) => {
+
     const { name, value, type, checked } = e.target;
 
     setFormData({
@@ -23,216 +27,277 @@ const Signup = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  // Handle Submit
+  const handleSubmit = async (e) => {
+
     e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
+    try {
 
-    alert("Registration Successful");
-    console.log(formData);
+      const response = await fetch(
+        "https://fakestoreapi.com/users",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            id: formData.id,
+            username: formData.username,
+            email: formData.email,
+            password: formData.password,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      console.log("API Response:", data);
+
+      // Success Alert
+      alert("Registration Successful");
+
+      // ✅ IMPORTANT FIX (HEADER LOGIN/LOGIC)
+      localStorage.setItem("token", data.id);
+
+      // Reset Form
+      setFormData({
+        id: "",
+        username: "",
+        email: "",
+        mobile: "",
+        password: "",
+        confirmPassword: "",
+        gender: "",
+        address: "",
+        pincode: "",
+        terms: false,
+      });
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert("Something went wrong");
+    }
   };
 
   return (
-    <div
-      className="container-fluid min-vh-100 d-flex justify-content-center align-items-center"
-      style={{
-        background:
-          "linear-gradient(135deg, #141E30 0%, #243B55 50%, #4CA1AF 100%)",
-      }}
-    >
-      <div
-        className="row shadow-lg overflow-hidden rounded-4"
-        style={{
-          width: "950px",
-          background: "#fff",
-        }}
-      >
-        {/* Left Side */}
-        <div
-          className="col-md-5 d-none d-md-flex flex-column justify-content-center align-items-center text-white p-5"
-          style={{
-            background:
-              "linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)",
-          }}
-        >
-          <h1 className="fw-bold mb-3">Welcome Back!</h1>
 
-          <p className="text-center">
-            Create your account and enjoy our modern dashboard experience.
-          </p>
+    <div className="container py-5">
 
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/295/295128.png"
-            alt="signup"
-            width="180"
-            className="mt-3"
-          />
-        </div>
+      <div className="row justify-content-center">
 
-        {/* Right Side Form */}
-        <div className="col-md-7 p-5">
-          <h2 className="fw-bold text-center mb-4 text-primary">
-            Create Account
-          </h2>
+        <div className="col-md-7">
 
-          <form onSubmit={handleSubmit}>
-            {/* Username */}
-            <div className="mb-3">
-              <label className="form-label fw-semibold">Username</label>
-              <input
-                type="text"
-                className="form-control rounded-3"
-                placeholder="Enter Username"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-              />
-            </div>
+          <div className="card shadow p-4 border-0 rounded-4">
 
-            {/* Email */}
-            <div className="mb-3">
-              <label className="form-label fw-semibold">Email</label>
-              <input
-                type="email"
-                className="form-control rounded-3"
-                placeholder="Enter Email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
+            <h2 className="text-center mb-4 fw-bold">
+              Create Account
+            </h2>
 
-            {/* Mobile */}
-            <div className="mb-3">
-              <label className="form-label fw-semibold">
-                Mobile Number
-              </label>
-              <input
-                type="tel"
-                className="form-control rounded-3"
-                placeholder="Enter Mobile Number"
-                name="mobile"
-                value={formData.mobile}
-                onChange={handleChange}
-                required
-              />
-            </div>
+            <form onSubmit={handleSubmit}>
 
-            {/* Password Row */}
-            <div className="row">
-              <div className="col-md-6 mb-3">
-                <label className="form-label fw-semibold">Password</label>
+              {/* ID */}
+              <div className="mb-3">
+
+                <label className="form-label fw-semibold">
+                  ID
+                </label>
+
+                <input
+                  type="number"
+                  className="form-control"
+                  placeholder="Enter ID"
+                  name="id"
+                  value={formData.id}
+                  onChange={handleChange}
+                  required
+                />
+
+              </div>
+
+              {/* Username */}
+              <div className="mb-3">
+
+                <label className="form-label fw-semibold">
+                  Username
+                </label>
+
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter Username"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  required
+                />
+
+              </div>
+
+              {/* Email */}
+              <div className="mb-3">
+
+                <label className="form-label fw-semibold">
+                  Email
+                </label>
+
+                <input
+                  type="email"
+                  className="form-control"
+                  placeholder="Enter Email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+
+              </div>
+
+              {/* Hidden Mobile */}
+              <div className="mb-3 d-none">
+
+                <label className="form-label">
+                  Mobile Number
+                </label>
+
+                <input
+                  type="tel"
+                  className="form-control"
+                  placeholder="Enter Mobile Number"
+                  name="mobile"
+                  value={formData.mobile}
+                  onChange={handleChange}
+                />
+
+              </div>
+
+              {/* Password */}
+              <div className="mb-3">
+
+                <label className="form-label fw-semibold">
+                  Password
+                </label>
+
                 <input
                   type="password"
-                  className="form-control rounded-3"
-                  placeholder="Password"
+                  className="form-control"
+                  placeholder="Enter Password"
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
                   required
                 />
+
               </div>
 
-              <div className="col-md-6 mb-3">
-                <label className="form-label fw-semibold">
+              {/* Hidden Confirm Password */}
+              <div className="mb-3 d-none">
+
+                <label className="form-label">
                   Confirm Password
                 </label>
+
                 <input
                   type="password"
-                  className="form-control rounded-3"
+                  className="form-control"
                   placeholder="Confirm Password"
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  required
                 />
+
               </div>
-            </div>
 
-            {/* Gender */}
-            <div className="mb-3">
-              <label className="form-label fw-semibold">
-                Gender
-              </label>
+              {/* Hidden Gender */}
+              <div className="mb-3 d-none">
 
-              <select
-                className="form-select rounded-3"
-                name="gender"
-                value={formData.gender}
-                onChange={handleChange}
+                <label className="form-label">
+                  Gender
+                </label>
+
+                <select
+                  className="form-select"
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                >
+                  <option value="">Select Gender</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                  <option>Other</option>
+                </select>
+
+              </div>
+
+              {/* Hidden Address */}
+              <div className="mb-3 d-none">
+
+                <label className="form-label">
+                  Address
+                </label>
+
+                <textarea
+                  className="form-control"
+                  rows="3"
+                  placeholder="Enter Address"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                ></textarea>
+
+              </div>
+
+              {/* Hidden Pincode */}
+              <div className="mb-3 d-none">
+
+                <label className="form-label">
+                  Pincode / ZIP Code
+                </label>
+
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter Pincode"
+                  name="pincode"
+                  value={formData.pincode}
+                  onChange={handleChange}
+                />
+
+              </div>
+
+              {/* Hidden Terms */}
+              <div className="form-check mb-4 d-none">
+
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  name="terms"
+                  checked={formData.terms}
+                  onChange={handleChange}
+                />
+
+                <label className="form-check-label">
+                  I agree to Terms & Conditions
+                </label>
+
+              </div>
+
+              {/* Button */}
+              <button
+                type="submit"
+                className="btn btn-primary w-100 fw-bold"
               >
-                <option value="">Select Gender</option>
-                <option>Male</option>
-                <option>Female</option>
-                <option>Other</option>
-              </select>
-            </div>
+                Register
+              </button>
 
-            {/* Address */}
-            <div className="mb-3">
-              <label className="form-label fw-semibold">Address</label>
+            </form>
 
-              <textarea
-                className="form-control rounded-3"
-                rows="3"
-                placeholder="Enter Address"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-              ></textarea>
-            </div>
+          </div>
 
-            {/* Pincode */}
-            <div className="mb-3">
-              <label className="form-label fw-semibold">
-                Pincode / ZIP Code
-              </label>
-
-              <input
-                type="text"
-                className="form-control rounded-3"
-                placeholder="Enter Pincode"
-                name="pincode"
-                value={formData.pincode}
-                onChange={handleChange}
-              />
-            </div>
-
-            {/* Terms */}
-            <div className="form-check mb-4">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                name="terms"
-                checked={formData.terms}
-                onChange={handleChange}
-                required
-              />
-
-              <label className="form-check-label">
-                I agree to Terms & Conditions
-              </label>
-            </div>
-
-            {/* Button */}
-            <button
-              type="submit"
-              className="btn w-100 text-white fw-bold rounded-3"
-              style={{
-                background:
-                  "linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)",
-                padding: "12px",
-                border: "none",
-              }}
-            >
-              Register Now
-            </button>
-          </form>
         </div>
       </div>
     </div>

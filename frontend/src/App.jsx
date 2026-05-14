@@ -2,9 +2,9 @@ import {
   BrowserRouter,
   Routes,
   Route,
-  useLocation,
   Navigate,
   Outlet,
+  useLocation,
 } from "react-router-dom";
 
 import { useEffect, useState } from "react";
@@ -43,7 +43,7 @@ import Contact from "./Pages/Contact";
 import Login from "./Pages/Login";
 import Sign from "./Pages/Sign";
 
-/* HOME PAGE */
+/* HOME */
 function Home() {
   return (
     <>
@@ -56,11 +56,11 @@ function Home() {
   );
 }
 
-/* PROTECTED ADMIN ROUTE */
+/* 🔥 ADMIN PROTECTION */
 function ProtectedAdminRoute() {
   const isLoggedIn = localStorage.getItem("adminToken");
 
-  return isLoggedIn ? <Outlet /> : <Navigate to="/login" replace />;
+  return isLoggedIn ? <Outlet /> : <Navigate to="/admin/login" replace />;
 }
 
 /* WEBSITE LAYOUT */
@@ -70,11 +70,7 @@ function Website() {
 
   useEffect(() => {
     setLoading(true);
-
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-
+    const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
   }, [location]);
 
@@ -94,11 +90,7 @@ function Website() {
         <Route path="/ogani/blog-details" element={<BlogDetails />} />
         <Route path="/ogani/blog" element={<Block />} />
         <Route path="/ogani/contact" element={<Contact />} />
-        <Route path="/ogani/shoping-cart/checkout" element={<Checkout />} />
-        <Route path="/ogani/shopping-detail" element={<ShopDetail />} />
-        <Route path="/ogani/blog/blog-details" element={<BlogDetails />} />
-        <Route path="/ogani/product/:id" element={<ShopDetail />} />
-        <Route path="/ogani/shop-details/:id" element={<ShopDetail />} />
+
         <Route path="/ogani/login" element={<Login />} />
         <Route path="/ogani/sign-in" element={<Sign />} />
       </Routes>
@@ -114,32 +106,27 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-        {/* WEBSITE FIRST */}
+        {/* WEBSITE */}
         <Route path="/*" element={<Website />} />
 
-        {/* ADMIN LOGIN */}
-        <Route path="/login" element={<Loginss />} />
+        {/* 🔥 IMPORTANT: /admin redirect to login */}
+        <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
 
-        {/* FIXED ADMIN ROUTES WRAP */}
+        {/* ADMIN LOGIN PAGE */}
+        <Route path="/admin/login" element={<Loginss />} />
+
+        {/* PROTECTED ADMIN AREA */}
         <Route element={<ProtectedAdminRoute />}>
-          <Route path="/admin/*" element={<AdminLayout />}>
-
-            <Route index element={<Dashboard />} />
-
+          <Route path="/admin" element={<AdminLayout />}>
             <Route path="dashboard" element={<Dashboard />} />
-
             <Route path="reports" element={<Reports />} />
             <Route path="orders" element={<Orders />} />
-
             <Route path="users" element={<Users />} />
             <Route path="products" element={<Products />} />
-
             <Route path="settings" element={<Setting />} />
-
             <Route path="products/create" element={<CreateProduct />} />
             <Route path="users/add" element={<AddUser />} />
             <Route path="products/edit/:id" element={<EditPage />} />
-
           </Route>
         </Route>
 

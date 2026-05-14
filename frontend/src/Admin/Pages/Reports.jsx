@@ -42,8 +42,8 @@ const ReportsPage = () => {
       {/* HEADER */}
       <div className="topbar">
         <div>
-          <h1>Reports</h1>
-          <p>Dashboard / Reports</p>
+          <h1 className="pt-3">Reports</h1>
+          <p >Dashboard / Reports</p>
         </div>
 
         <button

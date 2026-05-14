@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaSignOutAlt } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 
 import {
   FaHome,
@@ -49,10 +50,10 @@ const Sidebar = () => {
           <span>Reports</span>
         </NavLink>
 
-        <NavLink to="/admin/users" className="menu-item">
-          <FaChartBar />
-          <span>Users</span>
-        </NavLink>
+       <NavLink to="/admin/users" className="menu-item">
+  <FaUser />
+  <span>Users</span>
+</NavLink>
 
         <NavLink to="/admin/settings" className="menu-item">
           <FaCog />

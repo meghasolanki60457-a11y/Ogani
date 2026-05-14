@@ -1,122 +1,194 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Login = () => {
+
+  // NAVIGATE
+  const navigate = useNavigate();
+
+  // STATE
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  // HANDLE INPUT
+  const handleChange = (e) => {
+
+    const { name, value } = e.target;
+
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  // HANDLE LOGIN
+  const handleLogin = async (e) => {
+
+    e.preventDefault();
+
+    try {
+
+      const response = await fetch(
+        "https://fakestoreapi.com/auth/login",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            username: formData.username,
+            password: formData.password,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      console.log("API Response:", data);
+
+      // SUCCESS LOGIN
+      if (data.token) {
+
+        // SAVE TOKEN
+        localStorage.setItem("token", data.token);
+
+        // SAVE LOGIN STATUS
+        localStorage.setItem("isLogin", true);
+
+        alert("Login Successful");
+
+        // REDIRECT HOME PAGE
+        navigate("/");
+
+        // RELOAD PAGE
+        window.location.reload();
+
+      } else {
+
+        alert("Invalid Username or Password");
+      }
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert("Something went wrong");
+    }
+  };
+
   return (
-    <div
-      className="min-vh-100 d-flex justify-content-center align-items-center"
-      style={{
-        background: "linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%)",
-      }}
-    >
-      <div
-        className="row shadow-lg rounded-4 overflow-hidden"
-        style={{
-          width: "900px",
-          backgroundColor: "#fff",
-        }}
-      >
-        {/* Left Side */}
-        <div
-          className="col-md-6 d-none d-md-flex flex-column justify-content-center align-items-center text-white p-5"
-          style={{
-            background:
-              "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-          }}
-        >
-          <h1 className="fw-bold mb-3">Welcome Back</h1>
 
-          <p className="text-center">
-            Login to continue and explore the beautiful UI experience.
-          </p>
+    <div className="container min-vh-100 d-flex justify-content-center align-items-center">
 
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/295/295128.png"
-            alt="login"
-            width="200"
-            className="mt-4"
-          />
-        </div>
+      <div className="row justify-content-center w-100">
 
-        {/* Right Side */}
-        <div className="col-md-6 p-5">
-          <div className="text-center mb-4">
-            <h2 className="fw-bold">Login</h2>
+        {/* LOGIN FORM */}
+        <div className="col-md-5">
 
-            <p className="text-muted">
-              Enter your details to continue
-            </p>
+          <div className="card shadow border-0 p-4 rounded-4">
+
+            <div className="text-center mb-4">
+
+              <h2 className="fw-bold">
+                Login
+              </h2>
+
+              <p className="text-muted">
+                Enter your details to continue
+              </p>
+
+            </div>
+
+            {/* FORM */}
+            <form onSubmit={handleLogin}>
+
+              {/* USERNAME */}
+              <div className="mb-4">
+
+                <label className="form-label fw-semibold">
+                  Username
+                </label>
+
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter your username"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  required
+                />
+
+              </div>
+
+              {/* PASSWORD */}
+              <div className="mb-4">
+
+                <label className="form-label fw-semibold">
+                  Password
+                </label>
+
+                <input
+                  type="password"
+                  className="form-control"
+                  placeholder="Enter your password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+
+              </div>
+
+              {/* FORGOT PASSWORD */}
+              <div className="text-end mb-4">
+
+                <Link
+                  to="/"
+                  className="text-decoration-none"
+                >
+                  Forgot Password?
+                </Link>
+
+              </div>
+
+              {/* LOGIN BUTTON */}
+              <button
+                type="submit"
+                className="btn btn-primary w-100 mb-4"
+              >
+                Login
+              </button>
+
+              {/* SIGNUP */}
+              <div className="text-center">
+
+                <span className="text-muted">
+                  Don’t have an account?
+                </span>
+
+                <Link
+                  to="/ogani/sign-in"
+                  className="btn btn-outline-primary ms-2"
+                >
+                  Sign Up
+                </Link>
+
+              </div>
+
+            </form>
+
           </div>
 
-          <form>
-            {/* Email */}
-            <div className="mb-4">
-              <label className="form-label fw-semibold">
-                Email Address
-              </label>
-
-              <input
-                type="email"
-                className="form-control form-control-lg rounded-3"
-                placeholder="Enter your email"
-              />
-            </div>
-
-            {/* Password */}
-            <div className="mb-4">
-              <label className="form-label fw-semibold">
-                Password
-              </label>
-
-              <input
-                type="password"
-                className="form-control form-control-lg rounded-3"
-                placeholder="Enter your password"
-              />
-            </div>
-
-            {/* Forgot Password */}
-            <div className="text-end mb-4">
-              <a
-                href="/"
-                className="text-decoration-none"
-                style={{ color: "#764ba2" }}
-              >
-                Forgot Password?
-              </a>
-            </div>
-
-            {/* Login Button */}
-            <button
-              type="button"
-              className="btn w-100 text-white fw-bold rounded-3 mb-4"
-              style={{
-                background:
-                  "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                border: "none",
-                padding: "12px",
-              }}
-            >
-              Login
-            </button>
-
-            {/* Sign Up */}
-            <div className="text-center">
-              <span className="text-muted">
-                Don’t have an account?
-              </span>
-
-              <Link
-                to="/ogani/sign-in"
-                className="btn btn-outline-primary rounded-pill ms-2 px-4"
-              >
-                Sign Up
-              </Link>
-            </div>
-          </form>
         </div>
+
       </div>
+
     </div>
   );
 };
