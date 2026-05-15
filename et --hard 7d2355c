@@ -1,0 +1,35 @@
+[33m3261fc6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{0}: reset: moving to HEAD~1
+[33m89e6c19[m HEAD@{1}: reset: moving to HEAD~1
+[33m7d2355c[m HEAD@{2}: reset: moving to HEAD~2
+[33m7b52217[m HEAD@{3}: commit: fix anchor
+[33mb598e90[m HEAD@{4}: commit: apply filter
+[33m7d2355c[m HEAD@{5}: commit: fix wishlist bug
+[33m89e6c19[m HEAD@{6}: commit: Your commit message
+[33m3261fc6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{7}: commit: first commit
+[33m3326678[m HEAD@{8}: commit: Resolved merge page
+[33m9491b30[m HEAD@{9}: commit: Resolved merge conflicts
+[33mabf7da8[m HEAD@{10}: commit: Updated main branch changes
+[33md386b89[m HEAD@{11}: commit: Updated main branch changes
+[33m5bf88ef[m HEAD@{12}: commit: Updated main branch with latest changes
+[33m9bb2929[m HEAD@{13}: commit: updated changes
+[33m927d734[m HEAD@{14}: commit: Initial commit
+[33m30f080f[m HEAD@{15}: commit: Updated project files and fixed CSS
+[33mb9302ff[m HEAD@{16}: commit: fix vercel 404 routing
+[33m5bfb456[m HEAD@{17}: reset: moving to origin/main
+[33m5bfb456[m HEAD@{18}: checkout: moving from main to main
+[33m5bfb456[m HEAD@{19}: commit: resolve merge conflicts
+[33m3ec21b1[m HEAD@{20}: commit: your message
+[33mccb9919[m HEAD@{21}: commit: updated admin dashboard UI
+[33m66c33b8[m HEAD@{22}: commit: Added Vercel rewrite config
+[33md0165f1[m HEAD@{23}: commit: Updated project changes
+[33mf663ad8[m HEAD@{24}: commit: updated main branch changes
+[33m0f253b1[m HEAD@{25}: commit: updated changes
+[33mb135ba4[m HEAD@{26}: commit: updated project changes
+[33mcfa66a3[m HEAD@{27}: commit: updated frontend changes + login page added
+[33md83dcb8[m[33m ([m[1;32mmegha-v1-8-may[m[33m)[m HEAD@{28}: merge megha-v1-8-may: Fast-forward
+[33mfe57171[m HEAD@{29}: checkout: moving from megha-v1-8-may to main
+[33md83dcb8[m[33m ([m[1;32mmegha-v1-8-may[m[33m)[m HEAD@{30}: commit: Completed new design changes
+[33mfe57171[m HEAD@{31}: checkout: moving from main to megha-v1-8-may
+[33mfe57171[m HEAD@{32}: commit: updated changes in main
+[33mfc22f9a[m HEAD@{33}: Branch: renamed refs/heads/master to refs/heads/main
+[33mfc22f9a[m HEAD@{35}: commit (initial): Initial project setup

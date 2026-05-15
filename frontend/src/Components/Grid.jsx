@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Slider from "rc-slider";
 import { Link } from "react-router-dom";
 
-import { Swiper,  SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 
 import "swiper/css";
@@ -12,7 +12,7 @@ import "rc-slider/assets/index.css";
 function App() {
 
   // PRICE STATE
-  const [price, setPrice] = useState([91, 312]);
+  const [price, setPrice] = useState([0, 1000]);
 
   // PRODUCTS STATE
   const [products, setProducts] = useState([]);
@@ -20,22 +20,15 @@ function App() {
   // PAGINATION STATE
   const [currentPage, setCurrentPage] = useState(1);
 
+  // CATEGORY FILTER
+  const [selectedCategory, setSelectedCategory] =
+    useState("all");
+
+  // SORT STATE
+  const [sortType, setSortType] =
+    useState("default");
+
   const productsPerPage = 6;
-
-  const indexOfLastProduct =
-    currentPage * productsPerPage;
-
-  const indexOfFirstProduct =
-    indexOfLastProduct - productsPerPage;
-
-  const currentProducts = products.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct
-  );
-
-  const totalPages = Math.ceil(
-    products.length / productsPerPage
-  );
 
   // API CALL
   useEffect(() => {
@@ -47,10 +40,63 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
 
+  // CATEGORIES
+  const categories = [
+    ...new Set(products.map((item) => item.category)),
+  ];
+
+  // FILTER PRODUCTS
+  const filteredProducts = products
+    .filter((item) => {
+
+      const matchCategory =
+        selectedCategory === "all"
+          ? true
+          : item.category === selectedCategory;
+
+      const matchPrice =
+        item.price >= price[0] &&
+        item.price <= price[1];
+
+      return matchCategory && matchPrice;
+    })
+
+    .sort((a, b) => {
+
+      if (sortType === "low") {
+        return a.price - b.price;
+      }
+
+      if (sortType === "high") {
+        return b.price - a.price;
+      }
+
+      return 0;
+    });
+
+  // PAGINATION
+  const indexOfLastProduct =
+    currentPage * productsPerPage;
+
+  const indexOfFirstProduct =
+    indexOfLastProduct - productsPerPage;
+
+  const currentProducts =
+    filteredProducts.slice(
+      indexOfFirstProduct,
+      indexOfLastProduct
+    );
+
+  const totalPages = Math.ceil(
+    filteredProducts.length / productsPerPage
+  );
+
   return (
     <>
       <section className="product spad">
+
         <div className="container">
+
           <div className="row">
 
             {/* SIDEBAR */}
@@ -64,16 +110,66 @@ function App() {
                   <h4>Department</h4>
 
                   <ul>
-                    <li><a href="/">Fresh Meat</a></li>
-                    <li><a href="/">Vegetables</a></li>
-                    <li><a href="/">Fruit & Nut Gifts</a></li>
-                    <li><a href="/">Fresh Berries</a></li>
-                    <li><a href="/">Ocean Foods</a></li>
-                    <li><a href="/">Butter & Eggs</a></li>
-                    <li><a href="/">Fastfood</a></li>
-                    <li><a href="/">Fresh Onion</a></li>
-                    <li><a href="/">Papayaya & Crisps</a></li>
-                    <li><a href="/">Oatmeal</a></li>
+
+                    <li>
+                      <button
+                        onClick={() => {
+                          setSelectedCategory("all");
+                          setCurrentPage(1);
+                        }}
+                        style={{
+                          border: "none",
+                          background: "transparent",
+                          padding: "0",
+                          marginBottom: "10px",
+                          color:
+                            selectedCategory === "all"
+                              ? "#7fad39"
+                              : "#000",
+                          fontWeight:
+                            selectedCategory === "all"
+                              ? "700"
+                              : "400",
+                          cursor: "pointer",
+                        }}
+                      >
+                        All
+                      </button>
+                    </li>
+
+                    {categories.map((category, index) => (
+
+                      <li key={index}>
+
+                        <button
+                          onClick={() => {
+                            setSelectedCategory(category);
+                            setCurrentPage(1);
+                          }}
+                          style={{
+                            border: "none",
+                            background: "transparent",
+                            padding: "0",
+                            marginBottom: "10px",
+                            textTransform: "capitalize",
+                            color:
+                              selectedCategory === category
+                                ? "#7fad39"
+                                : "#000",
+                            fontWeight:
+                              selectedCategory === category
+                                ? "700"
+                                : "400",
+                            cursor: "pointer",
+                          }}
+                        >
+                          {category}
+                        </button>
+
+                      </li>
+
+                    ))}
+
                   </ul>
 
                 </div>
@@ -87,10 +183,13 @@ function App() {
 
                     <Slider
                       range
-                      min={10}
-                      max={540}
+                      min={0}
+                      max={1000}
                       value={price}
-                      onChange={(value) => setPrice(value)}
+                      onChange={(value) => {
+                        setPrice(value);
+                        setCurrentPage(1);
+                      }}
                     />
 
                     <div
@@ -108,103 +207,102 @@ function App() {
                   </div>
 
                 </div>
+
                 {/* COLORS */}
-<div className="sidebar__item sidebar__item__color--option">
+                <div className="sidebar__item sidebar__item__color--option">
 
-  <h4>Colors</h4>
+                  <h4>Colors</h4>
 
-  <div className="sidebar__item__color sidebar__item__color--white">
-    <label htmlFor="white">
-      White
-      <input type="radio" id="white" />
-    </label>
-  </div>
+                  <div className="sidebar__item__color sidebar__item__color--white">
+                    <label htmlFor="white">
+                      White
+                      <input type="radio" id="white" />
+                    </label>
+                  </div>
 
-  <div className="sidebar__item__color sidebar__item__color--gray">
-    <label htmlFor="gray">
-      Gray
-      <input type="radio" id="gray" />
-    </label>
-  </div>
+                  <div className="sidebar__item__color sidebar__item__color--gray">
+                    <label htmlFor="gray">
+                      Gray
+                      <input type="radio" id="gray" />
+                    </label>
+                  </div>
 
-  <div className="sidebar__item__color sidebar__item__color--red">
-    <label htmlFor="red">
-      Red
-      <input type="radio" id="red" />
-    </label>
-  </div>
+                  <div className="sidebar__item__color sidebar__item__color--red">
+                    <label htmlFor="red">
+                      Red
+                      <input type="radio" id="red" />
+                    </label>
+                  </div>
 
-  <div className="sidebar__item__color sidebar__item__color--black">
-    <label htmlFor="black">
-      Black
-      <input type="radio" id="black" />
-    </label>
-  </div>
+                  <div className="sidebar__item__color sidebar__item__color--black">
+                    <label htmlFor="black">
+                      Black
+                      <input type="radio" id="black" />
+                    </label>
+                  </div>
 
-  <div className="sidebar__item__color sidebar__item__color--blue">
-    <label htmlFor="blue">
-      Blue
-      <input type="radio" id="blue" />
-    </label>
-  </div>
+                  <div className="sidebar__item__color sidebar__item__color--blue">
+                    <label htmlFor="blue">
+                      Blue
+                      <input type="radio" id="blue" />
+                    </label>
+                  </div>
 
-  <div className="sidebar__item__color sidebar__item__color--green">
-    <label htmlFor="green">
-      Green
-      <input type="radio" id="green" />
-    </label>
-  </div>
+                  <div className="sidebar__item__color sidebar__item__color--green">
+                    <label htmlFor="green">
+                      Green
+                      <input type="radio" id="green" />
+                    </label>
+                  </div>
 
-</div>
+                </div>
 
-{/* PRODUCT SIZE */}
-<div className="sidebar__item">
+                {/* PRODUCT SIZE */}
+                <div className="sidebar__item">
 
-  <h4>Popular Size</h4>
+                  <h4>Popular Size</h4>
 
-  <div className="sidebar__item__size">
-    <label htmlFor="large">
-      Large
-      <input type="radio" id="large" />
-    </label>
-  </div>
+                  <div className="sidebar__item__size">
+                    <label htmlFor="large">
+                      Large
+                      <input type="radio" id="large" />
+                    </label>
+                  </div>
 
-  <div className="sidebar__item__size">
-    <label htmlFor="medium">
-      Medium
-      <input type="radio" id="medium" />
-    </label>
-  </div>
+                  <div className="sidebar__item__size">
+                    <label htmlFor="medium">
+                      Medium
+                      <input type="radio" id="medium" />
+                    </label>
+                  </div>
 
-  <div className="sidebar__item__size">
-    <label htmlFor="small">
-      Small
-      <input type="radio" id="small" />
-    </label>
-  </div>
+                  <div className="sidebar__item__size">
+                    <label htmlFor="small">
+                      Small
+                      <input type="radio" id="small" />
+                    </label>
+                  </div>
 
-  <div className="sidebar__item__size">
-    <label htmlFor="tiny">
-      Tiny
-      <input type="radio" id="tiny" />
-    </label>
-  </div>
+                  <div className="sidebar__item__size">
+                    <label htmlFor="tiny">
+                      Tiny
+                      <input type="radio" id="tiny" />
+                    </label>
+                  </div>
 
-</div>
+                </div>
 
                 {/* LATEST PRODUCTS */}
                 <div className="sidebar__item">
 
                   <div className="latest-product__text">
 
-                    {/* HEADING */}
                     <div className="d-flex justify-content-between align-items-center mb-4">
 
                       <h4 className="mb-0">
                         Latest Products
                       </h4>
 
-                      {/* NAV BUTTONS */}
                       <div className="latest-product__slider__nav">
 
                         <button className="latest-prev">
@@ -219,34 +317,21 @@ function App() {
 
                     </div>
 
-                    {/* SWIPER */}
                     <Swiper
                       slidesPerView={1}
                       spaceBetween={20}
                       loop={true}
-
                       autoplay={{
                         delay: 2000,
                         disableOnInteraction: false,
                       }}
-
                       navigation={{
                         prevEl: ".latest-prev",
                         nextEl: ".latest-next",
                       }}
-
                       modules={[Navigation, Autoplay]}
-
-                      onBeforeInit={(swiper) => {
-                        swiper.params.navigation.prevEl =
-                          ".latest-prev";
-
-                        swiper.params.navigation.nextEl =
-                          ".latest-next";
-                      }}
                     >
 
-                      {/* SLIDE 1 */}
                       <SwiperSlide>
 
                         <div className="latest-prdouct__slider__item">
@@ -267,7 +352,7 @@ function App() {
                                   style={{
                                     width: "110px",
                                     height: "110px",
-                                    objectFit: "contain"
+                                    objectFit: "contain",
                                   }}
                                 />
 
@@ -293,7 +378,6 @@ function App() {
 
                       </SwiperSlide>
 
-                      {/* SLIDE 2 */}
                       <SwiperSlide>
 
                         <div className="latest-prdouct__slider__item">
@@ -314,7 +398,7 @@ function App() {
                                   style={{
                                     width: "110px",
                                     height: "110px",
-                                    objectFit: "contain"
+                                    objectFit: "contain",
                                   }}
                                 />
 
@@ -353,7 +437,7 @@ function App() {
             {/* PRODUCT SECTION */}
             <div className="col-lg-9 col-md-7">
 
-              {/* SALE OFF */}
+              {/* SALE OFF SLIDER */}
               <div className="product__discount">
 
                 <div className="section-title product__discount__title">
@@ -366,18 +450,15 @@ function App() {
                     slidesPerView={3}
                     spaceBetween={20}
                     loop={true}
-
                     autoplay={{
                       delay: 2000,
                       disableOnInteraction: false,
                     }}
-
                     modules={[Autoplay]}
-
                     breakpoints={{
                       0: { slidesPerView: 1 },
                       768: { slidesPerView: 2 },
-                      992: { slidesPerView: 3 }
+                      992: { slidesPerView: 3 },
                     }}
                   >
 
@@ -395,7 +476,7 @@ function App() {
                               backgroundRepeat: "no-repeat",
                               backgroundPosition: "center",
                               backgroundColor: "#fff",
-                              height: "250px"
+                              height: "250px",
                             }}
                           >
 
@@ -405,26 +486,23 @@ function App() {
 
                             <ul className="product__item__pic__hover">
 
-                              {/* WISHLIST */}
                               <li>
                                 <Link to={`/ogani/wishlist/${item.id}`}>
                                   <i className="fa fa-heart"></i>
                                 </Link>
                               </li>
 
-                              {/* DETAIL */}
                               <li>
                                 <Link to={`/ogani/product/${item.id}`}>
                                   <i className="fa fa-retweet"></i>
                                 </Link>
                               </li>
 
-                              {/* CART */}
-                             <li>
-  <Link to="/ogani/shopping-cart">
-    <i className="fa fa-shopping-cart"></i>
-  </Link>
-</li>
+                              <li>
+                                <Link to="/ogani/shopping-cart">
+                                  <i className="fa fa-shopping-cart"></i>
+                                </Link>
+                              </li>
 
                             </ul>
 
@@ -475,10 +553,25 @@ function App() {
 
                       <span>Sort By</span>
 
-                      <select className="border-0 ps-3">
-                        <option value="0">Default</option>
-                        <option value="1">Price Low</option>
-                        <option value="2">Price High</option>
+                      <select
+                        className="border-0 ps-3"
+                        value={sortType}
+                        onChange={(e) => {
+                          setSortType(e.target.value);
+                          setCurrentPage(1);
+                        }}
+                      >
+                        <option value="default">
+                          Default
+                        </option>
+
+                        <option value="low">
+                          Price Low
+                        </option>
+
+                        <option value="high">
+                          Price High
+                        </option>
                       </select>
 
                     </div>
@@ -490,8 +583,10 @@ function App() {
                     <div className="filter__found">
 
                       <h6>
-                        <span>{products.length}</span>
-                        {" "}Products found
+                        <span>
+                          {filteredProducts.length}
+                        </span>{" "}
+                        Products found
                       </h6>
 
                     </div>
@@ -528,11 +623,17 @@ function App() {
                     key={item.id}
                   >
 
-                    <div className="product__item">
+                    {/* FULL CARD CLICKABLE */}
+                    <Link
+                      to={`/ogani/product/${item.id}`}
+                      style={{
+                        textDecoration: "none",
+                      }}
+                    >
 
-                      {/* PRODUCT IMAGE */}
-                      <Link to={`/ogani/product/${item.id}`}>
+                      <div className="product__item">
 
+                        {/* PRODUCT IMAGE */}
                         <div
                           className="product__item__pic set-bg"
                           style={{
@@ -541,29 +642,47 @@ function App() {
                             backgroundRepeat: "no-repeat",
                             backgroundPosition: "center",
                             backgroundColor: "#fff",
-                            height: "250px"
+                            height: "250px",
                           }}
                         >
 
                           <ul className="product__item__pic__hover">
 
                             {/* WISHLIST */}
-                            <li>
-                              <Link to={`/ogani/wishlist/${item.id}`}>
+                            <li
+                              onClick={(e) =>
+                                e.stopPropagation()
+                              }
+                            >
+                              <Link
+                                to={`/ogani/wishlist/${item.id}`}
+                              >
                                 <i className="fa fa-heart"></i>
                               </Link>
                             </li>
 
                             {/* DETAIL */}
-                            <li>
-                              <Link to={`/ogani/product/${item.id}`}>
+                            <li
+                              onClick={(e) =>
+                                e.stopPropagation()
+                              }
+                            >
+                              <Link
+                                to={`/ogani/product/${item.id}`}
+                              >
                                 <i className="fa fa-retweet"></i>
                               </Link>
                             </li>
 
                             {/* CART */}
-                            <li>
-                              <Link to={`/ogani/cart/${item.id}`}>
+                            <li
+                              onClick={(e) =>
+                                e.stopPropagation()
+                              }
+                            >
+                              <Link
+                                to={`/ogani/cart/${item.id}`}
+                              >
                                 <i className="fa fa-shopping-cart"></i>
                               </Link>
                             </li>
@@ -572,43 +691,50 @@ function App() {
 
                         </div>
 
-                      </Link>
+                        {/* PRODUCT TEXT */}
+                        <div className="product__item__text">
 
-                      {/* PRODUCT TEXT */}
-                      <div className="product__item__text">
+                          <span
+                            style={{
+                              color: "#999",
+                              fontSize: "14px",
+                            }}
+                          >
+                            {item.category}
+                          </span>
 
-                        <span
-                          style={{
-                            color: "#999",
-                            fontSize: "14px"
-                          }}
-                        >
-                          {item.category}
-                        </span>
-
-                        <h6>
-
-                          <Link to={`/ogani/product/${item.id}`}>
+                          <h6
+                            style={{
+                              color: "#000",
+                            }}
+                          >
                             {item.title}
-                          </Link>
+                          </h6>
 
-                        </h6>
+                          <p
+                            style={{
+                              fontSize: "13px",
+                              minHeight: "50px",
+                              marginTop: "10px",
+                              color: "#666",
+                            }}
+                          >
+                            {item.description.slice(0, 60)}...
+                          </p>
 
-                        <p
-                          style={{
-                            fontSize: "13px",
-                            minHeight: "50px",
-                            marginTop: "10px"
-                          }}
-                        >
-                          {item.description.slice(0, 60)}...
-                        </p>
+                          <h5
+                            style={{
+                              color: "#000",
+                            }}
+                          >
+                            ${item.price}
+                          </h5>
 
-                        <h5>${item.price}</h5>
+                        </div>
 
                       </div>
 
-                    </div>
+                    </Link>
 
                   </div>
 
@@ -619,7 +745,6 @@ function App() {
               {/* PAGINATION */}
               <div className="product__pagination">
 
-                {/* PREV */}
                 <button
                   onClick={() =>
                     setCurrentPage(currentPage - 1)
@@ -636,7 +761,7 @@ function App() {
                     opacity:
                       currentPage === 1
                         ? 0.5
-                        : 1
+                        : 1,
                   }}
                 >
 
@@ -644,7 +769,6 @@ function App() {
 
                 </button>
 
-                {/* PAGE NUMBERS */}
                 {[...Array(totalPages)].map((_, index) => (
 
                   <button
@@ -666,7 +790,7 @@ function App() {
                         currentPage === index + 1
                           ? "#fff"
                           : "#000",
-                      cursor: "pointer"
+                      cursor: "pointer",
                     }}
                   >
                     {index + 1}
@@ -674,7 +798,6 @@ function App() {
 
                 ))}
 
-                {/* NEXT */}
                 <button
                   onClick={() =>
                     setCurrentPage(currentPage + 1)
@@ -693,7 +816,7 @@ function App() {
                     opacity:
                       currentPage === totalPages
                         ? 0.5
-                        : 1
+                        : 1,
                   }}
                 >
 
@@ -706,7 +829,9 @@ function App() {
             </div>
 
           </div>
+
         </div>
+
       </section>
     </>
   );

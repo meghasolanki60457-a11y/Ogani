@@ -1,96 +1,112 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function ShopDetail() {
-
-  // URL SE PRODUCT ID
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  // PRODUCT STATE
   const [product, setProduct] = useState(null);
 
-  // POPUP STATE
   const [popup, setPopup] = useState({
     show: false,
     message: "",
     type: ""
   });
 
-  // API CALL
+  // ================= FETCH PRODUCT =================
   useEffect(() => {
-
     fetch(`https://fakestoreapi.com/products/${id}`)
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setProduct(data);
-      })
+      .then((data) => setProduct(data))
       .catch((err) => console.log(err));
-
   }, [id]);
 
-  // ================= SHOW POPUP =================
+  // ================= POPUP =================
   const showPopup = (message, type) => {
-
     setPopup({
       show: true,
       message,
       type
     });
 
-    // AUTO CLOSE AFTER 3 SEC
     setTimeout(() => {
       setPopup({
         show: false,
         message: "",
         type: ""
       });
-    }, 3000);
+    }, 2500);
+  };
+
+  // ================= CHECK LOGIN =================
+  const isLoggedIn = () => {
+    const user = localStorage.getItem("user");
+
+    // safe check (important fix)
+    return user !== null && user !== "null" && user !== "";
   };
 
   // ================= ADD TO CART =================
   const addToCart = () => {
+    if (!product) return;
 
-    const existingCart =
+    // ❌ NOT LOGGED IN
+    if (!isLoggedIn()) {
+      showPopup("Please Login First 🔐", "error");
+
+      setTimeout(() => {
+        navigate("/ogani/login");
+      }, 1200);
+
+      return;
+    }
+
+    // 🟢 GET CART
+    const cart =
       JSON.parse(localStorage.getItem("cart")) || [];
 
-    existingCart.push(product);
-
-    localStorage.setItem(
-      "cart",
-      JSON.stringify(existingCart)
+    // 🟢 CHECK DUPLICATE PRODUCT
+    const alreadyExists = cart.find(
+      (item) => item.id === product.id
     );
 
-    // ALERT REMOVE
-    showPopup("Product Added To Cart ✅", "success");
+    if (alreadyExists) {
+      showPopup("Already in Cart ⚠️", "error");
+      return;
+    }
+
+    // 🟢 ADD PRODUCT
+    cart.push({
+      ...product,
+      quantity: 1
+    });
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    showPopup("Added To Cart ✅", "success");
+
+    // OPTIONAL: redirect to cart
+    // setTimeout(() => navigate("/ogani/cart"), 1000);
   };
 
-  // ================= ADD TO WISHLIST =================
+  // ================= WISHLIST =================
   const addToWishlist = () => {
-
-    const existingWishlist =
+    const wishlist =
       JSON.parse(localStorage.getItem("wishlist")) || [];
 
-    existingWishlist.push(product);
+    wishlist.push(product);
 
     localStorage.setItem(
       "wishlist",
-      JSON.stringify(existingWishlist)
+      JSON.stringify(wishlist)
     );
 
-    // ALERT REMOVE
-    showPopup("Product Added To Wishlist ❤️", "wishlist");
+    showPopup("Added To Wishlist ❤️", "wishlist");
   };
 
-  // LOADING
   if (!product) {
     return (
-      <h2
-        style={{
-          textAlign: "center",
-          padding: "100px"
-        }}
-      >
+      <h2 style={{ textAlign: "center", padding: "100px" }}>
         Loading...
       </h2>
     );
@@ -98,7 +114,7 @@ function ShopDetail() {
 
   return (
     <>
-      {/* ================= POPUP ================= */}
+      {/* POPUP */}
       {popup.show && (
         <div
           style={{
@@ -108,202 +124,75 @@ function ShopDetail() {
             background:
               popup.type === "success"
                 ? "#7fad39"
-                : "#dd2222",
+                : popup.type === "wishlist"
+                ? "#dd2222"
+                : "#ff9800",
             color: "#fff",
-            padding: "15px 25px",
+            padding: "12px 20px",
             borderRadius: "8px",
-            boxShadow: "0 0 10px rgba(0,0,0,0.2)",
-            zIndex: "9999",
-            fontWeight: "600",
-            animation: "slideIn 0.4s ease"
+            zIndex: 9999,
+            fontWeight: "600"
           }}
         >
           {popup.message}
         </div>
       )}
 
-      {/* ================= PAGE ================= */}
-      <section
-        className="shop-details"
-        style={{
-          padding: "80px 0"
-        }}
-      >
-
+      {/* PRODUCT UI */}
+      <section style={{ padding: "80px 0" }}>
         <div className="container">
-
           <div className="row">
 
-            {/* PRODUCT IMAGE */}
             <div className="col-lg-6">
-
-              <div
+              <img
+                src={product.image}
+                alt=""
                 style={{
-                  background: "#fff",
-                  padding: "30px",
-                  borderRadius: "10px",
-                  textAlign: "center",
-                  boxShadow: "0 0 10px rgba(0,0,0,0.1)"
+                  width: "100%",
+                  height: "400px",
+                  objectFit: "contain"
                 }}
-              >
-
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  style={{
-                    width: "100%",
-                    height: "400px",
-                    objectFit: "contain"
-                  }}
-                />
-
-              </div>
-
+              />
             </div>
 
-            {/* PRODUCT DETAILS */}
             <div className="col-lg-6">
+              <h4>{product.category}</h4>
+              <h2>{product.title}</h2>
+              <h3>${product.price}</h3>
 
-              <div
+              <p>{product.description}</p>
+
+              <button
+                onClick={addToCart}
                 style={{
-                  padding: "20px"
+                  background: "#7fad39",
+                  color: "#fff",
+                  border: "none",
+                  padding: "12px 30px",
+                  marginRight: "10px",
+                  cursor: "pointer"
                 }}
               >
+                Add To Cart
+              </button>
 
-                {/* CATEGORY */}
-                <span
-                  style={{
-                    color: "#7fad39",
-                    fontWeight: "600",
-                    textTransform: "uppercase",
-                    letterSpacing: "1px"
-                  }}
-                >
-                  {product.category}
-                </span>
-
-                {/* TITLE */}
-                <h2
-                  style={{
-                    marginTop: "15px",
-                    marginBottom: "20px",
-                    fontWeight: "700"
-                  }}
-                >
-                  {product.title}
-                </h2>
-
-                {/* PRICE */}
-                <h3
-                  style={{
-                    color: "#dd2222",
-                    marginBottom: "25px",
-                    fontWeight: "700"
-                  }}
-                >
-                  ${product.price}
-                </h3>
-
-                {/* DESCRIPTION */}
-                <p
-                  style={{
-                    fontSize: "16px",
-                    lineHeight: "30px",
-                    color: "#555"
-                  }}
-                >
-                  {product.description}
-                </p>
-
-                {/* PRODUCT INFO */}
-                <div
-                  style={{
-                    marginTop: "30px"
-                  }}
-                >
-
-                  <p>
-                    <b>Product ID :</b> {product.id}
-                  </p>
-
-                  <p>
-                    <b>Category :</b> {product.category}
-                  </p>
-
-                  <p>
-                    <b>Price :</b> ${product.price}
-                  </p>
-
-                </div>
-
-                {/* BUTTONS */}
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "15px",
-                    marginTop: "30px"
-                  }}
-                >
-
-                  {/* ADD TO CART */}
-                  <button
-                    onClick={addToCart}
-                    style={{
-                      background: "#7fad39",
-                      color: "#fff",
-                      border: "none",
-                      padding: "12px 35px",
-                      borderRadius: "5px",
-                      fontWeight: "600",
-                      cursor: "pointer"
-                    }}
-                  >
-                    Add To Cart
-                  </button>
-
-                  {/* WISHLIST */}
-                  <button
-                    onClick={addToWishlist}
-                    style={{
-                      background: "#dd2222",
-                      color: "#fff",
-                      border: "none",
-                      padding: "12px 35px",
-                      borderRadius: "5px",
-                      fontWeight: "600",
-                      cursor: "pointer"
-                    }}
-                  >
-                    Wishlist
-                  </button>
-
-                </div>
-
-              </div>
-
+              <button
+                onClick={addToWishlist}
+                style={{
+                  background: "#dd2222",
+                  color: "#fff",
+                  border: "none",
+                  padding: "12px 30px",
+                  cursor: "pointer"
+                }}
+              >
+                Wishlist
+              </button>
             </div>
 
           </div>
-
         </div>
-
       </section>
-
-      {/* ================= ANIMATION ================= */}
-      <style>
-        {`
-          @keyframes slideIn {
-            from {
-              transform: translateX(100%);
-              opacity: 0;
-            }
-            to {
-              transform: translateX(0);
-              opacity: 1;
-            }
-          }
-        `}
-      </style>
     </>
   );
 }
