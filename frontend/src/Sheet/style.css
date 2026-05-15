@@ -3803,3 +3803,46 @@ img.rim {
   bottom: 20px;
   opacity: 1;
 }
+.wishlist-page{
+  padding:40px;
+}
+
+.wishlist-container{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+  margin-top:30px;
+}
+
+.wishlist-card{
+  border:1px solid #ddd;
+  padding:20px;
+  border-radius:10px;
+  text-align:center;
+}
+
+.wishlist-card img{
+  width:100%;
+  height:220px;
+  object-fit:contain;
+}
+
+.wishlist-card h3{
+  font-size:18px;
+  margin:15px 0;
+}
+
+.wishlist-card p{
+  font-size:20px;
+  color:#7fad39;
+  font-weight:bold;
+}
+
+.wishlist-card button{
+  background:red;
+  color:#fff;
+  border:none;
+  padding:10px 20px;
+  border-radius:5px;
+  cursor:pointer;
+}

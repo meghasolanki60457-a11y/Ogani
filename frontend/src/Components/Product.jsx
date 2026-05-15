@@ -1,234 +1,188 @@
-import {Link} from "react-router-dom";
-import { useState } from "react";
-function App() {
-    const [count1, setCount1] = useState(1);
-    const [count2, setCount2] = useState(1);
-    const [count3, setCount3] = useState(1);
-    return (
-        <>
-            <section className="shoping-cart spad">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <div className="shoping__cart__table">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th className="shoping__product">Products</th>
-                                            <th>Price</th>
-                                            <th>Quantity</th>
-                                            <th>Total</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td className="shoping__cart__item">
-                                                <img src="/Images/one.png" className="w-25" alt="" />
-                                                <h5>Vegetable’s Package</h5>
-                                            </td>
-                                            <td className="shoping__cart__price">
-                                                $55.00
-                                            </td>
-                                            <td className="shoping__cart__quantity">
-                                                <div className="quantity">
-                                                    <div
-                                                        className="pro-qty ms-4"
-                                                        style={{
-                                                            display: "flex",
-                                                            alignItems: "center",
-                                                            gap: "10px",
-                                                        }}
-                                                    >
-                                                        <button
-                                                            onClick={() => count1 > 1 && setCount1(count1 - 1)}
-                                                            style={{
-                                                                border: "none",
-                                                                padding: "7px 12px",
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-                                                            }}
-                                                        >
-                                                            -
-                                                        </button>
+function Cart() {
 
-                                                        <input
-                                                            type="text"
-                                                            value={count1}
-                                                            readOnly
-                                                            style={{
-                                                                width: "50px",
-                                                                textAlign: "center",
-                                                            }}
-                                                        />
+  const [cartItems, setCartItems] = useState([]);
 
-                                                        <button
-                                                            onClick={() => setCount1(count1 + 1)}
-                                                            style={{
-                                                                border: "none",
-                                                                padding: "7px 12px",
+  // LOAD CART
+  useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+    // SAFE FIX: ensure quantity always exists
+    const safeCart = cart.map((item) => ({
+      ...item,
+      quantity: item.quantity ? Number(item.quantity) : 1,
+      price: Number(String(item.price).replace("$", "")) || 0
+    }));
 
-                                                            }}
-                                                        >
-                                                            +
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="shoping__cart__total">
-                                                $110.00
-                                            </td>
-                                            <td className="shoping__cart__item__close">
-                                                <i class="fa-solid fa-xmark"></i>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="shoping__cart__item">
-                                                <img src="/Images/one.png" className="w-25" alt="" />
-                                                <h5>Fresh Garden Vegetable</h5>
-                                            </td>
-                                            <td className="shoping__cart__price">
-                                                $39.00
-                                            </td>
-                                            <td className="shoping__cart__quantity">
-                                                <div className="quantity">
-                                                    <div
-                                                        className="pro-qty ms-4"
-                                                        style={{
-                                                            display: "flex",
-                                                            alignItems: "center",
-                                                            gap: "10px",
+    setCartItems(safeCart);
+  }, []);
 
-                                                        }}
-                                                    >
-                                                         <button
-                                                            onClick={() => count2 > 1 && setCount2(count2 - 1)}
-                                                            style={{
-                                                                border: "none",
-                                                                padding: "7px 12px",
+  // SAVE CART
+  const saveCart = (items) => {
+    setCartItems(items);
+    localStorage.setItem("cart", JSON.stringify(items));
+  };
 
-                                                            }}
-                                                        >
-                                                            -
-                                                        </button>
+  // QTY UPDATE
+  const updateQty = (id, type) => {
+    const updated = cartItems.map((item) => {
+      if (item.id === id) {
+        const newQty =
+          type === "inc"
+            ? item.quantity + 1
+            : item.quantity > 1
+              ? item.quantity - 1
+              : 1;
 
-                                                        <input type="text" value={count2} readOnly />
+        return { ...item, quantity: newQty };
+      }
+      return item;
+    });
 
-                                                         <button
-                                                            onClick={() => setCount2(count2 + 1)}
-                                                            style={{
-                                                                border: "none",
-                                                                padding: "7px 12px",
+    saveCart(updated);
+  };
 
+  // REMOVE ITEM
+  const removeItem = (id) => {
+    const filtered = cartItems.filter((item) => item.id !== id);
+    saveCart(filtered);
+  };
 
-                                                            }}
-                                                        >
-                                                            +
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="shoping__cart__total">
-                                                $39.99
-                                            </td>
-                                            <td className="shoping__cart__item__close">
-                                                <i class="fa-solid fa-xmark"></i>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="shoping__cart__item">
-                                                <img src="/Images/one.png" className="w-25" alt="" />
-                                                <h5>Organic Bananas</h5>
-                                            </td>
-                                            <td className="shoping__cart__price">
-                                                $69.00
-                                            </td>
-                                            <td className="shoping__cart__quantity">
-                                                <div className="quantity">
-                                                    <div
-                                                        className="pro-qty ms-4"
-                                                        style={{
-                                                            display: "flex",
-                                                            alignItems: "center",
-                                                            gap: "10px",
-                                                        }}
-                                                    >
-                                                        <button
-                                                            onClick={() => count3 > 1 && setCount3(count3 - 1)}
-                                                            style={{
-                                                                border: "none",
-                                                                padding: "7px 12px",
+  // TOTAL FIX (NO NaN)
+  const total = cartItems.reduce((sum, item) => {
+    const price = Number(item.price) || 0;
+    const qty = Number(item.quantity) || 1;
 
-                                                            }}
-                                                        >
-                                                            -
-                                                        </button>
+    return sum + price * qty;
+  }, 0);
 
-                                                        <input type="text" value={count3} readOnly />
+  return (
+    <section className="py-5">
+      <div className="container">
 
-                                                         <button
-                                                            onClick={() => setCount3(count3 + 1)}
-                                                            style={{
-                                                                border: "none",
-                                                                padding: "7px 12px",
+        <h2 className="mb-4 fw-bold">Shopping Cart 🛒</h2>
 
+        {cartItems.length === 0 ? (
+          <h4 className="text-center text-muted py-5">
+            Your cart is empty
+          </h4>
+        ) : (
 
-                                                            }}
-                                                        >
-                                                            +
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="shoping__cart__total">
-                                                $69.99
-                                            </td>
-                                            <td className="shoping__cart__item__close">
-                                                <i class="fa-solid fa-xmark"></i>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <div className="shoping__cart__btns">
-                              <Link to="/ogani/shopping-detail" className="primary-btn cart-btn">
-  CONTINUE SHOPPING
-</Link>
-                                <a href="javascript:void(0)" className="primary-btn cart-btn cart-btn-right"><span className="icon_loading"></span>
-                                    Upadate Cart</a>
-                            </div>
-                        </div>
-                        <div className="col-lg-6">
-                            <div className="shoping__continue">
-                                <div className="shoping__discount">
-                                    <h5>Discount Codes</h5>
-                                    <form action="javascript:void(0)">
-                                        <input type="text" placeholder="Enter your coupon code" />
-                                        <button type="submit" className="site-btn">APPLY COUPON</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-6">
-                            <div className="shoping__checkout">
-                                <h5>Cart Total</h5>
-                                <ul>
-                                    <li>Subtotal <span>$454.98</span></li>
-                                    <li>Total <span>$454.98</span></li>
-                                </ul>
-                              <Link to="/ogani/shoping-cart/checkout" className="primary-btn">
-  PROCEED TO CHECKOUT
-</Link>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </>
-    );
+          <div className="table-responsive">
+
+            <table className="table align-middle text-center">
+
+              <thead className="table-dark">
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Qty</th>
+                  <th>Total</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                {cartItems.map((item) => (
+
+                  <tr key={item.id}>
+
+                    {/* PRODUCT */}
+                    <td className="text-start">
+                      <div className="d-flex align-items-center gap-3">
+                        <img
+                          src={item.image}
+                          alt=""
+                          style={{
+                            width: "60px",
+                            height: "60px",
+                            objectFit: "contain"
+                          }}
+                        />
+                        <span>{item.title}</span>
+                      </div>
+                    </td>
+
+                    {/* PRICE */}
+                    <td>${item.price.toFixed(2)}</td>
+
+                    {/* QTY BUTTONS */}
+                    <td>
+                      <div className="d-flex justify-content-center align-items-center gap-2">
+
+                        <button
+                          className="btn btn-sm btn-outline-secondary"
+                          onClick={() => updateQty(item.id, "dec")}
+                        >
+                          -
+                        </button>
+
+                        <span className="fw-bold">
+                          {item.quantity}
+                        </span>
+
+                        <button
+                          className="btn btn-sm btn-outline-success"
+                          onClick={() => updateQty(item.id, "inc")}
+                        >
+                          +
+                        </button>
+
+                      </div>
+                    </td>
+
+                    {/* TOTAL */}
+                    <td className="fw-bold text-success">
+                      ${(item.price * item.quantity).toFixed(2)}
+                    </td>
+
+                    {/* REMOVE */}
+                    <td>
+                      <button
+                        className="btn btn-sm btn-danger"
+                        onClick={() => removeItem(item.id)}
+                      >
+                        Remove
+                      </button>
+                    </td>
+
+                  </tr>
+
+                ))}
+
+              </tbody>
+
+            </table>
+
+          </div>
+        )}
+
+        {/* TOTAL + CONTINUE */}
+        {cartItems.length > 0 && (
+
+          <div className="d-flex justify-content-between align-items-center mt-4 p-3 border rounded">
+
+            <h4 className="mb-0">
+              Total: <span className="text-success">${total.toFixed(2)}</span>
+            </h4>
+
+            <Link
+              to="/ogani/shop"
+              className="btn btn-success px-4 py-2 fw-bold"
+            >
+              ← Continue Shopping
+            </Link>
+
+          </div>
+
+        )}
+
+      </div>
+    </section>
+  );
 }
-export default App;
+
+export default Cart;

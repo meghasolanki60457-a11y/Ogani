@@ -1132,14 +1132,14 @@ body{
 table{
   width:100%;
   border-collapse:collapse;
-  background:#111827;
+  
   border-radius:16px;
   overflow:hidden;
 }
 
 table th{
-  background:#1e293b;
-  color:white;
+ 
+  
   text-align:left;
   padding:16px;
 }
@@ -1147,7 +1147,7 @@ table th{
 table td{
   padding:16px;
   border-top:1px solid #334155;
-  color:#cbd5e1;
+  
 }
 
 /* RESPONSIVE */
@@ -1352,7 +1352,7 @@ table td{
 /* TABLE */
 
 .users-table-card{
-  background:white;
+  
   border-radius:20px;
   padding:20px;
   overflow-x:auto;
@@ -1451,9 +1451,7 @@ table td{
   background: #1e293b;
 }
 
-.users-table thead th {
-  color: #f8fafc;
-}
+
 
 .users-table tbody tr {
   background: #0f172a;

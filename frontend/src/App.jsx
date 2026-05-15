@@ -42,6 +42,8 @@ import Block from "./Pages/Block";
 import Contact from "./Pages/Contact";
 import Login from "./Pages/Login";
 import Sign from "./Pages/Sign";
+import ProductDel from "./Pages/ProductDel";
+import Wishlist from "./Pages/Wishlist";
 
 /* HOME */
 function Home() {
@@ -86,13 +88,30 @@ function Website() {
         <Route path="/ogani/shop" element={<Shop />} />
         <Route path="/ogani/shop-details" element={<ShopDetail />} />
         <Route path="/ogani/shopping-cart" element={<ShopCard />} />
-        <Route path="/ogani/checkout" element={<Checkout />} />
-        <Route path="/ogani/blog-details" element={<BlogDetails />} />
+        <Route path="/ogani/shoping-cart/checkout" element={<Checkout />} />
+        <Route path="/ogani/blog/blog-details" element={<BlogDetails />} />
         <Route path="/ogani/blog" element={<Block />} />
         <Route path="/ogani/contact" element={<Contact />} />
 
         <Route path="/ogani/login" element={<Login />} />
         <Route path="/ogani/sign-in" element={<Sign />} />
+           <Route
+  path="/ogani/product/:id"
+  element={<ProductDel />}
+/>
+<Route
+  path="/ogani/shop-details/:id"
+  element={<ShopDetail />}
+/>
+  <Route path="/ogani/wishlist/:id" element={<Wishlist />} />
+  <Route
+  path="/ogani/shopping-cart/:id"
+  element={<ShopCard />}
+/>
+<Route
+  path="/ogani/wishlist"
+  element={<Wishlist />}
+/>
       </Routes>
 
       <Footer />
@@ -130,6 +149,7 @@ function App() {
             <Route path="products/create" element={<CreateProduct />} />
             <Route path="users/add" element={<AddUser />} />
             <Route path="products/edit/:id" element={<EditPage />} />
+         
           </Route>
         </Route>
 

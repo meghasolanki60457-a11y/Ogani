@@ -176,10 +176,10 @@ function App() {
               <div className="header__cart">
                 <ul>
                   <li>
-                    <Link to="/ogani/shop-details">
-                      <i className="fa fa-heart"></i>
-                      <span>1</span>
-                    </Link>
+                 <Link to="/ogani/wishlist">
+  <i className="fa fa-heart"></i>
+  <span>1</span>
+</Link>
                   </li>
 
                   <li>

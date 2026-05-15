@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "rc-slider";
 import { Link } from "react-router-dom";
 
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper,  SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 
 import "swiper/css";
@@ -14,6 +14,39 @@ function App() {
   // PRICE STATE
   const [price, setPrice] = useState([91, 312]);
 
+  // PRODUCTS STATE
+  const [products, setProducts] = useState([]);
+
+  // PAGINATION STATE
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const productsPerPage = 6;
+
+  const indexOfLastProduct =
+    currentPage * productsPerPage;
+
+  const indexOfFirstProduct =
+    indexOfLastProduct - productsPerPage;
+
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  const totalPages = Math.ceil(
+    products.length / productsPerPage
+  );
+
+  // API CALL
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products")
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <>
       <section className="product spad">
@@ -22,10 +55,12 @@ function App() {
 
             {/* SIDEBAR */}
             <div className="col-lg-3 col-md-5">
+
               <div className="sidebar">
 
                 {/* DEPARTMENT */}
                 <div className="sidebar__item">
+
                   <h4>Department</h4>
 
                   <ul>
@@ -40,10 +75,12 @@ function App() {
                     <li><a href="/">Papayaya & Crisps</a></li>
                     <li><a href="/">Oatmeal</a></li>
                   </ul>
+
                 </div>
 
                 {/* PRICE FILTER */}
                 <div className="sidebar__item">
+
                   <h4>Price</h4>
 
                   <div className="price-range-wrap">
@@ -54,29 +91,6 @@ function App() {
                       max={540}
                       value={price}
                       onChange={(value) => setPrice(value)}
-                      trackStyle={[{ backgroundColor: "#dd2222", height: 4 }]}
-                      handleStyle={[
-                        {
-                          borderColor: "#fff",
-                          backgroundColor: "#fff",
-                          width: 18,
-                          height: 18,
-                          marginTop: -7,
-                          border: "2px solid #ddd",
-                        },
-                        {
-                          borderColor: "#fff",
-                          backgroundColor: "#fff",
-                          width: 18,
-                          height: 18,
-                          marginTop: -7,
-                          border: "2px solid #ddd",
-                        },
-                      ]}
-                      railStyle={{
-                        backgroundColor: "#ebebeb",
-                        height: 4,
-                      }}
                     />
 
                     <div
@@ -92,366 +106,373 @@ function App() {
                     </div>
 
                   </div>
-                </div>
 
+                </div>
                 {/* COLORS */}
-                <div className="sidebar__item sidebar__item__color--option">
-                  <h4>Colors</h4>
+<div className="sidebar__item sidebar__item__color--option">
 
-                  <div className="sidebar__item__color sidebar__item__color--white">
-                    <label htmlFor="white">
-                      White
-                      <input type="radio" id="white" />
-                    </label>
-                  </div>
+  <h4>Colors</h4>
 
-                  <div className="sidebar__item__color sidebar__item__color--gray">
-                    <label htmlFor="gray">
-                      Gray
-                      <input type="radio" id="gray" />
-                    </label>
-                  </div>
+  <div className="sidebar__item__color sidebar__item__color--white">
+    <label htmlFor="white">
+      White
+      <input type="radio" id="white" />
+    </label>
+  </div>
 
-                  <div className="sidebar__item__color sidebar__item__color--red">
-                    <label htmlFor="red">
-                      Red
-                      <input type="radio" id="red" />
-                    </label>
-                  </div>
+  <div className="sidebar__item__color sidebar__item__color--gray">
+    <label htmlFor="gray">
+      Gray
+      <input type="radio" id="gray" />
+    </label>
+  </div>
 
-                  <div className="sidebar__item__color sidebar__item__color--black">
-                    <label htmlFor="black">
-                      Black
-                      <input type="radio" id="black" />
-                    </label>
-                  </div>
+  <div className="sidebar__item__color sidebar__item__color--red">
+    <label htmlFor="red">
+      Red
+      <input type="radio" id="red" />
+    </label>
+  </div>
 
-                  <div className="sidebar__item__color sidebar__item__color--blue">
-                    <label htmlFor="blue">
-                      Blue
-                      <input type="radio" id="blue" />
-                    </label>
-                  </div>
+  <div className="sidebar__item__color sidebar__item__color--black">
+    <label htmlFor="black">
+      Black
+      <input type="radio" id="black" />
+    </label>
+  </div>
 
-                  <div className="sidebar__item__color sidebar__item__color--green">
-                    <label htmlFor="green">
-                      Green
-                      <input type="radio" id="green" />
-                    </label>
-                  </div>
-                </div>
+  <div className="sidebar__item__color sidebar__item__color--blue">
+    <label htmlFor="blue">
+      Blue
+      <input type="radio" id="blue" />
+    </label>
+  </div>
 
-                {/* SIZE */}
-                <div className="sidebar__item">
-                  <h4>Popular Size</h4>
+  <div className="sidebar__item__color sidebar__item__color--green">
+    <label htmlFor="green">
+      Green
+      <input type="radio" id="green" />
+    </label>
+  </div>
 
-                  <div className="sidebar__item__size">
-                    <label htmlFor="large">
-                      Large
-                      <input type="radio" id="large" />
-                    </label>
-                  </div>
+</div>
 
-                  <div className="sidebar__item__size">
-                    <label htmlFor="medium">
-                      Medium
-                      <input type="radio" id="medium" />
-                    </label>
-                  </div>
+{/* PRODUCT SIZE */}
+<div className="sidebar__item">
 
-                  <div className="sidebar__item__size">
-                    <label htmlFor="small">
-                      Small
-                      <input type="radio" id="small" />
-                    </label>
-                  </div>
+  <h4>Popular Size</h4>
 
-                  <div className="sidebar__item__size">
-                    <label htmlFor="tiny">
-                      Tiny
-                      <input type="radio" id="tiny" />
-                    </label>
-                  </div>
-                </div>
+  <div className="sidebar__item__size">
+    <label htmlFor="large">
+      Large
+      <input type="radio" id="large" />
+    </label>
+  </div>
+
+  <div className="sidebar__item__size">
+    <label htmlFor="medium">
+      Medium
+      <input type="radio" id="medium" />
+    </label>
+  </div>
+
+  <div className="sidebar__item__size">
+    <label htmlFor="small">
+      Small
+      <input type="radio" id="small" />
+    </label>
+  </div>
+
+  <div className="sidebar__item__size">
+    <label htmlFor="tiny">
+      Tiny
+      <input type="radio" id="tiny" />
+    </label>
+  </div>
+
+</div>
 
                 {/* LATEST PRODUCTS */}
                 <div className="sidebar__item">
-                   <div className="latest-product__text">
 
-          {/* Heading */}
-          <div className="d-flex justify-content-between align-items-center mb-4">
+                  <div className="latest-product__text">
 
-            <h4 className="mb-0">Latest Products</h4>
+                    {/* HEADING */}
+                    <div className="d-flex justify-content-between align-items-center mb-4">
 
-            {/* Navigation Buttons */}
-            <div className="latest-product__slider__nav">
-              <button className="latest-prev">
-                <i className="fa fa-angle-left"></i>
-              </button>
+                      <h4 className="mb-0">
+                        Latest Products
+                      </h4>
 
-              <button className="latest-next">
-                <i className="fa fa-angle-right"></i>
-              </button>
-            </div>
+                      {/* NAV BUTTONS */}
+                      <div className="latest-product__slider__nav">
 
-          </div>
+                        <button className="latest-prev">
+                          <i className="fa fa-angle-left"></i>
+                        </button>
 
-          {/* Swiper */}
-        <Swiper
-  slidesPerView={1}
-  spaceBetween={20}
-  loop={true}
+                        <button className="latest-next">
+                          <i className="fa fa-angle-right"></i>
+                        </button>
 
-  autoplay={{
-    delay: 2000,
-    disableOnInteraction: false,
-  }}
+                      </div>
 
-  navigation={{
-    prevEl: ".latest-prev",
-    nextEl: ".latest-next",
-  }}
+                    </div>
 
-  modules={[Navigation, Autoplay]}
+                    {/* SWIPER */}
+                    <Swiper
+                      slidesPerView={1}
+                      spaceBetween={20}
+                      loop={true}
 
-  onBeforeInit={(swiper) => {
-    swiper.params.navigation.prevEl = ".latest-prev";
-    swiper.params.navigation.nextEl = ".latest-next";
-  }}
->
+                      autoplay={{
+                        delay: 2000,
+                        disableOnInteraction: false,
+                      }}
 
-            <SwiperSlide>
+                      navigation={{
+                        prevEl: ".latest-prev",
+                        nextEl: ".latest-next",
+                      }}
 
-              <div className="latest-prdouct__slider__item">
+                      modules={[Navigation, Autoplay]}
 
-                <a
-                  href="javascript:void(0)"
-                  className="latest-product__item"
-                >
-                  <div className="latest-product__item__pic">
-                    <img src="/Images/one.png" alt="" />
+                      onBeforeInit={(swiper) => {
+                        swiper.params.navigation.prevEl =
+                          ".latest-prev";
+
+                        swiper.params.navigation.nextEl =
+                          ".latest-next";
+                      }}
+                    >
+
+                      {/* SLIDE 1 */}
+                      <SwiperSlide>
+
+                        <div className="latest-prdouct__slider__item">
+
+                          {products.slice(0, 3).map((item) => (
+
+                            <Link
+                              to={`/ogani/product/${item.id}`}
+                              className="latest-product__item"
+                              key={item.id}
+                            >
+
+                              <div className="latest-product__item__pic">
+
+                                <img
+                                  src={item.image}
+                                  alt=""
+                                  style={{
+                                    width: "110px",
+                                    height: "110px",
+                                    objectFit: "contain"
+                                  }}
+                                />
+
+                              </div>
+
+                              <div className="latest-product__item__text">
+
+                                <h6>
+                                  {item.title.slice(0, 25)}...
+                                </h6>
+
+                                <span>
+                                  ${item.price}
+                                </span>
+
+                              </div>
+
+                            </Link>
+
+                          ))}
+
+                        </div>
+
+                      </SwiperSlide>
+
+                      {/* SLIDE 2 */}
+                      <SwiperSlide>
+
+                        <div className="latest-prdouct__slider__item">
+
+                          {products.slice(3, 6).map((item) => (
+
+                            <Link
+                              to={`/ogani/product/${item.id}`}
+                              className="latest-product__item"
+                              key={item.id}
+                            >
+
+                              <div className="latest-product__item__pic">
+
+                                <img
+                                  src={item.image}
+                                  alt=""
+                                  style={{
+                                    width: "110px",
+                                    height: "110px",
+                                    objectFit: "contain"
+                                  }}
+                                />
+
+                              </div>
+
+                              <div className="latest-product__item__text">
+
+                                <h6>
+                                  {item.title.slice(0, 25)}...
+                                </h6>
+
+                                <span>
+                                  ${item.price}
+                                </span>
+
+                              </div>
+
+                            </Link>
+
+                          ))}
+
+                        </div>
+
+                      </SwiperSlide>
+
+                    </Swiper>
+
                   </div>
 
-                  <div className="latest-product__item__text">
-                    <h6>Crab Pool Security</h6>
-                    <span>$30.00</span>
-                  </div>
-                </a>
-
-                 <a
-                  href="javascript:void(0)"
-                  className="latest-product__item"
-                >
-                  <div className="latest-product__item__pic">
-                    <img src="/Images/one.png" alt="" />
-                  </div>
-
-                  <div className="latest-product__item__text">
-                    <h6>Crab Pool Security</h6>
-                    <span>$30.00</span>
-                  </div>
-                </a>
-                   <a
-                  href="javascript:void(0)"
-                  className="latest-product__item"
-                >
-                  <div className="latest-product__item__pic">
-                    <img src="/Images/one.png" alt="" />
-                  </div>
-
-                  <div className="latest-product__item__text">
-                    <h6>Crab Pool Security</h6>
-                    <span>$30.00</span>
-                  </div>
-                </a>
-
-              </div>
-
-            </SwiperSlide>
-
-            <SwiperSlide>
-
-              <div className="latest-prdouct__slider__item">
-
-                 <a
-                  href="javascript:void(0)"
-                  className="latest-product__item"
-                >
-                  <div className="latest-product__item__pic">
-                    <img src="/Images/one.png" alt="" />
-                  </div>
-
-                  <div className="latest-product__item__text">
-                    <h6>Crab Pool Security</h6>
-                    <span>$30.00</span>
-                  </div>
-                </a>
-                <a
-                  href="javascript:void(0)"
-                  className="latest-product__item"
-                >
-                  <div className="latest-product__item__pic">
-                    <img src="/Images/one.png" alt="" />
-                  </div>
-
-                  <div className="latest-product__item__text">
-                    <h6>Crab Pool Security</h6>
-                    <span>$30.00</span>
-                  </div>
-                </a>
-                   <a
-                  href="javascript:void(0)"
-                  className="latest-product__item"
-                >
-                  <div className="latest-product__item__pic">
-                    <img src="/Images/one.png" alt="" />
-                  </div>
-
-                  <div className="latest-product__item__text">
-                    <h6>Crab Pool Security</h6>
-                    <span>$30.00</span>
-                  </div>
-                </a>
-              </div>
-
-            </SwiperSlide>
-
-          </Swiper>
-
-        </div>
                 </div>
 
               </div>
+
             </div>
 
             {/* PRODUCT SECTION */}
             <div className="col-lg-9 col-md-7">
+
+              {/* SALE OFF */}
               <div className="product__discount">
-  <div className="section-title product__discount__title">
-    <h2>Sale Off</h2>
-  </div>
 
-  <div className="row">
+                <div className="section-title product__discount__title">
+                  <h2>Sale Off</h2>
+                </div>
 
-    <Swiper
-      slidesPerView={3}
-      spaceBetween={20}
-      loop={true}
+                <div className="row">
 
-      autoplay={{
-        delay: 2000,
-        disableOnInteraction: false,
-      }}
+                  <Swiper
+                    slidesPerView={3}
+                    spaceBetween={20}
+                    loop={true}
 
-      modules={[Autoplay]}
-      breakpoints={{
-        0: { slidesPerView: 1 },
-        768: { slidesPerView: 2 },
-        992: { slidesPerView: 3 }
-      }}
-    >
+                    autoplay={{
+                      delay: 2000,
+                      disableOnInteraction: false,
+                    }}
 
-      {/* ITEM 1 */}
-      <SwiperSlide>
-        <div className="product__discount__item">
-          <div className="product__discount__item__pic set-bg"
-            style={{ backgroundImage: "url('/Images/one.png')" }}
-          >
-            <div className="product__discount__percent">-20%</div>
+                    modules={[Autoplay]}
 
-            <ul className="product__item__pic__hover">
-              <li><a href="#"><i className="fa fa-heart"></i></a></li>
-              <li><a href="#"><i className="fa fa-retweet"></i></a></li>
-              <li><a href="#"><i className="fa fa-shopping-cart"></i></a></li>
-            </ul>
-          </div>
+                    breakpoints={{
+                      0: { slidesPerView: 1 },
+                      768: { slidesPerView: 2 },
+                      992: { slidesPerView: 3 }
+                    }}
+                  >
 
-          <div className="product__discount__item__text">
-            <span>Dried Fruit</span>
-            <h5><a href="#">Raisin’n’nuts</a></h5>
-            <div className="product__item__price">$30.00 <span>$36.00</span></div>
-          </div>
-        </div>
-      </SwiperSlide>
+                    {products.map((item) => (
 
-      {/* ITEM 2 */}
-      <SwiperSlide>
-        <div className="product__discount__item">
-          <div className="product__discount__item__pic set-bg"
-            style={{ backgroundImage: "url('/Images/one.png')" }}
-          >
-            <div className="product__discount__percent">-20%</div>
+                      <SwiperSlide key={item.id}>
 
-            <ul className="product__item__pic__hover">
-              <li><a href="#"><i className="fa fa-heart"></i></a></li>
-              <li><a href="#"><i className="fa fa-retweet"></i></a></li>
-              <li><a href="#"><i className="fa fa-shopping-cart"></i></a></li>
-            </ul>
-          </div>
+                        <div className="product__discount__item">
 
-          <div className="product__discount__item__text">
-            <span>Vegetables</span>
-            <h5><a href="#">Vegetables’package</a></h5>
-            <div className="product__item__price">$30.00 <span>$36.00</span></div>
-          </div>
-        </div>
-      </SwiperSlide>
+                          <div
+                            className="product__discount__item__pic set-bg"
+                            style={{
+                              backgroundImage: `url(${item.image})`,
+                              backgroundSize: "contain",
+                              backgroundRepeat: "no-repeat",
+                              backgroundPosition: "center",
+                              backgroundColor: "#fff",
+                              height: "250px"
+                            }}
+                          >
 
-      {/* ITEM 3 */}
-      <SwiperSlide>
-        <div className="product__discount__item">
-          <div className="product__discount__item__pic set-bg"
-            style={{ backgroundImage: "url('/Images/one.png')" }}
-          >
-            <div className="product__discount__percent">-20%</div>
+                            <div className="product__discount__percent">
+                              -20%
+                            </div>
 
-            <ul className="product__item__pic__hover">
-              <li><a href="#"><i className="fa fa-heart"></i></a></li>
-              <li><a href="#"><i className="fa fa-retweet"></i></a></li>
-              <li><a href="#"><i className="fa fa-shopping-cart"></i></a></li>
-            </ul>
-          </div>
+                            <ul className="product__item__pic__hover">
 
-          <div className="product__discount__item__text">
-            <span>Dried Fruit</span>
-            <h5><a href="#">Mixed Fruits</a></h5>
-            <div className="product__item__price">$30.00 <span>$36.00</span></div>
-          </div>
-        </div>
-      </SwiperSlide>
+                              {/* WISHLIST */}
+                              <li>
+                                <Link to={`/ogani/wishlist/${item.id}`}>
+                                  <i className="fa fa-heart"></i>
+                                </Link>
+                              </li>
 
-      {/* ITEM 4 */}
-      <SwiperSlide>
-        <div className="product__discount__item">
-          <div className="product__discount__item__pic set-bg"
-       style={{ backgroundImage: "url('/Images/one.png')" }}
-          >
-            <div className="product__discount__percent">-20%</div>
+                              {/* DETAIL */}
+                              <li>
+                                <Link to={`/ogani/product/${item.id}`}>
+                                  <i className="fa fa-retweet"></i>
+                                </Link>
+                              </li>
 
-            <ul className="product__item__pic__hover">
-              <li><a href="#"><i className="fa fa-heart"></i></a></li>
-              <li><a href="#"><i className="fa fa-retweet"></i></a></li>
-              <li><a href="#"><i className="fa fa-shopping-cart"></i></a></li>
-            </ul>
-          </div>
+                              {/* CART */}
+                             <li>
+  <Link to="/ogani/shopping-cart">
+    <i className="fa fa-shopping-cart"></i>
+  </Link>
+</li>
 
-          <div className="product__discount__item__text">
-            <span>Dried Fruit</span>
-            <h5><a href="#">Raisin’n’nuts</a></h5>
-            <div className="product__item__price">$30.00 <span>$36.00</span></div>
-          </div>
-        </div>
-      </SwiperSlide>
+                            </ul>
 
-    </Swiper>
+                          </div>
 
-  </div>
-</div>
+                          <div className="product__discount__item__text">
+
+                            <span>{item.category}</span>
+
+                            <h5>
+                              <Link to={`/ogani/product/${item.id}`}>
+                                {item.title}
+                              </Link>
+                            </h5>
+
+                            <div className="product__item__price">
+
+                              ${item.price}
+
+                              <span>
+                                ${(item.price + 10).toFixed(2)}
+                              </span>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </SwiperSlide>
+
+                    ))}
+
+                  </Swiper>
+
+                </div>
+
+              </div>
+
+              {/* FILTER */}
               <div className="filter__item">
+
                 <div className="row">
 
                   <div className="col-lg-4 col-md-5">
+
                     <div className="filter__sort">
+
                       <span>Sort By</span>
 
                       <select className="border-0 ps-3">
@@ -459,80 +480,227 @@ function App() {
                         <option value="1">Price Low</option>
                         <option value="2">Price High</option>
                       </select>
+
                     </div>
+
                   </div>
 
                   <div className="col-lg-4 col-md-4">
+
                     <div className="filter__found">
-                      <h6><span>16</span> Products found</h6>
+
+                      <h6>
+                        <span>{products.length}</span>
+                        {" "}Products found
+                      </h6>
+
                     </div>
+
                   </div>
 
                   <div className="col-lg-4 col-md-3">
+
                     <div className="filter__option">
-                      <span className="icon_grid-2x2"><i class="fa-solid fa-border-all"></i></span>
-                      <span className="icon_ul"><i class="fa-solid fa-sliders"></i></span>
+
+                      <span className="icon_grid-2x2">
+                        <i className="fa-solid fa-border-all"></i>
+                      </span>
+
+                      <span className="icon_ul">
+                        <i className="fa-solid fa-sliders"></i>
+                      </span>
+
                     </div>
+
                   </div>
 
                 </div>
+
               </div>
 
               {/* PRODUCTS */}
-             <div className="row">
+              <div className="row">
 
-  {[1,2,3,4,5,6,7,8,9].map((item) => (
+                {currentProducts.map((item) => (
 
-    <div className="col-lg-4 col-md-6 col-sm-6" key={item}>
+                  <div
+                    className="col-lg-4 col-md-6 col-sm-6"
+                    key={item.id}
+                  >
 
-      <div className="product__item">
+                    <div className="product__item">
 
-        {/* PRODUCT IMAGE CLICK */}
-        <Link to={`/ogani/product/${item}`}>
+                      {/* PRODUCT IMAGE */}
+                      <Link to={`/ogani/product/${item.id}`}>
 
-          <div
-            className="product__item__pic set-bg"
-            style={{
-              backgroundImage: "url('/Images/one.png')"
-            }}
-          >
-            <ul className="product__item__pic__hover">
-              <li><a href="/"><i className="fa fa-heart"></i></a></li>
-              <li><a href="/"><i className="fa fa-retweet"></i></a></li>
-              <li><a href="/"><i className="fa fa-shopping-cart"></i></a></li>
-            </ul>
-          </div>
+                        <div
+                          className="product__item__pic set-bg"
+                          style={{
+                            backgroundImage: `url(${item.image})`,
+                            backgroundSize: "contain",
+                            backgroundRepeat: "no-repeat",
+                            backgroundPosition: "center",
+                            backgroundColor: "#fff",
+                            height: "250px"
+                          }}
+                        >
 
-        </Link>
+                          <ul className="product__item__pic__hover">
 
-        {/* PRODUCT TEXT CLICK */}
-        <div className="product__item__text">
+                            {/* WISHLIST */}
+                            <li>
+                              <Link to={`/ogani/wishlist/${item.id}`}>
+                                <i className="fa fa-heart"></i>
+                              </Link>
+                            </li>
 
-          <h6>
-            <Link to={`/ogani/product/${item}`}>
-              Crab Pool Security
-            </Link>
-          </h6>
+                            {/* DETAIL */}
+                            <li>
+                              <Link to={`/ogani/product/${item.id}`}>
+                                <i className="fa fa-retweet"></i>
+                              </Link>
+                            </li>
 
-          <h5>$30.00</h5>
+                            {/* CART */}
+                            <li>
+                              <Link to={`/ogani/cart/${item.id}`}>
+                                <i className="fa fa-shopping-cart"></i>
+                              </Link>
+                            </li>
 
-        </div>
+                          </ul>
 
-      </div>
-    </div>
+                        </div>
 
-  ))}
+                      </Link>
 
-</div>
+                      {/* PRODUCT TEXT */}
+                      <div className="product__item__text">
+
+                        <span
+                          style={{
+                            color: "#999",
+                            fontSize: "14px"
+                          }}
+                        >
+                          {item.category}
+                        </span>
+
+                        <h6>
+
+                          <Link to={`/ogani/product/${item.id}`}>
+                            {item.title}
+                          </Link>
+
+                        </h6>
+
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            minHeight: "50px",
+                            marginTop: "10px"
+                          }}
+                        >
+                          {item.description.slice(0, 60)}...
+                        </p>
+
+                        <h5>${item.price}</h5>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                ))}
+
+              </div>
 
               {/* PAGINATION */}
               <div className="product__pagination">
-                <a href="/">1</a>
-                <a href="/">2</a>
-                <a href="/">3</a>
-                <a href="/">
+
+                {/* PREV */}
+                <button
+                  onClick={() =>
+                    setCurrentPage(currentPage - 1)
+                  }
+                  disabled={currentPage === 1}
+                  style={{
+                    border: "none",
+                    background: "transparent",
+                    marginRight: "10px",
+                    cursor:
+                      currentPage === 1
+                        ? "not-allowed"
+                        : "pointer",
+                    opacity:
+                      currentPage === 1
+                        ? 0.5
+                        : 1
+                  }}
+                >
+
+                  <i className="fa fa-long-arrow-left"></i>
+
+                </button>
+
+                {/* PAGE NUMBERS */}
+                {[...Array(totalPages)].map((_, index) => (
+
+                  <button
+                    key={index}
+                    onClick={() =>
+                      setCurrentPage(index + 1)
+                    }
+                    style={{
+                      margin: "0 5px",
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                      border: "1px solid #ebebeb",
+                      background:
+                        currentPage === index + 1
+                          ? "#7fad39"
+                          : "#fff",
+                      color:
+                        currentPage === index + 1
+                          ? "#fff"
+                          : "#000",
+                      cursor: "pointer"
+                    }}
+                  >
+                    {index + 1}
+                  </button>
+
+                ))}
+
+                {/* NEXT */}
+                <button
+                  onClick={() =>
+                    setCurrentPage(currentPage + 1)
+                  }
+                  disabled={
+                    currentPage === totalPages
+                  }
+                  style={{
+                    border: "none",
+                    background: "transparent",
+                    marginLeft: "10px",
+                    cursor:
+                      currentPage === totalPages
+                        ? "not-allowed"
+                        : "pointer",
+                    opacity:
+                      currentPage === totalPages
+                        ? 0.5
+                        : 1
+                  }}
+                >
+
                   <i className="fa fa-long-arrow-right"></i>
-                </a>
+
+                </button>
+
               </div>
 
             </div>
